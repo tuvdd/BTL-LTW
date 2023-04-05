@@ -1,4 +1,4 @@
-package demo.services.impls;
+package repositories.impls;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import demo.models.DBConfig;
+import models.DBConfig;
 
 public abstract class Repo<T> {
     protected Connection connection;

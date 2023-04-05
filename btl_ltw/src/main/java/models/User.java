@@ -1,4 +1,4 @@
-package demo.models;
+package models;
 
 import java.sql.Timestamp;
 import java.util.UUID;

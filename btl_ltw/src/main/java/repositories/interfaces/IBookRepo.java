@@ -1,9 +1,9 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import demo.models.Book;
+import models.Book;
 
 public interface IBookRepo extends IRepo<Book> {
     List<Book> GetListBookByCategoryID(String uuid, int page, int size) throws SQLException;

@@ -1,6 +1,6 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
-import demo.models.Category;
+import models.Category;
 
 public interface ICategoryRepo extends IRepo<Category>{
     

@@ -1,4 +1,4 @@
-package com.servlet;
+package servlets;
 
 import com.entity.Product;
 

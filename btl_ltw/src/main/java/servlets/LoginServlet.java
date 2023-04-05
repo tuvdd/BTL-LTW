@@ -1,4 +1,4 @@
-package com.servlet;
+package servlets;
 
 public class LoginServlet {
 }

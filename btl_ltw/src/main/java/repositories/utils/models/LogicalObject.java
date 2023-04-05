@@ -1,4 +1,4 @@
-package demo.services.utils.models;
+package repositories.utils.models;
 
 public class LogicalObject {
     public String name;

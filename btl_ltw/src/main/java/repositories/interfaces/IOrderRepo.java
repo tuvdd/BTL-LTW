@@ -1,6 +1,6 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
-import demo.models.Order;
+import models.Order;
 
 public interface IOrderRepo extends IRepo<Order> {
     

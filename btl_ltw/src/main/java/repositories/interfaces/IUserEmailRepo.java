@@ -1,6 +1,6 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
-import demo.models.UserEmail;
+import models.UserEmail;
 
 public interface IUserEmailRepo extends IRepo<UserEmail>{
      

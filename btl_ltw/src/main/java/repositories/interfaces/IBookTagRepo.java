@@ -1,6 +1,6 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
-import demo.models.BookTag;
+import models.BookTag;
 
 public interface IBookTagRepo extends IRepo<BookTag>{
     

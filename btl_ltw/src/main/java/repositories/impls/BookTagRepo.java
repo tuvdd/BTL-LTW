@@ -1,16 +1,16 @@
-package demo.services.impls;
+package repositories.impls;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import demo.models.BookTag;
-import demo.services.interfaces.IBookTagRepo;
-import demo.services.utils.SQLInjection;
-import demo.services.utils.models.LogicalClause;
-import demo.services.utils.models.LogicalObject;
-import demo.services.utils.models.LogicalObjectType;
+import models.BookTag;
+import repositories.interfaces.IBookTagRepo;
+import repositories.utils.SQLInjection;
+import repositories.utils.models.LogicalClause;
+import repositories.utils.models.LogicalObject;
+import repositories.utils.models.LogicalObjectType;
 
 public class BookTagRepo extends Repo<BookTag> implements IBookTagRepo {
     public BookTagRepo() {

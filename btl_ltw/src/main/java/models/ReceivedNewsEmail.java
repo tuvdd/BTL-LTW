@@ -1,4 +1,4 @@
-package demo.models;
+package models;
 
 import java.util.UUID;
 

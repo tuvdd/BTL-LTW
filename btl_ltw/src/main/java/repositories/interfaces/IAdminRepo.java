@@ -1,6 +1,6 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
-import demo.models.Admin;
+import models.Admin;
 
 public interface IAdminRepo extends IRepo<Admin>{
        

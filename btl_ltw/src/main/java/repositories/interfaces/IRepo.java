@@ -1,4 +1,4 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
 import java.sql.SQLException;
 import java.util.List;

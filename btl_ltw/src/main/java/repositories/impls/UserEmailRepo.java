@@ -1,16 +1,16 @@
-package demo.services.impls;
+package repositories.impls;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import demo.models.UserEmail;
-import demo.services.interfaces.IUserEmailRepo;
-import demo.services.utils.SQLInjection;
-import demo.services.utils.models.LogicalClause;
-import demo.services.utils.models.LogicalObject;
-import demo.services.utils.models.LogicalObjectType;
+import models.UserEmail;
+import repositories.interfaces.IUserEmailRepo;
+import repositories.utils.SQLInjection;
+import repositories.utils.models.LogicalClause;
+import repositories.utils.models.LogicalObject;
+import repositories.utils.models.LogicalObjectType;
 
 public class UserEmailRepo extends Repo<UserEmail> implements IUserEmailRepo {
     public UserEmailRepo() {

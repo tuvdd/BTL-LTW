@@ -1,4 +1,4 @@
-package demo.services.impls;
+package repositories.impls;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import demo.models.Book;
-import demo.services.interfaces.IBookRepo;
-import demo.services.utils.SQLInjection;
-import demo.services.utils.models.LogicalClause;
-import demo.services.utils.models.LogicalObject;
-import demo.services.utils.models.LogicalObjectType;
-import demo.services.utils.models.OrderByObject;
-import demo.services.utils.models.OrderType;
+import models.Book;
+import repositories.interfaces.IBookRepo;
+import repositories.utils.SQLInjection;
+import repositories.utils.models.LogicalClause;
+import repositories.utils.models.LogicalObject;
+import repositories.utils.models.LogicalObjectType;
+import repositories.utils.models.OrderByObject;
+import repositories.utils.models.OrderType;
 
 public class BookRepo extends Repo<Book> implements IBookRepo {
 

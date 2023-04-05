@@ -1,4 +1,4 @@
-package demo.services.impls;
+package repositories.impls;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import demo.models.OrderDetail;
-import demo.services.interfaces.IOrderDetailRepo;
-import demo.services.utils.SQLInjection;
-import demo.services.utils.models.LogicalClause;
-import demo.services.utils.models.LogicalObject;
-import demo.services.utils.models.LogicalObjectType;
+import models.OrderDetail;
+import repositories.interfaces.IOrderDetailRepo;
+import repositories.utils.SQLInjection;
+import repositories.utils.models.LogicalClause;
+import repositories.utils.models.LogicalObject;
+import repositories.utils.models.LogicalObjectType;
 
 public class OrderDetailRepo extends Repo<OrderDetail> implements IOrderDetailRepo {
 

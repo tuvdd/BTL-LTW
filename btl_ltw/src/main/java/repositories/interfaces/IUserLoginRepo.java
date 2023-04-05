@@ -1,6 +1,6 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
-import demo.models.UserLogin;
+import models.UserLogin;
 
 public interface IUserLoginRepo extends IRepo<UserLogin> {
     

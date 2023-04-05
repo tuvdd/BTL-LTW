@@ -1,6 +1,6 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
-import demo.models.Tag;
+import models.Tag;
 
 public interface ITagRepo extends IRepo<Tag>{
     

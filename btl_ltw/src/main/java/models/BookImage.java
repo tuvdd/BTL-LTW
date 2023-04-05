@@ -1,5 +1,4 @@
-package demo.models;
-
+package models;
 import java.util.UUID;
 
 public class BookImage extends Table {

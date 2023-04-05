@@ -1,6 +1,6 @@
-package demo.services.interfaces;
+package repositories.interfaces;
 
-import demo.models.ReceivedNewsEmail;
+import models.ReceivedNewsEmail;
 
 public interface IReceivedNewsEmailRepo extends IRepo<ReceivedNewsEmail>{
     

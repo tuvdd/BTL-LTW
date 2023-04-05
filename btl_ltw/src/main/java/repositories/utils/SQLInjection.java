@@ -1,8 +1,8 @@
-package demo.services.utils;
+package repositories.utils;
 
-import demo.services.utils.models.InsertFieldObject;
-import demo.services.utils.models.LogicalClause;
-import demo.services.utils.models.OrderByObject;
+import repositories.utils.models.InsertFieldObject;
+import repositories.utils.models.LogicalClause;
+import repositories.utils.models.OrderByObject;
 
 public class SQLInjection {
     public static String PAGINSQL(int page, int count, OrderByObject[] orderByObjArray) {
