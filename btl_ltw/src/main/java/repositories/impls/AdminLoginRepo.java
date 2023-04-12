@@ -53,7 +53,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<AdminLogin>();
             while (resultSet.next()) {
-                var admin_login = setObjectFromResultSet(resultSet);
+                AdminLogin admin_login = setObjectFromResultSet(resultSet);
 
                 response.add(admin_login);
             }
@@ -116,7 +116,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
 
     @Override
     protected AdminLogin setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new AdminLogin();
+        AdminLogin response = new AdminLogin();
         response.set(UUID.fromString(
                 resultSet.getString("id")),
                 resultSet.getString("username"),

@@ -51,7 +51,7 @@ public class UserLoginRepo extends Repo<UserLogin> implements IUserLoginRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<UserLogin>();
             while (resultSet.next()) {
-                var user_login = setObjectFromResultSet(resultSet);
+                UserLogin user_login = setObjectFromResultSet(resultSet);
 
                 response.add(user_login);
             }
@@ -111,7 +111,7 @@ public class UserLoginRepo extends Repo<UserLogin> implements IUserLoginRepo {
 
     @Override
     protected UserLogin setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new UserLogin();
+        UserLogin response = new UserLogin();
         response.set(UUID.fromString(
                 resultSet.getString("id")),
                 resultSet.getString("username"),

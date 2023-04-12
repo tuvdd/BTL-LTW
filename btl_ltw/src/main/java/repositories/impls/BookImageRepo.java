@@ -53,7 +53,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<BookImage>();
             while (resultSet.next()) {
-                var BookImage = new BookImage();
+                BookImage BookImage = new BookImage();
                 BookImage.set(UUID.fromString(resultSet.getString("id")),
                         resultSet.getString("value"),
                         UUID.fromString(resultSet.getString("book_id")));
@@ -119,7 +119,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
 
     @Override
     protected BookImage setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new BookImage();
+        BookImage response = new BookImage();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("value"),
@@ -150,7 +150,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<BookImage>();
             while (resultSet.next()) {
-                var BookImage = new BookImage();
+                BookImage BookImage = new BookImage();
                 BookImage.set(UUID.fromString(resultSet.getString("id")),
                         resultSet.getString("value"),
                         UUID.fromString(resultSet.getString("book_id")));

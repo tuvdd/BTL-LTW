@@ -51,7 +51,7 @@ public class BookTagRepo extends Repo<BookTag> implements IBookTagRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<BookTag>();
             while (resultSet.next()) {
-                var book_tag = setObjectFromResultSet(resultSet);
+                BookTag book_tag = setObjectFromResultSet(resultSet);
                 response.add(book_tag);
             }
 
@@ -110,7 +110,7 @@ public class BookTagRepo extends Repo<BookTag> implements IBookTagRepo {
 
     @Override
     protected BookTag setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new BookTag();
+        BookTag response = new BookTag();
         response.set(
                 UUID.fromString(resultSet.getString("book_id")),
                 UUID.fromString(resultSet.getString("id")),

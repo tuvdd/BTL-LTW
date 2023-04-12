@@ -53,7 +53,7 @@ public class UserRepo extends Repo<User> implements IUserRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<User>();
             while (resultSet.next()) {
-                var user = setObjectFromResultSet(resultSet);
+                User user = setObjectFromResultSet(resultSet);
 
                 response.add(user);
             }
@@ -116,7 +116,7 @@ public class UserRepo extends Repo<User> implements IUserRepo {
 
     @Override
     protected User setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new User();
+        User response = new User();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("name"),

@@ -52,7 +52,7 @@ public class UserEmailRepo extends Repo<UserEmail> implements IUserEmailRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<UserEmail>();
             while (resultSet.next()) {
-                var user_email = setObjectFromResultSet(resultSet);
+                UserEmail user_email = setObjectFromResultSet(resultSet);
                 response.add(user_email);
             }
 
@@ -111,7 +111,7 @@ public class UserEmailRepo extends Repo<UserEmail> implements IUserEmailRepo {
 
     @Override
     protected UserEmail setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new UserEmail();
+        UserEmail response = new UserEmail();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("email"));
