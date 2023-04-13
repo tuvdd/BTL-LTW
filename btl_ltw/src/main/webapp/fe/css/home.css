@@ -3,10 +3,12 @@
     height: 100vh;
     margin: auto;
 }
-
+body {
+    font-family: "Open Sans", sans-serif;
+}
 .header {
     margin-top: 30px;
-    width: 90%;
+    width: 100%;
     height: 50px;
     margin: auto;
     display: flex;
@@ -16,7 +18,6 @@
 
 .logo {
     width: 100px;
-    /* background-color: aqua; */
     height: 100%;
     float: left;
     display: flex;
@@ -25,15 +26,15 @@
 }
 
 .search {
-    width: 25%;
+    width: 50%;
     height: 100%;
     float: left;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .search input {
+    width: 70%;
     height: 70%;
     margin-left: 10%;
     margin-right: 3%;   
@@ -41,26 +42,25 @@
 
 .search button {
     height: 70%;
-    margin-left: 5%;
+    margin-left: 0%;
     width: 70px;
 }
 
 
 .menu {
-    width: 50%;
+    width: 30%;
     height: 100%;
     list-style:none;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    float: left;
+    float: right;
     
 }
 
 .menu .item {
-    width: 25%;
     height: 100%;
-    display: flex;
+    display:flex;
     align-items: center;
     justify-content: center;
 }
@@ -120,6 +120,7 @@
     width: 100%;
     height: 15%;
     display: flex;
+    justify-content: center;
 }
 
 .banner  .box-left h2 {
@@ -163,9 +164,6 @@
 .wp-products {
     width: 100%;
     margin-top: 50px;
-    /* padding-top: 10px; */
-    /* margin-top: 10px;/ */
-    /* padding: auto; */
 }
 
 .wp-products h2 {
