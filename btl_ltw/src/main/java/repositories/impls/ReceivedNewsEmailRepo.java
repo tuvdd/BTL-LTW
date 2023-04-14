@@ -51,7 +51,7 @@ public class ReceivedNewsEmailRepo extends Repo<ReceivedNewsEmail> implements IR
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<ReceivedNewsEmail>();
             while (resultSet.next()) {
-                var received_news_email = setObjectFromResultSet(resultSet);
+                ReceivedNewsEmail received_news_email = setObjectFromResultSet(resultSet);
 
                 response.add(received_news_email);
             }
@@ -111,7 +111,7 @@ public class ReceivedNewsEmailRepo extends Repo<ReceivedNewsEmail> implements IR
 
     @Override
     protected ReceivedNewsEmail setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new ReceivedNewsEmail();
+        ReceivedNewsEmail response = new ReceivedNewsEmail();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("email"));

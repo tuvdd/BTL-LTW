@@ -52,7 +52,7 @@ public class TagRepo extends Repo<Tag> implements ITagRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Tag>();
             while (resultSet.next()) {
-                var tag = setObjectFromResultSet(resultSet);
+                Tag tag = setObjectFromResultSet(resultSet);
                 response.add(tag);
             }
 
@@ -111,7 +111,7 @@ public class TagRepo extends Repo<Tag> implements ITagRepo {
 
     @Override
     protected Tag setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new Tag();
+        Tag response = new Tag();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("tag_name"));

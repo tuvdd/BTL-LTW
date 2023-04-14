@@ -52,7 +52,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Book>();
             while (resultSet.next()) {
-                var Book = setObjectFromResultSet(resultSet);
+                Book Book = setObjectFromResultSet(resultSet);
                 response.add(Book);
             }
 
@@ -114,7 +114,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
 
     @Override
     protected Book setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new Book();
+        Book response = new Book();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("name"),
@@ -142,11 +142,11 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         LogicalObject obj2 = new LogicalObject(uuid.toString(), LogicalObjectType.STRING);
         LogicalClause clause = new LogicalClause(obj1, "=", obj2);
         LogicalClause[] clausArray = { clause };
-        var whereSql = SQLInjection.WHERESQL(clausArray);
+        String whereSql = SQLInjection.WHERESQL(clausArray);
 
         OrderByObject obj3 = new OrderByObject("last_update_time", OrderType.DESC);
         OrderByObject[] orderArr = { obj3 };
-        var paginSql = SQLInjection.PAGINSQL(page, size, orderArr);
+        String paginSql = SQLInjection.PAGINSQL(page, size, orderArr);
 
         sql += SQLInjection.SELECTSQL(null, "books") + " " + whereSql + " " + paginSql + " ;";
 
@@ -158,7 +158,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Book>();
             while (resultSet.next()) {
-                var Book = setObjectFromResultSet(resultSet);
+                Book Book = setObjectFromResultSet(resultSet);
                 response.add(Book);
             }
 
@@ -173,10 +173,10 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
 
     @Override
     public List<Book> GetListBookByPrice(double fromMoney, double toMoney, int page, int size) throws SQLException {
-        var sql = "";
+        String sql = "";
         OrderByObject obj1 = new OrderByObject("price", OrderType.ASC);
         OrderByObject[] objArr = { obj1 };
-        var paginSql = SQLInjection.PAGINSQL(page, size, objArr);
+        String paginSql = SQLInjection.PAGINSQL(page, size, objArr);
         sql += SQLInjection.SELECTSQL(null, "books") + " ";
         sql += "WHERE " + SQLInjection.BETWEEN("books", fromMoney + "", toMoney + "") + paginSql + " ;";
 
@@ -188,7 +188,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Book>();
             while (resultSet.next()) {
-                var Book = setObjectFromResultSet(resultSet);
+                Book Book = setObjectFromResultSet(resultSet);
                 response.add(Book);
             }
 
@@ -218,7 +218,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Book>();
             while (resultSet.next()) {
-                var Book = setObjectFromResultSet(resultSet);
+                Book Book = setObjectFromResultSet(resultSet);
                 response.add(Book);
             }
 

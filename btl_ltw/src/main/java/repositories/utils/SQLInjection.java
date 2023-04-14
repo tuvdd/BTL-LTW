@@ -6,7 +6,7 @@ import repositories.utils.models.OrderByObject;
 
 public class SQLInjection {
     public static String PAGINSQL(int page, int count, OrderByObject[] orderByObjArray) {
-        var orderBySql = "";
+        String orderBySql = "";
         orderBySql += orderByObjArray[0].FieldName + " " + orderByObjArray[0].type.label;
         for (int i = 1; i < orderByObjArray.length; i++) {
             orderBySql += ", " + orderByObjArray[0].FieldName + " " + orderByObjArray[0].type.label;
@@ -15,7 +15,7 @@ public class SQLInjection {
     }
 
     public static String WHERESQL(LogicalClause[] list) {
-        var sql = "WHERE ";
+        String sql = "WHERE ";
         sql += LOGICAL_CLAUSE(list[0]);
         for (int i = 1; i < list.length; i++) {
             sql += ", " + LOGICAL_CLAUSE(list[i]);
@@ -23,13 +23,13 @@ public class SQLInjection {
         return " " + sql + " ";
     }
     public static String WHERESQL(LogicalClause clause) {
-        var sql = "WHERE ";
+        String sql = "WHERE ";
         sql += LOGICAL_CLAUSE(clause);
         return " " + sql + " ";
     }
 
     public static String SELECTSQL(String[] fields, String table) {
-        var sql = "SELECT ";
+        String sql = "SELECT ";
 
         if (fields != null) {
             if (fields.length > 0) {
@@ -49,9 +49,9 @@ public class SQLInjection {
     }
 
     public static String INSERTSQL(InsertFieldObject[] insertFieldObjectArray, String table) {
-        var sql = "INSERT INTO " + table + " ";
-        var fields = "(" + insertFieldObjectArray[0].fieldName;
-        var values = "(" + insertFieldObjectArray[0].getValue();
+        String sql = "INSERT INTO " + table + " ";
+        String fields = "(" + insertFieldObjectArray[0].fieldName;
+        String values = "(" + insertFieldObjectArray[0].getValue();
         for (int i = 1; i < insertFieldObjectArray.length; i++) {
             fields += ", " + insertFieldObjectArray[i].fieldName;
             values += ", " + insertFieldObjectArray[0].getValue();
@@ -63,7 +63,7 @@ public class SQLInjection {
     }
 
     public static String BETWEEN(String field, String from, String to) {
-        var sql = field + " BETWEEN " + from + " AND " + to;
+        String sql = field + " BETWEEN " + from + " AND " + to;
         return " " + sql + " ";
     }
 

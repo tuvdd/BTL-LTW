@@ -51,7 +51,7 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Category>();
             while (resultSet.next()) {
-                var category = setObjectFromResultSet(resultSet);
+                Category category = setObjectFromResultSet(resultSet);
                 response.add(category);
             }
 
@@ -110,7 +110,7 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
 
     @Override
     protected Category setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new Category();
+        Category response = new Category();
         response.set(UUID.fromString(resultSet.getString("id")), resultSet.getString("name"),
                 resultSet.getBoolean(("status")));
         return response;

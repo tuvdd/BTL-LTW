@@ -51,7 +51,7 @@ public class AdminRepo extends Repo<Admin> implements IAdminRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Admin>();
             while (resultSet.next()) {
-                var admin = setObjectFromResultSet(resultSet);
+                Admin admin = setObjectFromResultSet(resultSet);
 
                 response.add(admin);
             }
@@ -111,7 +111,7 @@ public class AdminRepo extends Repo<Admin> implements IAdminRepo {
 
     @Override
     protected Admin setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new Admin();
+        Admin response = new Admin();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("name"),

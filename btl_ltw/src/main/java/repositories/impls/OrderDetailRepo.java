@@ -51,7 +51,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> implements IOrderDetailRe
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<OrderDetail>();
             while (resultSet.next()) {
-                var order_detail = setObjectFromResultSet(resultSet);
+                OrderDetail order_detail = setObjectFromResultSet(resultSet);
 
                 response.add(order_detail);
             }
@@ -114,7 +114,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> implements IOrderDetailRe
 
     @Override
     protected OrderDetail setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new OrderDetail();
+        OrderDetail response = new OrderDetail();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 UUID.fromString(resultSet.getString("order_id")),

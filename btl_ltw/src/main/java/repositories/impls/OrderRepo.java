@@ -49,7 +49,7 @@ public class OrderRepo extends Repo<Order> implements IOrderRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Order>();
             while (resultSet.next()) {
-                var order = setObjectFromResultSet(resultSet);
+                Order order = setObjectFromResultSet(resultSet);
 
                 response.add(order);
             }
@@ -112,7 +112,7 @@ public class OrderRepo extends Repo<Order> implements IOrderRepo {
 
     @Override
     protected Order setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new Order();
+        Order response = new Order();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getTimestamp("created_time"),
