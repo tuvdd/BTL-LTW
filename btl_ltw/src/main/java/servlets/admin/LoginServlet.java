@@ -3,8 +3,6 @@ package servlets.admin;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
-
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,46 +12,48 @@ import jakarta.servlet.http.HttpSession;
 import services.impls.AdminService;
 import services.interfaces.IAdminService;
 
-@WebServlet("/admin/login")
+@WebServlet({ "/admin/login", "/admin/login/" })
 public class LoginServlet extends HttpServlet {
-    private IAdminService adminService;
+	private IAdminService adminService;
 
-    public LoginServlet() {
-        adminService = new AdminService();
-    }
+	public LoginServlet() {
+		adminService = new AdminService();
+	}
 
-    private static final long serialVersionUID = 22;
+	private static final long serialVersionUID = 20;
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("login.jsp");
-        dispatcher.forward(req, resp);
-    }
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if (ServletUtil.IsSessionExsited(req, resp)) {
+			resp.sendRedirect("admin/home.jsp");
+			return;
+		}
+		resp.sendRedirect("login.jsp");
+	}
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        if (username == null || username == "" || password == null || password == "") {
-            req.setAttribute("error", "Tên tài khoản hoặc mật khẩu không được để trống");
-            resp.sendRedirect("/btl_ltw/admin/login");
-            return;
-        }
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		if (username == null || username == "" || password == null || password == "") {
+			req.setAttribute("error", "Tên tài khoản hoặc mật khẩu không được để trống");
+			resp.sendRedirect("/btl_ltw/admin/login");
+			return;
+		}
 
-        try {
-            UUID id = adminService.Login(username, password);
-            if (id == null) {
-                req.getSession().setAttribute("error", "Tên tài khoản hoặc mật khẩu không đúng");
-                resp.sendRedirect("/btl_ltw/admin/login");
-                return;
-            }
+		try {
+			UUID id = adminService.Login(username, password);
+			if (id == null) {
+				req.getSession().setAttribute("error", "Tên tài khoản hoặc mật khẩu không đúng");
+				resp.sendRedirect("/btl_ltw/admin/login");
+				return;
+			}
 
-            HttpSession session = req.getSession();
-            session.setAttribute("id", id);
-            resp.sendRedirect("/btl_ltw/admin");
+			HttpSession session = req.getSession();
+			session.setAttribute("id", id);
+			resp.sendRedirect("/btl_ltw/admin");
 
-        } catch (SQLException e) {
-            req.getSession().setAttribute("error", e.getMessage());
-            resp.sendRedirect("/btl_ltw/admin/login");
-        }
-    }
+		} catch (SQLException e) {
+			req.getSession().setAttribute("error", e.getMessage());
+			resp.sendRedirect("/btl_ltw/admin/login");
+		}
+	}
 }

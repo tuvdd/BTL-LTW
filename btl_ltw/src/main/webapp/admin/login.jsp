@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+	pageEncoding="UTF-8" import="servlets.admin.ServletUtil"%>
+<%
+	if (ServletUtil.IsSessionExsited(request, response)) {
+		response.sendRedirect("home.jsp");
+		return;
+	}
+%>
 <!DOCTYPE html>
 <html>
 
@@ -16,7 +21,7 @@
 			<img class="center" src="resources/img/logo.png"
 				style="width: 30%; margin-left: 35%; margin-bottom: 15px;" />
 			<h3 class="center form-header">Đăng nhập hệ thống</h3>
-			<h4 class="center form-header">Hệ thống quản lý bán hàng</h4>
+			<h4 class="center form-header">Hệ thống quản lý bán sách</h4>
 			<form class="center " method="post" action="/btl_ltw/admin/login">
 				<div class="form-label">
 					<img class="form-label-icon" src="resources/img/usericon.png">
