@@ -38,7 +38,9 @@ input {
 	width: 94%;
 }
 
-body, html, div {
+body,
+html,
+div {
 	font-family: sans-serif;
 	font-size: 20px;
 	padding: 0;
@@ -173,4 +175,22 @@ button {
 	background-color: white;
 	color: #271452;
 	transition: 0.5s;
+}
+
+.content-table {}
+
+.content-table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.content-table td,th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+.content-table tr:nth-child(even) {
+	background-color: #dddddd;
 }

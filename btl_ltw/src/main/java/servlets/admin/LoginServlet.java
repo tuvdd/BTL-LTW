@@ -3,9 +3,10 @@ package servlets.admin;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.UUID;
+
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -13,7 +14,7 @@ import services.impls.AdminService;
 import services.interfaces.IAdminService;
 
 @WebServlet({ "/admin/login", "/admin/login/" })
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends BaseServlet {
 	private IAdminService adminService;
 
 	public LoginServlet() {
@@ -23,11 +24,15 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 20;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doGet(req,resp);
+
 		if (ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin/home.jsp");
+			resp.sendRedirect("/btl_ltw/admin");
 			return;
 		}
-		resp.sendRedirect("/btl_ltw/admin/login.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/admin/login.jsp");
+		rd.forward(req, resp);
+		return;
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -1,36 +1,46 @@
 package servlets.admin;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Category;
+import services.impls.CategoryService;
+import services.interfaces.ICategoryService;
 
 @WebServlet({ "/admin/category", "/admin/category/" })
-public class CategoryServlet extends HttpServlet {
+public class CategoryServlet extends BaseServlet {
+    private ICategoryService categoryService;
+
+    public CategoryServlet() {
+        super();
+        categoryService = new CategoryService();
+    }
+
     private static final long serialVersionUID = 23;
+
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("category.jsp");
-    }
+    	super.doGet(req, resp);
+    	
+        List<Category> listCategories;
+        try {
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doPost(req, resp);
+        	listCategories = categoryService.Gets();
+            req.setAttribute("listCategories", listCategories);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            req.getRequestDispatcher("/admin/category.jsp").forward(req, resp);
+        }
     }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doPut(req, resp);
-    }
-    
 }
