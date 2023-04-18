@@ -24,10 +24,10 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("admin/home.jsp");
+			resp.sendRedirect("/btl_ltw/admin/home.jsp");
 			return;
 		}
-		resp.sendRedirect("login.jsp");
+		resp.sendRedirect("/btl_ltw/admin/login.jsp");
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

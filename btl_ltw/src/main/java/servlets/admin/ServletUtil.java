@@ -8,9 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class ServletUtil {
-    public static boolean IsSessionExsited(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HttpSession session = req.getSession();
-        UUID uuid = (UUID) session.getAttribute("id");
-        return (uuid != null && !uuid.toString().equals(""));
-    }
+	public static String[] SesstionAttributes = { "id" };
+
+	public static boolean IsSessionExsited(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		HttpSession session = req.getSession();
+		UUID uuid = (UUID) session.getAttribute("id");
+		return (uuid != null && !uuid.toString().equals(""));
+	}
 }

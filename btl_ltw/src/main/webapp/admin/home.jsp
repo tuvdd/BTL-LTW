@@ -99,7 +99,7 @@
 				<button class="left-sidebar-item-button"
 					onclick="redirect('/btl_ltw/admin/logout')">
 					<img class="left-sidebar-item-button-img"
-						src="resources/img/email.png" />
+						src="resources/img/logout.png" />
 					<p class="left-sidebar-item-button-text">Đăng xuất</p>
 					<img class="left-sidebar-item-button-img"
 						src="resources/img/next.png" style="float: right;" />

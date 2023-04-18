@@ -17,7 +17,7 @@ public class HomeServlet extends HttpServlet {
 			resp.sendRedirect("/btl_ltw/admin/login");
 			return;
 		};
-		resp.sendRedirect("admin/home.jsp");
+		resp.sendRedirect("/btl_ltw/admin/home.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
