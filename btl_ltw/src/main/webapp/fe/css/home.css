@@ -181,6 +181,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     margin-top: 30px;
+    padding-inline-start: 0px;
 }
 
 .list-products .item {
