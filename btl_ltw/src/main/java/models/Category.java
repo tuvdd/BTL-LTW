@@ -6,6 +6,30 @@ public class Category extends Table {
 	public String name;
 	public boolean status;
 
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 	public Category() {
 		super();
 		TableName = "categories";
@@ -17,10 +41,9 @@ public class Category extends Table {
 		this.status = status;
 	}
 
-    public static String GetTableName() {
+	public static String GetTableName() {
 		return "categories";
 	}
-    
 
 	@Override
 	protected String Get_Insert_Fields_SQL() {
@@ -36,4 +59,5 @@ public class Category extends Table {
 	protected String Get_Update_Values_SQL() {
 		return "name = '" + name + "', status = " + status + "";
 	}
+
 };
