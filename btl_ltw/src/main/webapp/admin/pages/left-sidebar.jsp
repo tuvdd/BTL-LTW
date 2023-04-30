@@ -3,8 +3,6 @@
 	pageEncoding="UTF-8"%>
 <div id="left-sidebar">
 	<h1 class="left-sidebar-item">Hệ thống quản lý bán sách</h1>
-	<img class="left-sidebar-img"
-		src="/btl_ltw/admin/resources/img/logo.png" />
 	<script type="text/javascript">
 		function redirect(url) {
 			window.location.href = url;
