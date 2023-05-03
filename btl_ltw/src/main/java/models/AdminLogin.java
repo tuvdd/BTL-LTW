@@ -3,6 +3,8 @@ package models;
 
 import java.util.UUID;
 
+import utils.JsonUtils;
+
 public class AdminLogin extends Table {
     public String username;
     public String password;
@@ -36,4 +38,11 @@ public class AdminLogin extends Table {
     protected String Get_Update_Values_SQL() {
         return "username = '" + username + "', password = '" + password + "'";
     }
+    public String To_Json_String() {
+		return "{" +
+				JsonUtils.PropToJson("id", id, true) +
+				JsonUtils.PropToJson("username", username, true) +
+				JsonUtils.PropToJson("password", password, true) +
+				"}";
+	}
 }

@@ -2,6 +2,8 @@ package models;
 
 import java.util.UUID;
 
+import utils.JsonUtils;
+
 public class OrderDetail extends Table {
 
     public UUID id;
@@ -49,5 +51,13 @@ public class OrderDetail extends Table {
         this.quantity = quantity;
         this.price = price;
     }
-
+    public String To_Json_String() {
+		return "{" +
+				JsonUtils.PropToJson("id", id, true) +
+				JsonUtils.PropToJson("order_id", order_id, true) +
+				JsonUtils.PropToJson("book_id", book_id, true) +
+                JsonUtils.PropToJson("quantity", quantity, false) +
+				JsonUtils.PropToJson("price", price, false) +
+				"}";
+	}
 }

@@ -2,6 +2,8 @@ package models;
 
 import java.util.UUID;
 
+import utils.JsonUtils;
+
 public class Category extends Table {
 	public String name;
 	public boolean status;
@@ -58,6 +60,13 @@ public class Category extends Table {
 	@Override
 	protected String Get_Update_Values_SQL() {
 		return "name = '" + name + "', status = " + status + "";
+	}
+	public String To_Json_String() {
+		return "{" +
+				JsonUtils.PropToJson("id", id, true) +
+				JsonUtils.PropToJson("name", name, true) +
+				JsonUtils.PropToJson("status", status, false) +
+				"}";
 	}
 
 };

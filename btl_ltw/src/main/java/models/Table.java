@@ -25,4 +25,6 @@ public abstract class Table {
     protected abstract String Get_Insert_Values_SQL();
 
     protected abstract String Get_Update_Values_SQL();
+
+    public abstract String To_Json_String();
 }
