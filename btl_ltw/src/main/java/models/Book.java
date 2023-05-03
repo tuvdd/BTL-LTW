@@ -1,6 +1,9 @@
 package models;
+
 import java.sql.Timestamp;
 import java.util.UUID;
+
+import utils.JsonUtils;
 
 public class Book extends Table {
     public String name;
@@ -24,9 +27,8 @@ public class Book extends Table {
     }
 
     public static String GetTableName() {
-		return "books";
-	}
-    
+        return "books";
+    }
 
     public void set(UUID id, String name, String author, int release_year, UUID category_id, double price,
             double promote_price,
@@ -70,5 +72,25 @@ public class Book extends Table {
                 + sub_description + "', status = " + status + ", create_time = '" + create_time + "', create_by = '"
                 + create_by + "', last_update_time = '" + last_update_time + "', last_update_by = '" + last_update_by
                 + "'";
+    }
+
+    public String To_Json_String() {
+        return "{" +
+                JsonUtils.PropToJson("id", id, true) +
+                JsonUtils.PropToJson("name", name, true) +
+                JsonUtils.PropToJson("author", author, true) + 
+                JsonUtils.PropToJson("release_year", release_year, false) +
+                JsonUtils.PropToJson("category_id", category_id, true) + 
+                JsonUtils.PropToJson("price", price, false) +
+                JsonUtils.PropToJson("promote_price", promote_price, false) +
+                JsonUtils.PropToJson("quantity", quantity, true) +
+                JsonUtils.PropToJson("description", description, true) +
+                JsonUtils.PropToJson("sub_description", sub_description, true) + 
+                JsonUtils.PropToJson("status", status, false) +
+                JsonUtils.PropToJson("create_time", create_time, true) + 
+                JsonUtils.PropToJson("create_by", create_by, true) +
+                JsonUtils.PropToJson("last_update_time", last_update_time, true) + 
+                JsonUtils.PropToJson("last_update_by", last_update_by, true) +
+                "}";
     }
 }
