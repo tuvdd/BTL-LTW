@@ -1,11 +1,10 @@
-<%@ page
-	import="java.util.*, servlets.admin.ServletUtil, models.*"
-	language="java" 
-	contentType="text/html; charset=UTF-8"
+<%@ page import="java.util.*, servlets.admin.ServletUtil, models.*"
+	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String pageUri = "/category";
+String pageName = "pages/" + (String) request.getAttribute("pageName");
 
 if (request.getAttribute("isAccessFromServlet") == null) {
 	response.sendRedirect("/btl_ltw/admin" + pageUri);
@@ -29,25 +28,9 @@ if (!ServletUtil.IsSessionExsited(request, response)) {
 
 <body>
 	<div id="flex-box">
-		<jsp:include page="pages/left-sidebar.jsp"/>
+		<jsp:include page="pages/left-sidebar.jsp" />
 		<div id="content">
-			<%
-			List<Category> listCategories = (List<Category>) request.getAttribute("listCategories");
-			%>
-			<table class="content-table">
-				<tr>
-					<th>ID</th>
-					<th>Tên</th>
-					<th>Trạng thái</th>
-				</tr>
-				<c:forEach var="category" items="${listCategories}">
-					<tr>
-						<td>${category.getId()}</td>
-						<td>${category.getName()}</td>
-						<td>${category.getStatus()}</td>
-					</tr>
-				</c:forEach>
-			</table>
+			<jsp:include page="<%=pageName%>" />
 		</div>
 	</div>
 </body>

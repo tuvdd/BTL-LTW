@@ -23,6 +23,5 @@ public class BaseServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("isAccessFromServlet", isAccessFromServlet);
     }
-
     
 }

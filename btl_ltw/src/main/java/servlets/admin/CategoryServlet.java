@@ -40,7 +40,8 @@ public class CategoryServlet extends BaseServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            req.getRequestDispatcher("/admin/category.jsp").forward(req, resp);
+        	req.setAttribute("pageName", "category.jsp");
+            req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
         }
     }
 }

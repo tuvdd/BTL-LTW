@@ -176,7 +176,9 @@ button {
 	transition: 0.5s;
 }
 
-.content-table {}
+#title-page{
+	margin: 0;
+}
 
 .content-table {
 	font-family: arial, sans-serif;
