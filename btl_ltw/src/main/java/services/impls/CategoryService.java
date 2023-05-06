@@ -49,4 +49,9 @@ public class CategoryService implements ICategoryService {
         jsonResponse += "]";
         return jsonResponse;
     }
+
+    @Override
+    public int Add(Category category) throws SQLException {
+        return categoryRepo.Add(category);
+    }
 }

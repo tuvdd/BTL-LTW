@@ -10,4 +10,5 @@ public interface ICategoryService extends IBaseService<Category>{
     Category Get(UUID id)throws SQLException;
     List<Category> Gets()throws SQLException;
     List<Category> Gets(int page, int size) throws SQLException;
+    int Add(Category category)throws SQLException;
 }

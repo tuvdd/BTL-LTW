@@ -6,6 +6,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
     List<Category> listCategories = (List<Category>) request.getAttribute("listCategories");
+    String message = (String) request.getSession().getAttribute("message");
+    String messageType = (String) request.getSession().getAttribute("messageType");
+    request.getSession().removeAttribute("message");
+    request.getSession().removeAttribute("messageType");
 %>
 <h1 id="title-page">Danh Mục Sản Phẩm</h1>
 <table class="content-table">
@@ -22,3 +26,12 @@
         </tr>
     </c:forEach>
 </table>
+<p class="alert-<%=messageType%>"><%=(message!=null?message:"")%></p>
+<button id="add-new-button">Thêm mới</button>
+<div id="add-new-modal">
+    <form method="post" action="/btl_ltw/admin/category" id="add-new-form">
+        <input name="name" placeholder="Nhập tên danh mục"/>
+        <button type="submit">Thêm</button>
+    </form>
+</div>
+<script src="/btl_ltw/admin/resources/js/main.js" type="text/javascript"></script>
