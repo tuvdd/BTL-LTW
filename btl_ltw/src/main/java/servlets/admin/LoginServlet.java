@@ -10,15 +10,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import services.impls.AdminService;
-import services.interfaces.IAdminService;
+import repositories.impls.AdminRepo;
+import repositories.interfaces.IAdminLoginRepo;
+import repositories.interfaces.IAdminRepo;
 
 @WebServlet({ "/admin/login", "/admin/login/" })
 public class LoginServlet extends BaseServlet {
-	private IAdminService adminService;
+	private IAdminRepo adminRepo;
+	private IAdminLoginRepo adminLoginRepo;
 
 	public LoginServlet() {
-		adminService = new AdminService();
+		adminRepo = new AdminRepo();
 	}
 
 	private static final long serialVersionUID = 20;
@@ -45,7 +47,7 @@ public class LoginServlet extends BaseServlet {
 		}
 
 		try {
-			UUID id = adminService.Login(username, password);
+			UUID id = adminLoginRepo.GetIdByUsernamePassword(username, password);
 			if (id == null) {
 				req.getSession().setAttribute("error", "Tên tài khoản hoặc mật khẩu không đúng");
 				resp.sendRedirect("/btl_ltw/admin/login");

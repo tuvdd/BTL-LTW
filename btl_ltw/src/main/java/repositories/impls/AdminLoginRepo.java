@@ -136,4 +136,23 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
         return response;
     }
 
+    @Override
+    public UUID GetIdByUsernamePassword(String username, String password) throws SQLException {
+        UUID id = null;
+        try {
+            CreateConnection();
+            String sql = "SELECT id FROM admin_logins WHERE username ='"+username+"' AND password = '"+password+"';";
+            statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                id = UUID.fromString(resultSet.getString("id"));
+            }
+
+        } catch (Exception ex) {
+        } finally {
+            connection.close();
+            statement.close();
+        }
+        return id;
+    }
 }

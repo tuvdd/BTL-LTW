@@ -9,17 +9,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Category;
-import services.impls.CategoryService;
-import services.interfaces.ICategoryService;
+import repositories.impls.CategoryRepo;
+import repositories.interfaces.ICategoryRepo;
 
 @WebServlet({ "/admin/category", "/admin/category/" })
 public class CategoryServlet extends BaseServlet {
-	private ICategoryService categoryService;
+    private ICategoryRepo categoryRepo;
 
-	public CategoryServlet() {
-		super();
-		categoryService = new CategoryService();
-	}
+    public CategoryServlet() {
+        super();
+        categoryRepo = new CategoryRepo();
+    }
 
 	private static final long serialVersionUID = 23;
 
@@ -35,7 +35,7 @@ public class CategoryServlet extends BaseServlet {
 		List<Category> listCategories;
 		try {
 
-			listCategories = categoryService.Gets();
+			listCategories = categoryRepo.Gets("","");
 			req.setAttribute("listCategories", listCategories);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,7 +59,7 @@ public class CategoryServlet extends BaseServlet {
 		category.setStatus(true);
 
 		try {
-			int res = categoryService.Add(category);
+			int res = categoryRepo.Add(category);
 			if (res == 1) {
 				req.getSession().setAttribute("message", "Thêm mới thành công!");
 				req.getSession().setAttribute("messageType", "success");
