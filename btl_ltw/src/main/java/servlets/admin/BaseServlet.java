@@ -1,7 +1,6 @@
 package servlets.admin;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
