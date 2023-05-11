@@ -2,6 +2,8 @@ package models;
 
 import java.util.UUID;
 
+import utils.JsonUtils;
+
 public class Admin extends Table {
 	public String name;
 	public String email;
@@ -39,4 +41,29 @@ public class Admin extends Table {
 	protected String Get_Update_Values_SQL() {
 		return "name = '" + name + "', email = '" + email + "', phonenum = '" + phonenum + "', cccd = '" + cccd + "'";
 	}
+
+	@Override
+	public String To_Json_String() {
+		return "{" +
+				JsonUtils.PropToJson("id", id, true) +
+				JsonUtils.PropToJson("name", name, true) +
+				JsonUtils.PropToJson("email", email, true) +
+				JsonUtils.PropToJson("phonenum", phonenum, true) +
+				JsonUtils.PropToJson("cccd", cccd, true) +
+				"}";
+	}
+
+	// public static Admin JsonToObj(String json){
+	// 	UUID id;
+	// 	String name;
+	// 	String email;
+	// 	String phonenum;
+	// 	String cccd;
+
+	// 	if(json.charAt(0) !='{' && json.charAt(json.length()-1) !='}' )
+	// 	return null;
+	// 	json.substring(1, json.length()-1);
+
+		
+	// }
 };

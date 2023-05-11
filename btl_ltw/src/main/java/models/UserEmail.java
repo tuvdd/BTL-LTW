@@ -2,6 +2,8 @@ package models;
 
 import java.util.UUID;
 
+import utils.JsonUtils;
+
 public class UserEmail extends Table {
     public String email;
 
@@ -33,5 +35,10 @@ public class UserEmail extends Table {
     @Override
     protected String Get_Update_Values_SQL() {
         return "id = '" + id + "', email = '" + email + "'";
-    }
+    }public String To_Json_String() {
+		return "{" +
+				JsonUtils.PropToJson("id", id, true) +
+				JsonUtils.PropToJson("email", email, true) +
+				"}";
+	}
 };

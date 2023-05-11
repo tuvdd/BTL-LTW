@@ -1,86 +1,197 @@
-.container{
-    padding-left:auto ;
-    padding-right:auto ;
-}
-._20pc{
-    width: 20%;
-}
-._40pc{
-    width: 40%;
+.container {
+	padding-left: auto;
+	padding-right: auto;
 }
 
-._80pc{
-    width: 80%;
-}
-.center{
-    margin-left: auto;
-    margin-right: auto;
-}
-.login-panel{
-    background-color: white;
-    height: 470px;
-    width: 350px;
-    border-radius: 10px;
-    padding:30px;
-    margin-top: 30px;
-}
-input{
-    border: 2px solid #355b9a;
-    border-radius: 10px;
-    margin: 10px 0 ;
-    height: 30px;
-    padding: 5px 10px;
-    
-    width: 94%;
+._20pc {
+	width: 20%;
 }
 
-body,html,div{
-    font-family: sans-serif;
-    font-size: 20px;
-    padding: 0;
-    margin: 0;
-    
-}
-body{
-    background: linear-gradient(to right, #a3c6fc, #d2c6fc);
+._40pc {
+	width: 40%;
 }
 
-form{
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-}
-button{
-    background-color: none;
-    border: none;
-}
-.btn1{
-    background: linear-gradient(to right, #4d7fca, #8a70eb);
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-    font-size: 20px;
-    width: 200px;
-}
-.form-header{
-    color: #2f41bf;
-    text-align: center;
-    margin: 0;
-    margin-top: 10px;
-}
-.form-label-icon{
-    display: inline;
-    height: 15px;
-    vertical-align: middle;
-}
-.form-label-text{
-    display: inline;
-    vertical-align: middle;
-    font-size: 20px;
-    color: #2f41bf;
-}
-.right{
-    margin-right: 0;
-    margin-left: 44%;
+._80pc {
+	width: 80%;
 }
 
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.login-panel {
+	background-color: white;
+	height: 470px;
+	width: 350px;
+	border-radius: 10px;
+	padding: 30px;
+	margin-top: 30px;
+}
+
+input {
+	border: 2px solid #355b9a;
+	border-radius: 10px;
+	margin: 10px 0;
+	height: 30px;
+	padding: 5px 10px;
+	width: 94%;
+}
+
+body,
+html,
+div {
+	font-family: sans-serif;
+	font-size: 20px;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	background: linear-gradient(to right, #a3c6fc, #d2c6fc);
+}
+
+form {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+}
+
+button {
+	background-color: none;
+	border: none;
+}
+
+.btn1 {
+	background: linear-gradient(to right, #4d7fca, #8a70eb);
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+	font-size: 20px;
+	width: 200px;
+}
+
+.form-header {
+	color: #2f41bf;
+	text-align: center;
+	margin: 0;
+	margin-top: 10px;
+}
+
+.form-label-icon {
+	display: inline;
+	height: 15px;
+	vertical-align: middle;
+}
+
+.form-label-text {
+	display: inline;
+	vertical-align: middle;
+	font-size: 20px;
+	color: #2f41bf;
+}
+
+.right {
+	margin-right: 0;
+	margin-left: 44%;
+}
+
+#flex-box {
+	display: flex;
+	width: auto;
+	height: 95%;
+	padding: 20px;
+	height: 95%;
+}
+
+#left-sidebar {
+	padding: 20px;
+	background: #271452;
+	margin-right: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 2px 2px 0px #271452;
+	border: 1px solid #271452;
+}
+
+#left-sidebar h1 {
+	color: white;
+}
+
+.left-sidebar-img {
+	width: 100px;
+	height: 100px;
+}
+
+#content {
+	flex-grow: 1;
+	background-color: white;
+	padding: 20px;
+	margin-right: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 2px 5px -2px #2b0b50;
+	border: 1px solid white;
+}
+
+.left-sidebar-item {
+	display: block;
+	margin: 10px 0;
+	font-size: 20px;
+	width: 100%;
+	text-align: center;
+}
+
+.left-sidebar-item-button {
+	border-radius: 5px 10px 10px 5px;
+	padding: 15px 10px;
+	background: none;
+	color: white;
+	transition: 0.5s;
+	border: 1px solid #271452;
+	font-size: 17;
+	text-align: left;
+	display: block;
+	width: 100%
+}
+
+.left-sidebar-item-button:hover {
+	border: 1px solid white;
+	transition: 0.5s;
+}
+
+.left-sidebar-item-button-img {
+	height: 15;
+	width: 15;
+	display: inline-block;
+}
+
+.left-sidebar-item-button-text {
+	font-size: 17;
+	display: inline-block;
+	margin: 0;
+}
+
+.left-sidebar-item-button-selected {
+	background-color: white;
+	color: #271452;
+	transition: 0.5s;
+}
+
+#title-page{
+	margin: 0;
+}
+
+.content-table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.content-table td,th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+.content-table tr:nth-child(even) {
+	background-color: #dddddd;
+}
