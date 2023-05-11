@@ -6,15 +6,16 @@
 String pageUri = "/category";
 String pageName = "pages/" + (String) request.getAttribute("pageName");
 
-if (request.getAttribute("isAccessFromServlet") == null) {
-	response.sendRedirect("/btl_ltw/admin" + pageUri);
-	return;
-}
-
-if (!ServletUtil.IsSessionExsited(request, response)) {
-	response.sendRedirect("/btl_ltw/admin/login");
-	return;
-}
+//if (request.getAttribute("isAccessFromServlet") == null) {
+//	response.sendRedirect("/btl_ltw/admin" + pageUri);
+//	return;
+//}
+//
+//if (!ServletUtil.IsSessionExsited(request, response)) {
+//	response.sendRedirect("/btl_ltw/admin/login");
+//	return;
+//}
+	response.sendRedirect("/btl_ltw/client/home");
 %>
 <html lang="en">
 
