@@ -44,7 +44,19 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
     }
 
     @Override
+    public AdminLogin Get(String username, String password) throws SQLException {
+        String whereSQL = "WHERE username = '" + username + "' AND password = '" + password + "'";
+        List<AdminLogin> list = Gets(whereSQL, "");
+        if (list != null && list.size() > 0 && list.get(0) != null) {
+            return list.get(0);
+        } else
+            return null;
+    }
+
+    @Override
     public List<AdminLogin> Gets(String WhereSQL, String PaginSQL) throws SQLException {
+        if (PaginSQL == null)
+            PaginSQL = "";
         List<AdminLogin> response = null;
         try {
             CreateConnection();
@@ -53,7 +65,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<AdminLogin>();
             while (resultSet.next()) {
-                var admin_login = setObjectFromResultSet(resultSet);
+                AdminLogin admin_login = setObjectFromResultSet(resultSet);
 
                 response.add(admin_login);
             }
@@ -116,11 +128,31 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
 
     @Override
     protected AdminLogin setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new AdminLogin();
+        AdminLogin response = new AdminLogin();
         response.set(UUID.fromString(
                 resultSet.getString("id")),
                 resultSet.getString("username"),
                 resultSet.getString("password"));
         return response;
+    }
+
+    @Override
+    public UUID GetIdByUsernamePassword(String username, String password) throws SQLException {
+        UUID id = null;
+        try {
+            CreateConnection();
+            String sql = "SELECT id FROM admin_logins WHERE username ='"+username+"' AND password = '"+password+"';";
+            statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                id = UUID.fromString(resultSet.getString("id"));
+            }
+
+        } catch (Exception ex) {
+        } finally {
+            connection.close();
+            statement.close();
+        }
+        return id;
     }
 }

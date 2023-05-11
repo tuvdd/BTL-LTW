@@ -2,6 +2,8 @@ package models;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import utils.JsonUtils;
+
 public class Order extends Table {
     public Timestamp created_time;
     public int status;
@@ -51,5 +53,14 @@ public class Order extends Table {
         this.phonenum = phonenum;
         this.buyer_name = buyer_name;
     }
-
+    public String To_Json_String() {
+		return "{" +
+				JsonUtils.PropToJson("id", id, true) +
+				JsonUtils.PropToJson("created_time", created_time, true) +
+				JsonUtils.PropToJson("status", status, false) +
+                JsonUtils.PropToJson("address", address, true) +
+				JsonUtils.PropToJson("phonenum", phonenum, true) +
+                JsonUtils.PropToJson("buyer_name", buyer_name, true) +
+				"}";
+	}
 }

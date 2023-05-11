@@ -1,6 +1,8 @@
 package models;
 import java.util.UUID;
 
+import utils.JsonUtils;
+
 public class Tag extends Table {
     public String tag_name;
 
@@ -32,5 +34,10 @@ public class Tag extends Table {
     @Override
     protected String Get_Update_Values_SQL() {
         return "tag_name = '" + tag_name + "'";
-    }
+    }public String To_Json_String() {
+		return "{" +
+				JsonUtils.PropToJson("id", id, true) +
+				JsonUtils.PropToJson("tag_name", tag_name, true) +
+				"}";
+	}
 }

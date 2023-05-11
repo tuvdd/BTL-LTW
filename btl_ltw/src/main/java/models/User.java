@@ -3,6 +3,8 @@ package models;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import utils.JsonUtils;
+
 public class User extends Table {
     public String name;
     public String phonenum;
@@ -50,5 +52,16 @@ public class User extends Table {
         return "name = '" + name + "', phonenum = '" + phonenum + "', address = '" + address + "', avatar_id = '"
                 + avatar_id + "', status = '" + status + "', created_time = '" + created_time
                 + "', last_update_time = '" + last_update_time + "'";
-    }
+    }public String To_Json_String() {
+		return "{" +
+				JsonUtils.PropToJson("id", id, true) +
+				JsonUtils.PropToJson("name", name, true) +
+				JsonUtils.PropToJson("phonenum", phonenum, true) +
+                JsonUtils.PropToJson("address", address, true) +
+				JsonUtils.PropToJson("avatar_id", avatar_id, true) +
+                JsonUtils.PropToJson("status", status, false) +
+				JsonUtils.PropToJson("created_time", created_time, true) +
+                JsonUtils.PropToJson("last_update_time", last_update_time, true) +
+				"}";
+	}
 }

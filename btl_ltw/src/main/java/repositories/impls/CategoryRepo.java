@@ -1,4 +1,5 @@
 package repositories.impls;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,12 +21,13 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
     @Override
     public Category Get(UUID id) throws SQLException {
         Category response = null;
-        try {LogicalObject obj1 = new LogicalObject("id", LogicalObjectType.FIELD);
-        LogicalObject obj2 = new LogicalObject(id.toString(), LogicalObjectType.STRING);
-        LogicalClause logicalClause = new LogicalClause(obj1, "=", obj2);
-        LogicalClause[] logicalClauseArray = { logicalClause };
+        try {
+            LogicalObject obj1 = new LogicalObject("id", LogicalObjectType.FIELD);
+            LogicalObject obj2 = new LogicalObject(id.toString(), LogicalObjectType.STRING);
+            LogicalClause logicalClause = new LogicalClause(obj1, "=", obj2);
+            LogicalClause[] logicalClauseArray = { logicalClause };
             CreateConnection();
-            String sql = SQLInjection.SELECTSQL(null, "categories")+ SQLInjection.WHERESQL(logicalClauseArray)
+            String sql = SQLInjection.SELECTSQL(null, "categories") + SQLInjection.WHERESQL(logicalClauseArray)
                     + " ;";
             statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
@@ -34,7 +36,7 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
             }
 
         } catch (Exception ex) {
-        } finally{
+        } finally {
             connection.close();
             statement.close();
         }
@@ -51,12 +53,12 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
             ResultSet resultSet = statement.executeQuery();
             response = new ArrayList<Category>();
             while (resultSet.next()) {
-                var category = setObjectFromResultSet(resultSet);
+                Category category = setObjectFromResultSet(resultSet);
                 response.add(category);
             }
 
         } catch (Exception ex) {
-        } finally{
+        } finally {
             connection.close();
             statement.close();
         }
@@ -67,11 +69,12 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
     public int Add(Category record) throws SQLException {
         int response = 0;
         try {
-            sql = record.GetInsertSQL(); CreateConnection();
+            sql = record.GetInsertSQL();
+            CreateConnection();
             statement = connection.prepareStatement(sql);
             response = statement.executeUpdate();
         } catch (Exception ex) {
-        } finally{
+        } finally {
             connection.close();
             statement.close();
         }
@@ -82,11 +85,12 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
     public int Update(Category record) throws SQLException {
         int response = 0;
         try {
-            sql = record.GetUpdateSQL(); CreateConnection();
+            sql = record.GetUpdateSQL();
+            CreateConnection();
             statement = connection.prepareStatement(sql);
             response = statement.executeUpdate();
         } catch (Exception ex) {
-        } finally{
+        } finally {
             connection.close();
             statement.close();
         }
@@ -97,11 +101,12 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
     public int Delete(Category record) throws SQLException {
         int response = 0;
         try {
-            sql = record.GetDeteleSQL(); CreateConnection();
+            sql = record.GetDeteleSQL();
+            CreateConnection();
             statement = connection.prepareStatement(sql);
             response = statement.executeUpdate();
         } catch (Exception ex) {
-        } finally{
+        } finally {
             connection.close();
             statement.close();
         }
@@ -110,10 +115,9 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
 
     @Override
     protected Category setObjectFromResultSet(ResultSet resultSet) throws SQLException {
-        var response = new Category();
+        Category response = new Category();
         response.set(UUID.fromString(resultSet.getString("id")), resultSet.getString("name"),
                 resultSet.getBoolean(("status")));
         return response;
     }
-
 }
