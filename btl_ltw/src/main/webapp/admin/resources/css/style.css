@@ -38,7 +38,9 @@ input {
 	width: 94%;
 }
 
-body, html, div {
+body,
+html,
+div {
 	font-family: sans-serif;
 	font-size: 20px;
 	padding: 0;
@@ -184,7 +186,8 @@ button {
 	width: 100%;
 }
 
-.content-table td, th {
+.content-table td,
+th {
 	border: 1px solid #dddddd;
 	text-align: left;
 	padding: 8px;
@@ -194,10 +197,13 @@ button {
 	background-color: #dddddd;
 }
 
-.modal{
-	display: none; /* mặc định được ẩn đi */
-	position: fixed; /* vị trí cố định */
-	z-index: 1; /* Ưu tiên hiển thị trên cùng */
+.modal {
+	display: none;
+	/* mặc định được ẩn đi */
+	position: fixed;
+	/* vị trí cố định */
+	z-index: 1;
+	/* Ưu tiên hiển thị trên cùng */
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -205,7 +211,38 @@ button {
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.4);
 	padding: 50px;
-	
+}
+
+.modal form {
+	background: white;
+	padding: 2%;
+	margin: 10% 20%;
+}
+
+.modal form h3 {
+	margin: 0;
+}
+
+.form-data-text p {
+	display: inline;
+}
+
+.form-data-text input {
+	width: 200px;
+}
+
+.form-data-checkbox {
+	margin: 10px 0px;
+}
+
+.form-data-checkbox p {
+	display: inline;
+	vertical-align: super;
+}
+
+.form-data-checkbox input {
+	width: 20px;
+	margin: 0;
 }
 
 .alert-success {

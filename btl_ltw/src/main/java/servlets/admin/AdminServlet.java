@@ -8,18 +8,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.User;
-import models.UserLogin;
-import repositories.impls.UserRepo;
-import repositories.interfaces.IUserRepo;
+import models.Admin;
+import models.AdminLogin;
+import models.dtos.AdminFullDetail;
+import repositories.impls.AdminRepo;
+import repositories.interfaces.IAdminRepo;
 
-@WebServlet({ "/admin/user", "/admin/user/" })
-public class UserServlet extends BaseServlet {
-    private IUserRepo userRepo;
+@WebServlet({ "/admin/admin", "/admin/admin/" })
+public class AdminServlet extends BaseServlet {
+    private IAdminRepo adminRepo;
 
-    public UserServlet() {
+    public AdminServlet() {
         super();
-        userRepo = new UserRepo();
+        adminRepo = new AdminRepo();
     }
 
     private static final long serialVersionUID = 22;
@@ -29,20 +30,20 @@ public class UserServlet extends BaseServlet {
         super.doGet(req, resp);
 
         if (!ServletUtil.IsSessionExsited(req, resp)) {
-            resp.sendRedirect("/btl_ltw/user/login");
+            resp.sendRedirect("/btl_ltw/admin/login");
             return;
         }
 
-        List<User> listCategories;
+        List<AdminFullDetail> listAdminFullDetails;
         try {
 
-            listCategories = userRepo.Gets("", "");
-            req.setAttribute("listCategories", listCategories);
+            listAdminFullDetails = adminRepo.GetsFullDetail("");
+            req.setAttribute("listAdminFullDetails", listAdminFullDetails);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            req.setAttribute("pageName", "user.jsp");
-            req.getRequestDispatcher("/user/index.jsp").forward(req, resp);
+            req.setAttribute("pageName", "admin.jsp");
+            req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
         }
     }
 
@@ -60,11 +61,12 @@ public class UserServlet extends BaseServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        User user = new User();
-        UserLogin userLogin = new UserLogin();
-        userLogin.set(null, username, password);
+        Admin admin = new Admin();
+        AdminLogin adminLogin = new AdminLogin();
+        admin.set(null, name, email, phonenum, cccd);
+        adminLogin.set(null, username, password);
         try {
-            int res = userRepo.Add(user);
+            int res = adminRepo.Register(admin, adminLogin);
             if (res == 2) {
                 req.getSession().setAttribute("message", "Thêm mới thành công!");
                 req.getSession().setAttribute("messageType", "success");
@@ -76,7 +78,7 @@ public class UserServlet extends BaseServlet {
             req.getSession().setAttribute("message", e.getMessage());
             req.getSession().setAttribute("messageType", "error");
         } finally {
-            resp.sendRedirect("/btl_ltw/admin/user");
+            resp.sendRedirect("/btl_ltw/admin/admin");
         }
     }
 

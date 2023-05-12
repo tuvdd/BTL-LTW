@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.UUID;
 
 import models.Book;
+import models.dtos.BookFullDetail;
+import repositories.interfaces.IBookImageRepo;
 import repositories.interfaces.IBookRepo;
+import repositories.interfaces.ITagRepo;
 import repositories.utils.SQLInjection;
 import repositories.utils.models.LogicalClause;
 import repositories.utils.models.LogicalObject;
@@ -209,7 +212,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
                 "WHERE tag_id IN (" +
                 "SELECT id FROM tags WHERE tag_name LIKE '"
                 + tagString + "')); ";
-                
+
         List<Book> response = null;
         try {
             CreateConnection();
@@ -229,6 +232,53 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             statement.close();
         }
         return response;
+    }
+
+    @Override
+    public List<BookFullDetail> GetsFullDetail(String PaginSQL) throws SQLException {
+        List<BookFullDetail> response = null;
+        try {
+            String sql1 = ""
+                    + "SELECT  b.id id, b.name name, b.author author, b.release_year release_year, b.category_id category_id, c.name category_name, b.price price, b.promote_price promote_price, b.quantity quantity, b.description description, b.sub_description sub_description, b.status status, b.create_time create_time, b.create_by create_by, b.last_update_time last_update_time, b.last_update_by last_update_by "
+                    + "FROM books b, categories c "
+                    + "WHERE b.category_id = c.id "
+                    + PaginSQL
+                    + " ;";
+            statement = connection.prepareStatement(sql1);
+            ResultSet rs = statement.executeQuery();
+            response = new ArrayList<>();
+            ITagRepo tr = new TagRepo();
+            IBookImageRepo bir = new BookImageRepo();
+            while (rs.next()) {
+                BookFullDetail bfd = new BookFullDetail();
+                bfd.id = UUID.fromString(rs.getString("id"));
+                bfd.name = rs.getString("name");
+                bfd.author = rs.getString("author");
+                bfd.release_year = rs.getInt("release_year");
+                bfd.category_id = UUID.fromString(rs.getString("category_id"));
+                bfd.category_name = rs.getString("category_name");
+                bfd.price = rs.getDouble("price");
+                bfd.promote_price = rs.getDouble("promote_price");
+                bfd.quantity = rs.getInt("quantity");
+                bfd.description = rs.getString("description");
+                bfd.sub_description = rs.getString("sub_description");
+                bfd.status = rs.getInt("status");
+                bfd.create_time = rs.getTimestamp("create_time");
+                bfd.create_by = UUID.fromString(rs.getString("create_by"));
+                bfd.last_update_time = rs.getTimestamp("last_update_time");
+                bfd.last_update_by = UUID.fromString(rs.getString("last_update_by"));
+                bfd.listImages = bir.GetListBookImageByBookId(bfd.id);
+                bfd.listTags = tr.GetsByBookId(bfd.id);
+
+                response.add(bfd);
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        } finally {
+            connection.close();
+            statement.close();
+        }
     }
 
 }
