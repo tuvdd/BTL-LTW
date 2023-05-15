@@ -21,59 +21,33 @@ public class EmailServlet extends BaseServlet {
         emailRepo = new ReceivedNewsEmailRepo();
     }
 
-    private static final long serialVersionUID = 22;
+	private static final long serialVersionUID = 23;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doGet(req, resp);
 
-        if (!ServletUtil.IsSessionExsited(req, resp)) {
-            resp.sendRedirect("/btl_ltw/admin/login");
-            return;
-        }
+		if (!ServletUtil.IsSessionExsited(req, resp)) {
+			resp.sendRedirect("/btl_ltw/admin/login");
+			return;
+		}
 
-        List<ReceivedNewsEmail> listCategories;
-        try {
+		List<ReceivedNewsEmail> listEmails;
+		try {
 
-            listCategories = emailRepo.Gets("", "");
-            req.setAttribute("listCategories", listCategories);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            req.setAttribute("pageName", "email.jsp");
-            req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
-        }
-    }
+			listEmails = emailRepo.Gets("","");
+			req.setAttribute("listEmails", listEmails);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			req.setAttribute("pageName", "email.jsp");
+			req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
+		}
+	}
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        try {
-            int res = emailRepo.Add(null);
-            if (res == 2) {
-                req.getSession().setAttribute("message", "Thêm mới thành công!");
-                req.getSession().setAttribute("messageType", "success");
-            } else {
-                req.getSession().setAttribute("message", "Thêm mới không thành công!");
-                req.getSession().setAttribute("messageType", "error");
-            }
-        } catch (SQLException e) {
-            req.getSession().setAttribute("message", e.getMessage());
-            req.getSession().setAttribute("messageType", "error");
-        } finally {
-            resp.sendRedirect("/btl_ltw/admin/email");
-        }
-    }
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doPut(req, resp);
-    }
+	}
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
 }
-

@@ -66,14 +66,6 @@
 			<img class="left-sidebar-item-button-img"
 				src="/btl_ltw/admin/resources/img/next.png" style="float: right;" />
 		</button>
-		<button class="left-sidebar-item-button"
-			onclick="redirect('/btl_ltw/admin/email')">
-			<img class="left-sidebar-item-button-img"
-				src="/btl_ltw/admin/resources/img/email.png" />
-			<p class="left-sidebar-item-button-text">List Email nhận tin</p>
-			<img class="left-sidebar-item-button-img"
-				src="/btl_ltw/admin/resources/img/next.png" style="float: right;" />
-		</button>
 
 	</div>
 	<div class="left-sidebar-item" style="margin-top: 20px;">

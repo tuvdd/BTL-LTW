@@ -93,4 +93,116 @@ public class Book extends Table {
                 JsonUtils.PropToJson("last_update_by", last_update_by, true) +
                 "}";
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getRelease_year() {
+        return release_year;
+    }
+
+    public void setRelease_year(int release_year) {
+        this.release_year = release_year;
+    }
+
+    public UUID getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(UUID category_id) {
+        this.category_id = category_id;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getPromote_price() {
+        return promote_price;
+    }
+
+    public void setPromote_price(double promote_price) {
+        this.promote_price = promote_price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSub_description() {
+        return sub_description;
+    }
+
+    public void setSub_description(String sub_description) {
+        this.sub_description = sub_description;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Timestamp getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Timestamp create_time) {
+        this.create_time = create_time;
+    }
+
+    public UUID getCreate_by() {
+        return create_by;
+    }
+
+    public void setCreate_by(UUID create_by) {
+        this.create_by = create_by;
+    }
+
+    public Timestamp getLast_update_time() {
+        return last_update_time;
+    }
+
+    public void setLast_update_time(Timestamp last_update_time) {
+        this.last_update_time = last_update_time;
+    }
+
+    public UUID getLast_update_by() {
+        return last_update_by;
+    }
+
+    public void setLast_update_by(UUID last_update_by) {
+        this.last_update_by = last_update_by;
+    }
 }

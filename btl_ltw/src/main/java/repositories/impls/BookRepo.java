@@ -279,6 +279,8 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             connection.close();
             statement.close();
         }
+
+        return response;
     }
 
 }

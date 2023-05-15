@@ -33,10 +33,10 @@ public class BookServlet extends BaseServlet {
             return;
         }
 
-        List<BookFullDetail> listBookFullDetails;
+        List<Book> listBooks;
         try {
-            listBookFullDetails = bookRepo.GetsFullDetail("", "");
-            req.setAttribute("listBookFullDetails", listBookFullDetails);
+            listBooks = bookRepo.Gets("", "");
+            req.setAttribute("listBooks", listBooks);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
