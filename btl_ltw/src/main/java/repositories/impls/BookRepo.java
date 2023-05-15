@@ -118,6 +118,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("name"),
+                resultSet.getString("image"),
                 resultSet.getString("author"),
                 resultSet.getInt("release_year"),
                 UUID.fromString(resultSet.getString("category_id")),
