@@ -23,17 +23,17 @@ public class ReceivedNewsEmail extends Table {
     
 
     @Override
-    protected String Get_Insert_Fields_SQL() {
+    public String Get_Insert_Fields_SQL() {
         return "id, email";
     }
 
     @Override
-    protected String Get_Insert_Values_SQL() {
+    public String Get_Insert_Values_SQL() {
         return "gen_random_uuid(), '" + email + "'";
     }
 
     @Override
-    protected String Get_Update_Values_SQL() {
+    public String Get_Update_Values_SQL() {
         return "email = '" + email + "'";
     }public String To_Json_String() {
 		return "{" +

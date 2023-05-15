@@ -37,18 +37,18 @@ public class User extends Table {
     
 
     @Override
-    protected String Get_Insert_Fields_SQL() {
+    public String Get_Insert_Fields_SQL() {
         return "id, name, phonenum, address, avatar_id, status, created_time, last_update_time";
     }
 
     @Override
-    protected String Get_Insert_Values_SQL() {
+    public String Get_Insert_Values_SQL() {
         return "gen_random_uuid(), '" + name + "', '" + phonenum + "', '" + address + "', '" + avatar_id + "', '"
                 + status + "', '" + created_time + "', '" + last_update_time + "'";
     }
 
     @Override
-    protected String Get_Update_Values_SQL() {
+    public String Get_Update_Values_SQL() {
         return "name = '" + name + "', phonenum = '" + phonenum + "', address = '" + address + "', avatar_id = '"
                 + avatar_id + "', status = '" + status + "', created_time = '" + created_time
                 + "', last_update_time = '" + last_update_time + "'";

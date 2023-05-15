@@ -25,17 +25,17 @@ public class AdminLogin extends Table {
     }
 
     @Override
-    protected String Get_Insert_Fields_SQL() {
+    public String Get_Insert_Fields_SQL() {
         return "id, username, password";
     }
 
     @Override
-    protected String Get_Insert_Values_SQL() {
+    public String Get_Insert_Values_SQL() {
         return "'" + id + "', '" + username + "', '" + password + "'";
     }
 
     @Override
-    protected String Get_Update_Values_SQL() {
+    public String Get_Update_Values_SQL() {
         return "username = '" + username + "', password = '" + password + "'";
     }
     public String To_Json_String() {

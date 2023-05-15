@@ -23,17 +23,17 @@ public class UserEmail extends Table {
     
 
     @Override
-    protected String Get_Insert_Fields_SQL() {
+    public String Get_Insert_Fields_SQL() {
         return "id, email";
     }
 
     @Override
-    protected String Get_Insert_Values_SQL() {
+    public String Get_Insert_Values_SQL() {
         return "'" + id + "', '" + email + "'";
     }
 
     @Override
-    protected String Get_Update_Values_SQL() {
+    public String Get_Update_Values_SQL() {
         return "id = '" + id + "', email = '" + email + "'";
     }public String To_Json_String() {
 		return "{" +
