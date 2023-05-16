@@ -115,7 +115,7 @@ public class OrderRepo extends Repo<Order> implements IOrderRepo {
         Order response = new Order();
         response.set(
                 UUID.fromString(resultSet.getString("id")),
-                resultSet.getTimestamp("created_time"),
+                resultSet.getDate("created_time"),
                 resultSet.getInt("status"),
                 resultSet.getString("address"),
                 resultSet.getString("phonenum"),

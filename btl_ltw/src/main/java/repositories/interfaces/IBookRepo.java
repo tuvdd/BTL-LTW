@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import models.Book;
-import models.dtos.BookFullDetail;
+import models.dtos.AdminBookView;
 
 public interface IBookRepo extends IRepo<Book> {
     List<Book> GetListBookByCategoryID(String uuid, int page, int size) throws SQLException;
@@ -13,5 +13,5 @@ public interface IBookRepo extends IRepo<Book> {
 
     List<Book> GetListBookByBookTagString(String tagString) throws SQLException;
 
-    List<BookFullDetail> GetsFullDetail(String PaginSQL) throws SQLException;
+    List<AdminBookView> GetsAdminBookView(String PaginSQL) throws SQLException;
 }

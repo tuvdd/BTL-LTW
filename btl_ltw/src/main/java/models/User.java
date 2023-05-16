@@ -1,6 +1,6 @@
 package models;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 import utils.JsonUtils;
@@ -11,8 +11,8 @@ public class User extends Table {
     public String address;
     public UUID avatar_id;
     public boolean status;
-    public Timestamp created_time;
-    public Timestamp last_update_time;
+    public Date created_time;
+    public Date last_update_time;
 
     public User() {
         super();
@@ -20,7 +20,7 @@ public class User extends Table {
     }
 
     public void set(UUID id, String name, String phonenum, String address, UUID avatar_id, boolean status,
-            Timestamp created_time, Timestamp last_update_time) {
+            Date created_time, Date last_update_time) {
         this.id = id;
         this.name = name;
         this.phonenum = phonenum;

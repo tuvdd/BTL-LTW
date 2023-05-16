@@ -124,8 +124,8 @@ public class UserRepo extends Repo<User> implements IUserRepo {
                 resultSet.getString("address"),
                 UUID.fromString(resultSet.getString("avatar_id")),
                 resultSet.getBoolean("status"),
-                resultSet.getTimestamp("created_time"),
-                resultSet.getTimestamp("last_update_time"));
+                resultSet.getDate("created_time"),
+                resultSet.getDate("last_update_time"));
         return response;
     }
 }

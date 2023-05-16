@@ -1,13 +1,14 @@
 package models;
 
-import java.sql.Timestamp;
+import java.util.Base64;
+import java.util.Date;
 import java.util.UUID;
 
 import utils.JsonUtils;
 
 public class Book extends Table {
     public String name;
-    public String image;
+    public byte[] image;
     public String author;
     public int release_year;
     public UUID category_id;
@@ -17,9 +18,9 @@ public class Book extends Table {
     public String description;
     public String sub_description;
     public int status;
-    public Timestamp create_time;
+    public Date create_time;
     public UUID create_by;
-    public Timestamp last_update_time;
+    public Date last_update_time;
     public UUID last_update_by;
 
     public Book() {
@@ -31,10 +32,10 @@ public class Book extends Table {
         return "books";
     }
 
-    public void set(UUID id, String name,String image, String author, int release_year, UUID category_id, double price,
+    public void set(UUID id, String name,byte[] image, String author, int release_year, UUID category_id, double price,
             double promote_price,
-            int quantity, String description, String sub_description, int status, Timestamp create_time, UUID create_by,
-            Timestamp last_update_time, UUID last_update_by) {
+            int quantity, String description, String sub_description, int status, Date create_time, UUID create_by,
+            Date last_update_time, UUID last_update_by) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -60,7 +61,7 @@ public class Book extends Table {
 
     @Override
     public String Get_Insert_Values_SQL() {
-        return "gen_random_uuid(), '" + name + "', '" + image + "', '" + author + "', " + release_year + ", '" + category_id + "', "
+        return "gen_random_uuid(), '" + name + "', ? , '" + author + "', " + release_year + ", '" + category_id + "', "
                 + price + ", " + promote_price + ", " + quantity + ", '" + description + "', '" + sub_description
                 + "', " + status + ", '" + create_time + "', '" + create_by + "', '" + last_update_time + "', '"
                 + last_update_by + "'";
@@ -68,7 +69,7 @@ public class Book extends Table {
 
     @Override
     public String Get_Update_Values_SQL() {
-        return "id = '" + id + "', name = '" + name + "', image = '" + image + "', author = '" + author + "', release_year = " + release_year
+        return "id = '" + id + "', name = '" + name + "', image = ? , author = '" + author + "', release_year = " + release_year
                 + ", category_id = '" + category_id + "', price = " + price + ", promote_price = " + promote_price
                 + ", quantity = " + quantity + ", description = '" + description + "', sub_description = '"
                 + sub_description + "', status = " + status + ", create_time = '" + create_time + "', create_by = '"
@@ -104,6 +105,18 @@ public class Book extends Table {
         this.name = name;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public String getImageBase64() {
+        return Base64.getEncoder().encodeToString(image);
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+    
     public String getAuthor() {
         return author;
     }
@@ -176,11 +189,11 @@ public class Book extends Table {
         this.status = status;
     }
 
-    public Timestamp getCreate_time() {
+    public Date getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(Timestamp create_time) {
+    public void setCreate_time(Date create_time) {
         this.create_time = create_time;
     }
 
@@ -192,11 +205,11 @@ public class Book extends Table {
         this.create_by = create_by;
     }
 
-    public Timestamp getLast_update_time() {
+    public Date getLast_update_time() {
         return last_update_time;
     }
 
-    public void setLast_update_time(Timestamp last_update_time) {
+    public void setLast_update_time(Date last_update_time) {
         this.last_update_time = last_update_time;
     }
 
