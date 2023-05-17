@@ -1,5 +1,5 @@
 <%@ page
-	import="java.util.*, servlets.admin.ServletUtil, models.dtos.*, models.*"
+	import="java.util.*, java.text.*, servlets.admin.ServletUtil, models.dtos.*, models.*"
 	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -35,11 +35,12 @@ request.getSession().removeAttribute("messageType");
 			<td>Thao tác</td>
 		</tr>
 		<c:forEach var="adminBookView" items="${listAdminBookViews}">
-			<tr>
+			<tr id="tr-${adminBookView.getId()}">
 				<td>${adminBookView.getId()}</td>
 				<td>${adminBookView.getName()}</td>
 				<td><img
-					src="data:image/png;base64,${adminBookView.getImageBase64()}" style="max-height: 200px; max-width: 200px;"/></td>
+					src="data:image/png;base64,${adminBookView.getImageBase64()}"
+					style="max-height: 200px; max-width: 200px;" /></td>
 				<td>${adminBookView.getAuthor()}</td>
 				<td>${adminBookView.getRelease_year()}</td>
 				<td>${adminBookView.getCategory_name()}</td>
@@ -49,12 +50,12 @@ request.getSession().removeAttribute("messageType");
 				<td>${adminBookView.getDescription()}</td>
 				<td>${adminBookView.getSub_description()}</td>
 				<td>${adminBookView.getStatus()}</td>
-				<td>${adminBookView.getCreate_time()}</td>
+				<td>${adminBookView.getCreate_time_string()}</td>
 				<td>${adminBookView.getCreate_by_name()}</td>
-				<td>${adminBookView.getLast_update_time()}</td>
+				<td>${adminBookView.getLast_update_time_string()}</td>
 				<td>${adminBookView.getLast_update_by_name()}</td>
 				<td>
-					<button onclick="showEditModal()">Sửa</button>
+					<button onclick="showEditModal('tr-${adminBookView.getId()}')">Sửa</button>
 					<button>Xóa</button>
 				</td>
 			</tr>
@@ -108,11 +109,11 @@ request.getSession().removeAttribute("messageType");
 		</div>
 		<div class="form-data-text">
 			<p>Mô tả</p>
-			<input name="description" placeholder="Mô tả" />
+			<textarea name="description" placeholder="Mô tả"></textarea>
 		</div>
 		<div class="form-data-text">
 			<p>Tóm tắt</p>
-			<input name="sub_description" placeholder="Tóm tắt" />
+			<textarea name="sub_description" placeholder="Tóm tắt"></textarea>
 		</div>
 		<div class="form-data-text">
 			<p>Trạng thái</p>
@@ -129,5 +130,77 @@ request.getSession().removeAttribute("messageType");
 		</div>
 	</form>
 </div>
+<div id="edit-modal" class="modal">
+	<form method="post" enctype="multipart/form-data"
+		action="/btl_ltw/admin/book" id="edit-form">
+		<h3>Sửa sách</h3>
+		<input id="edit-hidden" type="hidden" name="id" value="" />
+		<div class="form-data-text">
+			<p>Tên</p>
+			<input id="edit-name" name="name" placeholder="Nhập tên" />
+		</div>
+		<div class="form-data-text">
+			<p>Ảnh</p>
+			<input name="image" type="file" accept=".jpg, .png"
+				placeholder="Nhập ảnh" />
+		</div>
+		<div class="form-data-text">
+			<p>Tên tác giả</p>
+			<input id="edit-author" name="author" placeholder="Nhập tên tác giả" />
+		</div>
+		<div class="form-data-text">
+			<p>Năm phát hành</p>
+			<input id="edit-release_year" name="release_year"
+				placeholder="Nhập năm phát hành" />
+		</div>
+		<div class="form-data-text">
+			<p>Danh mục</p>
+			<select name="category_id" id="select_category_id"
+				placeholder="Trạng thái">
+				<c:forEach var="category" items="${listCategories}">
+					<option value="${category.getId()}">${category.getName()}</option>
+				</c:forEach>
+			</select>
+		</div>
+		<div class="form-data-text">
+			<p>Giá tiền</p>
+			<input id="edit-price" name="price" placeholder="Giá tiền" />
+		</div>
+		<div class="form-data-text">
+			<p>Giá giảm</p>
+			<input id="edit-promote_price" name="promote_price"
+				placeholder="Giá giảm" />
+		</div>
+		<div class="form-data-text">
+			<p>Số lượng trong kho</p>
+			<input id="edit-quantity" name="quantity"
+				placeholder="Số lượng trong kho" />
+		</div>
+		<div class="form-data-text">
+			<p>Mô tả</p>
+			<textarea id="edit-description" name="description"
+				placeholder="Mô tả"></textarea>
+		</div>
+		<div class="form-data-text">
+			<p>Tóm tắt</p>
+			<textarea id="edit-sub_description" name="sub_description"
+				placeholder="Tóm tắt"></textarea>
+		</div>
+		<div class="form-data-text">
+			<p>Trạng thái</p>
+			<select name="status" id="select_status" placeholder="Trạng thái">
+				<option value="1">Bán</option>
+				<option value="0">Chưa bán</option>
+				<option value="-1">Dừng bán</option>
+			</select>
+		</div>
+		<div class="form-data-button">
+			<button type="submit">Thêm</button>
+			<button type="reset">Hoàn tác</button>
+			<button type="button" id="edit-cancel" onclick="closeAddModal()">Hủy</button>
+		</div>
+	</form>
+</div>
 <script src="/btl_ltw/admin/resources/js/content.js"
 	type="text/javascript"></script>
+<script src="/btl_ltw/admin/resources/js/book.js" type="text/javascript"></script>
