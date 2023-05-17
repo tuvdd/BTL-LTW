@@ -39,7 +39,7 @@ request.getSession().removeAttribute("messageType");
 				<td>${adminBookView.getId()}</td>
 				<td>${adminBookView.getName()}</td>
 				<td><img
-					src="data:image/png;base64,${adminBookView.getImageBase64()}" /></td>
+					src="data:image/png;base64,${adminBookView.getImageBase64()}" style="max-height: 200px; max-width: 200px;"/></td>
 				<td>${adminBookView.getAuthor()}</td>
 				<td>${adminBookView.getRelease_year()}</td>
 				<td>${adminBookView.getCategory_name()}</td>

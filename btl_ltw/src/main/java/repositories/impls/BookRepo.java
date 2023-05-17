@@ -40,8 +40,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -62,8 +61,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -80,8 +78,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -96,8 +93,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -112,8 +108,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -172,8 +167,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -202,8 +196,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -232,8 +225,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -302,8 +294,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception e) {
             // TODO: handle exception
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
 
         return response;
