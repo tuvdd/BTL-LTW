@@ -28,7 +28,7 @@
 				style="width: 30%; margin-left: 35%; margin-bottom: 15px;" />
 			<h3 class="center form-header">Đăng nhập hệ thống</h3>
 			<h4 class="center form-header">Hệ thống quản lý bán sách</h4>
-			<form class="center " method="post" action="/btl_ltw/admin/login">
+			<form class="center" method="post" action="/btl_ltw/admin/login">
 				<div class="form-label">
 					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/usericon.png">
 					<label class="form-label-text">Tên đăng nhập:</label>
