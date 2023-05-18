@@ -48,17 +48,17 @@ public class Category extends Table {
 	}
 
 	@Override
-	protected String Get_Insert_Fields_SQL() {
+	public String Get_Insert_Fields_SQL() {
 		return "id, name, status";
 	}
 
 	@Override
-	protected String Get_Insert_Values_SQL() {
+	public String Get_Insert_Values_SQL() {
 		return "gen_random_uuid(), '" + name + "', " + status + "";
 	}
 
 	@Override
-	protected String Get_Update_Values_SQL() {
+	public String Get_Update_Values_SQL() {
 		return "name = '" + name + "', status = " + status + "";
 	}
 	public String To_Json_String() {

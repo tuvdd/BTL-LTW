@@ -35,8 +35,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> implements IOrderDetailRe
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -58,8 +57,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> implements IOrderDetailRe
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -74,8 +72,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> implements IOrderDetailRe
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -90,8 +87,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> implements IOrderDetailRe
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -106,8 +102,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> implements IOrderDetailRe
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

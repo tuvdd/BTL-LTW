@@ -33,8 +33,7 @@ public class OrderRepo extends Repo<Order> implements IOrderRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -56,8 +55,7 @@ public class OrderRepo extends Repo<Order> implements IOrderRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -72,8 +70,7 @@ public class OrderRepo extends Repo<Order> implements IOrderRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -88,8 +85,7 @@ public class OrderRepo extends Repo<Order> implements IOrderRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -104,8 +100,7 @@ public class OrderRepo extends Repo<Order> implements IOrderRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

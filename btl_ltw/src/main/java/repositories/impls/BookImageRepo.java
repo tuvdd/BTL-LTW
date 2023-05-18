@@ -37,8 +37,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -63,8 +62,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -79,8 +77,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -95,8 +92,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -111,8 +107,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -160,8 +155,7 @@ public class BookImageRepo extends Repo<BookImage> implements IBookImageRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

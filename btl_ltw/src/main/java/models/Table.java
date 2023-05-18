@@ -20,6 +20,7 @@ public abstract class Table {
         return "DELETE FROM " + TableName + " WHERE id = '" + id + "'";
     }
 
+    
     protected abstract String Get_Insert_Fields_SQL();
 
     protected abstract String Get_Insert_Values_SQL();
@@ -27,4 +28,20 @@ public abstract class Table {
     protected abstract String Get_Update_Values_SQL();
 
     public abstract String To_Json_String();
+
+    public String getTableName() {
+        return TableName;
+    }
+
+    public void setTableName(String tableName) {
+        TableName = tableName;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 }

@@ -10,17 +10,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import repositories.impls.AdminRepo;
+import repositories.impls.AdminLoginRepo;
 import repositories.interfaces.IAdminLoginRepo;
-import repositories.interfaces.IAdminRepo;
 
 @WebServlet({ "/admin/login", "/admin/login/" })
 public class LoginServlet extends BaseServlet {
-	private IAdminRepo adminRepo;
 	private IAdminLoginRepo adminLoginRepo;
 
 	public LoginServlet() {
-		adminRepo = new AdminRepo();
+		adminLoginRepo = new AdminLoginRepo();
 	}
 
 	private static final long serialVersionUID = 20;

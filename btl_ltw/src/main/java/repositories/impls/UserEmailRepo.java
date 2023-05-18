@@ -36,8 +36,7 @@ public class UserEmailRepo extends Repo<UserEmail> implements IUserEmailRepo {
 
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -58,8 +57,7 @@ public class UserEmailRepo extends Repo<UserEmail> implements IUserEmailRepo {
 
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -73,8 +71,7 @@ public class UserEmailRepo extends Repo<UserEmail> implements IUserEmailRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -88,8 +85,7 @@ public class UserEmailRepo extends Repo<UserEmail> implements IUserEmailRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -103,8 +99,7 @@ public class UserEmailRepo extends Repo<UserEmail> implements IUserEmailRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

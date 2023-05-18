@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <div id="left-sidebar">
 	<h1 class="left-sidebar-item">Hệ thống quản lý bán sách</h1>
+	
 	<script type="text/javascript">
 		function redirect(url) {
 			window.location.href = url;
@@ -34,7 +35,7 @@
 			lý</p>
 		<hr />
 		<button class="left-sidebar-item-button"
-			onclick="redirect('/btl_ltw/admin/user')">
+			onclick="redirect('/btl_ltw/admin/admin')">
 			<img class="left-sidebar-item-button-img"
 				src="/btl_ltw/admin/resources/img/user.png" />
 			<p class="left-sidebar-item-button-text">Quản lý nhân viên</p>
@@ -62,14 +63,6 @@
 			<img class="left-sidebar-item-button-img"
 				src="/btl_ltw/admin/resources/img/order.png" />
 			<p class="left-sidebar-item-button-text">Quản lý đơn hàng</p>
-			<img class="left-sidebar-item-button-img"
-				src="/btl_ltw/admin/resources/img/next.png" style="float: right;" />
-		</button>
-		<button class="left-sidebar-item-button"
-			onclick="redirect('/btl_ltw/admin/email')">
-			<img class="left-sidebar-item-button-img"
-				src="/btl_ltw/admin/resources/img/email.png" />
-			<p class="left-sidebar-item-button-text">List Email nhận tin</p>
 			<img class="left-sidebar-item-button-img"
 				src="/btl_ltw/admin/resources/img/next.png" style="float: right;" />
 		</button>
