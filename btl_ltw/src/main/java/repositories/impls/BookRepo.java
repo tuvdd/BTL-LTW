@@ -1,5 +1,7 @@
 package repositories.impls;
 
+import java.sql.Timestamp;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,7 +9,10 @@ import java.util.List;
 import java.util.UUID;
 
 import models.Book;
+import models.dtos.AdminBookView;
+import repositories.interfaces.IBookImageRepo;
 import repositories.interfaces.IBookRepo;
+import repositories.interfaces.ITagRepo;
 import repositories.utils.SQLInjection;
 import repositories.utils.models.LogicalClause;
 import repositories.utils.models.LogicalObject;
@@ -36,8 +41,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -58,8 +62,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -71,11 +74,12 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             sql = record.GetInsertSQL();
             CreateConnection();
             statement = connection.prepareStatement(sql);
+            statement.setBytes(1, record.image);
             response = statement.executeUpdate();
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -87,11 +91,12 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             sql = record.GetUpdateSQL();
             CreateConnection();
             statement = connection.prepareStatement(sql);
+            if (record.getImage() != null && record.getImage().length > 0)
+                statement.setBytes(1, record.image);
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -106,8 +111,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -118,6 +122,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         response.set(
                 UUID.fromString(resultSet.getString("id")),
                 resultSet.getString("name"),
+                resultSet.getBytes("image"),
                 resultSet.getString("author"),
                 resultSet.getInt("release_year"),
                 UUID.fromString(resultSet.getString("category_id")),
@@ -165,8 +170,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -195,8 +199,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -209,7 +212,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
                 "WHERE tag_id IN (" +
                 "SELECT id FROM tags WHERE tag_name LIKE '"
                 + tagString + "')); ";
-                
+
         List<Book> response = null;
         try {
             CreateConnection();
@@ -225,9 +228,78 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
+        return response;
+    }
+
+    @Override
+    public List<AdminBookView> GetsAdminBookView(String PaginSQL) throws SQLException {
+        List<AdminBookView> response = null;
+        try {
+            String sql = ""
+                    + "SELECT  b.id id, "
+                    + "        b.name name, "
+                    + "        b.image image, "
+                    + "        b.author author, "
+                    + "        b.release_year release_year, "
+                    + "        b.category_id category_id, "
+                    + "        c.name category_name, "
+                    + "        b.price price, "
+                    + "        b.promote_price promote_price, "
+                    + "        b.quantity quantity, "
+                    + "        b.description description, "
+                    + "        b.sub_description sub_description, "
+                    + "        b.status status, "
+                    + "        b.create_time create_time, "
+                    + "        b.create_by create_by, "
+                    + "        ac.name create_by_name, "
+                    + "        b.last_update_time last_update_time, "
+                    + "        b.last_update_by last_update_by, "
+                    + "        au.name last_update_by_name "
+                    + "FROM    books b, "
+                    + "        categories c, "
+                    + "        admins ac, "
+                    + "        admins au "
+                    + "WHERE   b.category_id = c.id AND ac.id = b.create_by AND au.id = b.last_update_by "
+                    + PaginSQL
+                    + " ;";
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            response = new ArrayList<>();
+
+            while (rs.next()) {
+                AdminBookView bfd = new AdminBookView();
+                bfd.id = UUID.fromString(rs.getString("id"));
+                bfd.name = rs.getString("name");
+                bfd.image = rs.getBytes("image");
+                bfd.author = rs.getString("author");
+                bfd.release_year = rs.getInt("release_year");
+                bfd.category_id = UUID.fromString(rs.getString("category_id"));
+                bfd.category_name = rs.getString("category_name");
+                bfd.price = rs.getDouble("price");
+                bfd.promote_price = rs.getDouble("promote_price");
+                bfd.quantity = rs.getInt("quantity");
+                bfd.description = rs.getString("description");
+                bfd.sub_description = rs.getString("sub_description");
+                bfd.status = rs.getInt("status");
+                bfd.create_time = rs.getTimestamp("create_time");
+                bfd.create_by = UUID.fromString(rs.getString("create_by"));
+                bfd.create_by_name = rs.getString("create_by_name");
+                bfd.last_update_time =rs.getTimestamp("last_update_time");
+                bfd.last_update_by = UUID.fromString(rs.getString("last_update_by"));
+                bfd.last_update_by_name = rs.getString("last_update_by_name");
+
+                response.add(bfd);
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        } finally {
+            CloseConnection();
+        }
+
         return response;
     }
 

@@ -35,8 +35,7 @@ public class ReceivedNewsEmailRepo extends Repo<ReceivedNewsEmail> implements IR
 
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -58,8 +57,7 @@ public class ReceivedNewsEmailRepo extends Repo<ReceivedNewsEmail> implements IR
 
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -73,8 +71,7 @@ public class ReceivedNewsEmailRepo extends Repo<ReceivedNewsEmail> implements IR
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -88,8 +85,7 @@ public class ReceivedNewsEmailRepo extends Repo<ReceivedNewsEmail> implements IR
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -103,8 +99,7 @@ public class ReceivedNewsEmailRepo extends Repo<ReceivedNewsEmail> implements IR
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

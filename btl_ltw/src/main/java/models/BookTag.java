@@ -25,17 +25,17 @@ public class BookTag extends Table {
     
 
     @Override
-    protected String Get_Insert_Fields_SQL() {
+    public String Get_Insert_Fields_SQL() {
         return "id, book_id, tag_id";
     }
 
     @Override
-    protected String Get_Insert_Values_SQL() {
+    public String Get_Insert_Values_SQL() {
         return "gen_random_uuid(), '" + book_id + "', '" + tag_id + "'";
     }
 
     @Override
-    protected String Get_Update_Values_SQL() {
+    public String Get_Update_Values_SQL() {
         return "book_id='" + book_id + "', tag_id='" + tag_id + "'";
     }public String To_Json_String() {
 		return "{" +

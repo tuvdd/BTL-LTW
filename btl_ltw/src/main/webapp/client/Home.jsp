@@ -21,7 +21,7 @@
                         <p>
                             Giới thiệu...
                         </p>
-                        <a href="#" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a>
+                        <a href="/client/shopping/" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a>
                     </div>
                     <div class="col-2">
                         <img src="Book1.png" alt="" />
@@ -52,11 +52,11 @@
         <h2 class="title">Featured Products</h2>
     </div>
         <div class="row">
-            <c:forEach items="${listRB}" var="o">
+            <c:forEach items="${listB}" var="o">
                 <div class="col-4">
                     <a href="#"><img src="${o.image}" alt="" /></a>
                     <a href="#">
-                        <h4>$(o.name)</h4>
+                        <h4>${o.name}</h4>
                     </a>
                     <div class="rating">
                         <i class="fas fa-star"></i>
@@ -85,7 +85,7 @@
                         <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
                     </div>
-                    <p>${m.price}</p>
+                    <p>Price: $${m.price}</p>
                 </div>
             </c:forEach>
         </div>

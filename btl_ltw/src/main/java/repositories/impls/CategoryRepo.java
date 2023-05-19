@@ -37,8 +37,7 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -59,8 +58,7 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -75,8 +73,7 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -91,8 +88,7 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -107,8 +103,7 @@ public class CategoryRepo extends Repo<Category> implements ICategoryRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

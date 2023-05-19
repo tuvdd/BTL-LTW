@@ -2,62 +2,97 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>JSP Page</title>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <link href="css/shopping.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/shopping.css" />
+    <title>Ecommerce Website</title>
 </head>
+
 <body>
-<jsp:include page="Menu.jsp"></jsp:include>
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="Home.jsp">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">Category</a></li>
-          <li class="breadcrumb-item active" aria-current="#">Sub-category</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-</div>
-<div class="container">
-  <div class="row">
-    <jsp:include page="Left.jsp"></jsp:include>
-
-    <div class="col-sm-9">
-      <div class="row">
-        <c:forEach items="${listP}" var="o">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="card">
-              <img class="card-img-top" src="${o.image}" alt="Card image cap">
-              <div class="card-body">
-                <h4 class="card-title show_txt"><a href="detail?pid=${o.id}" title="View Product">${o.name}</a></h4>
-                <p class="card-text show_txt">${o.title}</p>
-                <div class="row">
-                  <div class="col">
-                    <p class="btn btn-danger btn-block">${o.price} $</p>
-                  </div>
-                  <div class="col">
-                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                  </div>
-                </div>
-              </div>
+    <jsp:include page="Menu.jsp"></jsp:include>
+    <div>
+        <script src = "shopping.js"></script>
+        <div id="content">
+            <div id="tab1">
+                <c:set var="chid" value="${requestScope.chid}"/>
+                <h5 style="color: chocolate">TÊN HÃNG</h5>
+                <hr style="border-top: 1px solid chocolate "/>
+                <form id="f1" action="home1">
+                    <input type="checkbox" id="c0" name="cidd"
+                    ${chid[0]?"checked":""}
+                           value="${0}" onclick="setCheck(this)"/>All<br/>
+                </form>
+                <h5 style="color: chocolate">MỨC GIÁ</h5>
+                <hr style="border-top: 1px solid chocolate "/>
+                <c:set var="pp" value="${requestScope.pp}"/>
+                <c:set var="pb" value="${requestScope.pb}"/>
+                <form id="f2" action="home1">
+                    <input type="checkbox" id="g0" name="price"
+                    ${pb[0]?"checked":""}
+                           value="0" onclick="setCheck1(this)"/>All<br/>
+                    <c:forEach begin="0" end="${4}"  var="i">
+                        <input type="checkbox" id="g1" name="price"
+                            ${pb[i+1]?"checked":""}
+                               value="${(i+1)}" onclick="setCheck1(this)"/>${pp[i]}<br/>
+                    </c:forEach>
+                </form>
             </div>
-          </div>
-        </c:forEach>
-      </div>
+            <div id="tab2">
+                <c:set var="news" value="${requestScope.news}"/>
+                <c:if test="${news!=null}">
+                    <h4 style="color: chocolate">ĐIỆN THOẠI MỚI </h4>
+                    <ul class="item">
+                        <c:forEach items="${news}" var="p">
+                            <li>
+                                <a href="#">
+                                    <img src="${p.image}" width="80px" height="80px"/>
+                                    <p>${p.name}</p>
+                                    <p>gia goc: <span class="old">${(p.price)}</span>VND</p>
+                                    <p>Sale:${(p.price)}VND</p>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                    <hr/>
+                </c:if>
+                <c:set var="olds" value="${requestScope.olds}"/>
+                <c:if test="${olds!=null}">
+                    <h4 style="color: chocolate">ĐIỆN THOẠI KHUYẾN MẠI </h4>
+                    <ul class="item">
+                        <c:forEach items="${olds}" var="p">
+                            <li>
+                                <a href="#">
+                                    <img src="${p.image}" width="80px" height="80px"/>
+                                    <p>${p.name}</p>
+                                    <p>gia goc: <span class="old">${(p.price)}</span>VND</p>
+                                    <p>Sale:${(p.price)}VND</p>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                    <hr/>
+                </c:if>
+                <c:set var="list" value="${requestScope.products}"/>
+                <c:if test="${list!=null}">
+                    <h4 style="color: chocolate">ĐIỆN THOẠI (${list.size()} sản phẩm)</h4>
+                    <ul class="item">
+                        <c:forEach items="${list}" var="p">
+                            <li>
+                                <a href="#">
+                                    <img src="${p.image}" width="80px" height="80px"/>
+                                    <p>${p.name}</p>
+                                    <p>gia goc: <span class="old">${(p.price)}</span>VND</p>
+                                    <p>Sale:${(p.price)}VND</p>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
+
+
+            </div>
     </div>
-
-  </div>
-</div>
-
-<jsp:include page="Footer.jsp"></jsp:include>
+    <jsp:include page="Footer.jsp"></jsp:include>
 </body>
-</html>
 
+</html>

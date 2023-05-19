@@ -23,17 +23,17 @@ public class BookImage extends Table {
     }
 
     @Override
-    protected String Get_Insert_Fields_SQL() {
+    public String Get_Insert_Fields_SQL() {
         return "id, value, book_id";
     }
 
     @Override
-    protected String Get_Insert_Values_SQL() {
+    public String Get_Insert_Values_SQL() {
         return "gen_random_uuid(), '" + value + "', '" + book_id + "'";
     }
 
     @Override
-    protected String Get_Update_Values_SQL() {
+    public String Get_Update_Values_SQL() {
         return "value = '" + value + "', book_id = '" + book_id + "'";
     }public String To_Json_String() {
 		return "{" +

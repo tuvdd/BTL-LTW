@@ -22,12 +22,12 @@ public class Order extends Table {
     
 
     @Override
-    protected String Get_Insert_Fields_SQL() {
+    public String Get_Insert_Fields_SQL() {
         return "id,created_time,status,address,phonenum,buyer_name";
     }
 
     @Override
-    protected String Get_Insert_Values_SQL() {
+    public String Get_Insert_Values_SQL() {
         return "gen_random_uuid(), " +
                 "'" + created_time + "', " +
                 "" + status + ", " +
@@ -37,7 +37,7 @@ public class Order extends Table {
     }
 
     @Override
-    protected String Get_Update_Values_SQL() {
+    public String Get_Update_Values_SQL() {
         return "created_time = '" + created_time + "', " +
                 "status = '" + status + "', " +
                 "address = '" + address + "', " +
