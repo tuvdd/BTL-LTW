@@ -1,7 +1,7 @@
 package models;
 
 import java.util.Base64;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 import utils.JsonUtils;
@@ -18,9 +18,9 @@ public class Book extends Table {
     public String description;
     public String sub_description;
     public int status;
-    public Date create_time;
+    public Timestamp create_time;
     public UUID create_by;
-    public Date last_update_time;
+    public Timestamp last_update_time;
     public UUID last_update_by;
 
     public Book() {
@@ -32,10 +32,10 @@ public class Book extends Table {
         return "books";
     }
 
-    public void set(UUID id, String name,byte[] image, String author, int release_year, UUID category_id, double price,
+    public void set(UUID id, String name, byte[] image, String author, int release_year, UUID category_id, double price,
             double promote_price,
-            int quantity, String description, String sub_description, int status, Date create_time, UUID create_by,
-            Date last_update_time, UUID last_update_by) {
+            int quantity, String description, String sub_description, int status, Timestamp create_time, UUID create_by,
+            Timestamp last_update_time, UUID last_update_by) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -56,43 +56,81 @@ public class Book extends Table {
 
     @Override
     public String Get_Insert_Fields_SQL() {
-        return "id, name, image, author, release_year, category_id, price, promote_price, quantity, description, sub_description, status, create_time, create_by, last_update_time, last_update_by";
+        return ""
+                + "id, "
+                + "name, "
+                + "image, "
+                + "author, "
+                + "release_year, "
+                + "category_id, "
+                + "price, "
+                + "promote_price, "
+                + "quantity, "
+                + "description, "
+                + "sub_description, "
+                + "status, "
+                + "create_time, "
+                + "create_by, "
+                + "last_update_time, "
+                + "last_update_by ";
     }
 
     @Override
     public String Get_Insert_Values_SQL() {
-        return "gen_random_uuid(), '" + name + "', ? , '" + author + "', " + release_year + ", '" + category_id + "', "
-                + price + ", " + promote_price + ", " + quantity + ", '" + description + "', '" + sub_description
-                + "', " + status + ", '" + create_time + "', '" + create_by + "', '" + last_update_time + "', '"
-                + last_update_by + "'";
+        return ""
+                + "gen_random_uuid(), "
+                + "'" + name + "', "
+                + "? , "
+                + "'" + author + "', "
+                + "" + release_year + ", "
+                + "'" + category_id + "', "
+                + "" + price + ", "
+                + "" + promote_price + ", "
+                + "" + quantity + ", "
+                + "'" + description + "', "
+                + "'" + sub_description + "', "
+                + "" + status + ", "
+                + "'" + create_time + "', "
+                + "'" + create_by + "', "
+                + "'" + last_update_time + "', "
+                + "'" + last_update_by + "' ";
     }
 
     @Override
     public String Get_Update_Values_SQL() {
-        return "id = '" + id + "', name = '" + name + "', image = ? , author = '" + author + "', release_year = " + release_year
-                + ", category_id = '" + category_id + "', price = " + price + ", promote_price = " + promote_price
-                + ", quantity = " + quantity + ", description = '" + description + "', sub_description = '"
-                + sub_description + "', status = " + status + ", create_time = '" + create_time + "', create_by = '"
-                + create_by + "', last_update_time = '" + last_update_time + "', last_update_by = '" + last_update_by
-                + "'";
+        return ""
+                + "id = '" + id + "', "
+                + "name = '" + name + "', "
+                + (image == null || image.length == 0 ? "" : "image = ? , ")
+                + "author = '" + author + "', "
+                + "release_year = " + release_year + ", "
+                + "category_id = '" + category_id + "', "
+                + "price = " + price + ", "
+                + "promote_price = " + promote_price + ", "
+                + "quantity = " + quantity + ", "
+                + "description = '" + description + "', "
+                + "sub_description = '" + sub_description + "', "
+                + "status = " + status + ", "
+                + "last_update_time = '" + last_update_time + "', "
+                + "last_update_by = '" + last_update_by + "' ";
     }
 
     public String To_Json_String() {
         return "{" +
                 JsonUtils.PropToJson("id", id, true) +
                 JsonUtils.PropToJson("name", name, true) +
-                JsonUtils.PropToJson("author", author, true) + 
+                JsonUtils.PropToJson("author", author, true) +
                 JsonUtils.PropToJson("release_year", release_year, false) +
-                JsonUtils.PropToJson("category_id", category_id, true) + 
+                JsonUtils.PropToJson("category_id", category_id, true) +
                 JsonUtils.PropToJson("price", price, false) +
                 JsonUtils.PropToJson("promote_price", promote_price, false) +
                 JsonUtils.PropToJson("quantity", quantity, true) +
                 JsonUtils.PropToJson("description", description, true) +
-                JsonUtils.PropToJson("sub_description", sub_description, true) + 
+                JsonUtils.PropToJson("sub_description", sub_description, true) +
                 JsonUtils.PropToJson("status", status, false) +
-                JsonUtils.PropToJson("create_time", create_time, true) + 
+                JsonUtils.PropToJson("create_time", create_time, true) +
                 JsonUtils.PropToJson("create_by", create_by, true) +
-                JsonUtils.PropToJson("last_update_time", last_update_time, true) + 
+                JsonUtils.PropToJson("last_update_time", last_update_time, true) +
                 JsonUtils.PropToJson("last_update_by", last_update_by, true) +
                 "}";
     }
@@ -116,7 +154,7 @@ public class Book extends Table {
     public void setImage(byte[] image) {
         this.image = image;
     }
-    
+
     public String getAuthor() {
         return author;
     }
@@ -189,11 +227,11 @@ public class Book extends Table {
         this.status = status;
     }
 
-    public Date getCreate_time() {
+    public Timestamp getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(Date create_time) {
+    public void setCreate_time(Timestamp create_time) {
         this.create_time = create_time;
     }
 
@@ -205,11 +243,11 @@ public class Book extends Table {
         this.create_by = create_by;
     }
 
-    public Date getLast_update_time() {
+    public Timestamp getLast_update_time() {
         return last_update_time;
     }
 
-    public void setLast_update_time(Date last_update_time) {
+    public void setLast_update_time(Timestamp last_update_time) {
         this.last_update_time = last_update_time;
     }
 

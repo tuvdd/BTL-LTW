@@ -1,5 +1,6 @@
 package repositories.impls;
 
+import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,8 +41,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -62,8 +62,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -74,14 +73,13 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         try {
             sql = record.GetInsertSQL();
             CreateConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setBytes(1, record.image);
             response = statement.executeUpdate();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -93,11 +91,12 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             sql = record.GetUpdateSQL();
             CreateConnection();
             statement = connection.prepareStatement(sql);
+            if (record.getImage() != null && record.getImage().length > 0)
+                statement.setBytes(1, record.image);
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -112,8 +111,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -134,9 +132,9 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
                 resultSet.getString("description"),
                 resultSet.getString("sub_description"),
                 resultSet.getInt("status"),
-                resultSet.getDate("create_time"),
+                resultSet.getTimestamp("create_time"),
                 UUID.fromString(resultSet.getString("create_by")),
-                resultSet.getDate("last_update_time"),
+                resultSet.getTimestamp("last_update_time"),
                 UUID.fromString(resultSet.getString("last_update_by")));
         return response;
     }
@@ -172,8 +170,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -202,8 +199,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -232,8 +228,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
         return response;
     }
@@ -289,10 +284,10 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
                 bfd.description = rs.getString("description");
                 bfd.sub_description = rs.getString("sub_description");
                 bfd.status = rs.getInt("status");
-                bfd.create_time = rs.getDate("create_time");
+                bfd.create_time = rs.getTimestamp("create_time");
                 bfd.create_by = UUID.fromString(rs.getString("create_by"));
                 bfd.create_by_name = rs.getString("create_by_name");
-                bfd.last_update_time = rs.getDate("last_update_time");
+                bfd.last_update_time =rs.getTimestamp("last_update_time");
                 bfd.last_update_by = UUID.fromString(rs.getString("last_update_by"));
                 bfd.last_update_by_name = rs.getString("last_update_by_name");
 
@@ -302,8 +297,7 @@ public class BookRepo extends Repo<Book> implements IBookRepo {
         } catch (Exception e) {
             // TODO: handle exception
         } finally {
-            connection.close();
-            statement.close();
+            CloseConnection();
         }
 
         return response;

@@ -28,8 +28,11 @@
 	padding: 30px;
 	margin-top: 30px;
 }
+textarea{
+	resize:vertical;
+}
 
-input {
+input,textarea, select {
 	border: 2px solid #355b9a;
 	border-radius: 10px;
 	margin: 10px 0;
@@ -224,7 +227,8 @@ th {
 }
 
 .form-data-text p {
-	display: inline;
+	display: block;
+	margin: 0;
 }
 
 .form-data-text input {

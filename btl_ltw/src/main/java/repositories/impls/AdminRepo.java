@@ -38,8 +38,7 @@ public class AdminRepo extends Repo<Admin> implements IAdminRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -61,8 +60,7 @@ public class AdminRepo extends Repo<Admin> implements IAdminRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -77,8 +75,7 @@ public class AdminRepo extends Repo<Admin> implements IAdminRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -93,8 +90,7 @@ public class AdminRepo extends Repo<Admin> implements IAdminRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -109,8 +105,7 @@ public class AdminRepo extends Repo<Admin> implements IAdminRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -170,8 +165,7 @@ public class AdminRepo extends Repo<Admin> implements IAdminRepo {
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

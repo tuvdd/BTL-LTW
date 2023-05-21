@@ -35,8 +35,7 @@ public class UserLoginRepo extends Repo<UserLogin> implements IUserLoginRepo {
 
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -58,8 +57,7 @@ public class UserLoginRepo extends Repo<UserLogin> implements IUserLoginRepo {
 
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -73,8 +71,7 @@ public class UserLoginRepo extends Repo<UserLogin> implements IUserLoginRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -88,8 +85,7 @@ public class UserLoginRepo extends Repo<UserLogin> implements IUserLoginRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -103,8 +99,7 @@ public class UserLoginRepo extends Repo<UserLogin> implements IUserLoginRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

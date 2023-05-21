@@ -35,8 +35,7 @@ public class BookTagRepo extends Repo<BookTag> implements IBookTagRepo {
 
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -57,8 +56,7 @@ public class BookTagRepo extends Repo<BookTag> implements IBookTagRepo {
 
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -72,8 +70,7 @@ public class BookTagRepo extends Repo<BookTag> implements IBookTagRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -87,8 +84,7 @@ public class BookTagRepo extends Repo<BookTag> implements IBookTagRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -102,8 +98,7 @@ public class BookTagRepo extends Repo<BookTag> implements IBookTagRepo {
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally{
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }

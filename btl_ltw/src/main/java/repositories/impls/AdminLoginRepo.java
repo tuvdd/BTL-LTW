@@ -37,8 +37,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -72,8 +71,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -88,8 +86,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -104,8 +101,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -120,8 +116,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
             response = statement.executeUpdate();
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return response;
     }
@@ -150,8 +145,7 @@ public class AdminLoginRepo extends Repo<AdminLogin> implements IAdminLoginRepo 
 
         } catch (Exception ex) {
         } finally {
-            connection.close();
-            statement.close();
+           CloseConnection();
         }
         return id;
     }

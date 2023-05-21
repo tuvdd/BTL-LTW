@@ -1,11 +1,11 @@
 package models;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 import utils.JsonUtils;
 
 public class Order extends Table {
-    public Date created_time;
+    public Timestamp created_time;
     public int status;
     public String address;
     public String phonenum;
@@ -45,7 +45,7 @@ public class Order extends Table {
                 "buyer_name = '" + buyer_name + "'";
     }
 
-    public void set(UUID id, Date created_time, int status, String address, String phonenum, String buyer_name) {
+    public void set(UUID id, Timestamp created_time, int status, String address, String phonenum, String buyer_name) {
         this.id = id;
         this.created_time = created_time;
         this.status = status;
