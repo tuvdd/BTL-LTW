@@ -195,8 +195,9 @@ request.getSession().removeAttribute("messageType");
 			</select>
 		</div>
 		<div class="form-data-button">
-			<button type="submit">Sửa</button>
-			<button type="button" id="edit-cancel" onclick="closeEditModal()">Hủy</button>
+			<button type="submit">Thêm</button>
+			<button type="reset">Hoàn tác</button>
+			<button type="button" id="edit-cancel" onclick="closeAddModal()">Hủy</button>
 		</div>
 	</form>
 </div>
