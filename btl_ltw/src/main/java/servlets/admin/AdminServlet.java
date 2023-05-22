@@ -3,20 +3,19 @@ package servlets.admin;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Admin;
-import models.AdminLogin;
 import models.dtos.AdminFullDetail;
-import repositories.impls.AdminRepo;
-import repositories.interfaces.IAdminRepo;
+import repositories.AdminRepo;
 
 @WebServlet({ "/admin/admin", "/admin/admin/" })
 public class AdminServlet extends BaseServlet {
-    private IAdminRepo adminRepo;
+    private AdminRepo adminRepo;
 
     public AdminServlet() {
         super();
@@ -37,7 +36,7 @@ public class AdminServlet extends BaseServlet {
         List<AdminFullDetail> listAdminFullDetails;
         try {
 
-            listAdminFullDetails = adminRepo.GetsFullDetail("");
+            listAdminFullDetails = adminRepo.GetsFullDetail(1, 10);
             req.setAttribute("listAdminFullDetails", listAdminFullDetails);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +52,7 @@ public class AdminServlet extends BaseServlet {
             resp.sendRedirect("/btl_ltw/admin/login");
             return;
         }
-
+        String id = req.getParameter("id");
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String phonenum = req.getParameter("phonenum");
@@ -62,11 +61,29 @@ public class AdminServlet extends BaseServlet {
         String password = req.getParameter("password");
 
         Admin admin = new Admin();
-        AdminLogin adminLogin = new AdminLogin();
-        admin.set(null, name, email, phonenum, cccd);
-        adminLogin.set(null, username, password);
+        admin.set(null, name, email, phonenum, cccd, username, password);
+
+        if (id != null && id != "") {
+            admin.id = UUID.fromString(id);
+            try {
+                int res = adminRepo.update(admin);
+                if (res == 1) {
+                    req.getSession().setAttribute("message", "Sửa thành công!");
+                    req.getSession().setAttribute("messageType", "success");
+                } else {
+                    req.getSession().setAttribute("message", "Sửa không thành công!");
+                    req.getSession().setAttribute("messageType", "error");
+                }
+            } catch (SQLException e) {
+                req.getSession().setAttribute("message", e.getMessage());
+                req.getSession().setAttribute("messageType", "error");
+            } finally {
+                resp.sendRedirect("/btl_ltw/admin/admin");
+            }
+            return;
+        }
         try {
-            int res = adminRepo.Register(admin, adminLogin);
+            int res = adminRepo.add(admin);
             if (res == 2) {
                 req.getSession().setAttribute("message", "Thêm mới thành công!");
                 req.getSession().setAttribute("messageType", "success");
@@ -80,16 +97,5 @@ public class AdminServlet extends BaseServlet {
         } finally {
             resp.sendRedirect("/btl_ltw/admin/admin");
         }
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doPut(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     }
 }

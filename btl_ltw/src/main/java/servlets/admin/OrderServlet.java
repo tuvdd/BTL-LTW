@@ -1,7 +1,6 @@
 package servlets.admin;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
@@ -9,12 +8,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Order;
-import repositories.impls.OrderRepo;
-import repositories.interfaces.IOrderRepo;
-
+import repositories.OrderRepo;
 @WebServlet({ "/admin/order", "/admin/order/" })
 public class OrderServlet extends BaseServlet {
-    private IOrderRepo orderRepo;
+    private OrderRepo orderRepo;
 
     public OrderServlet() {
         super();
@@ -35,9 +32,9 @@ public class OrderServlet extends BaseServlet {
 		List<Order> listCategories;
 		try {
 
-			listCategories = orderRepo.Gets("","");
+			listCategories = orderRepo.getAll(1,10);
 			req.setAttribute("listCategories", listCategories);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			req.setAttribute("pageName", "order.jsp");
@@ -53,7 +50,7 @@ public class OrderServlet extends BaseServlet {
 		}
 
 		try {
-			int res = orderRepo.Add(null);
+			int res = orderRepo.add(null);
 			if (res == 1) {
 				req.getSession().setAttribute("message", "Thêm mới thành công!");
 				req.getSession().setAttribute("messageType", "success");
@@ -61,23 +58,11 @@ public class OrderServlet extends BaseServlet {
 				req.getSession().setAttribute("message", "Thêm mới không thành công!");
 				req.getSession().setAttribute("messageType", "error");
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			req.getSession().setAttribute("message", e.getMessage());
 			req.getSession().setAttribute("messageType", "error");
 		} finally {
 			resp.sendRedirect("/btl_ltw/admin/order");
 		}
 	}
-
-	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPut(req, resp);
-	}
-
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-	}
-
 }

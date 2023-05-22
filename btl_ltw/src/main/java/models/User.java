@@ -3,9 +3,8 @@ package models;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-import utils.JsonUtils;
-
-public class User extends Table {
+public class User {
+    public UUID id;
     public String name;
     public String phonenum;
     public String address;
@@ -13,14 +12,11 @@ public class User extends Table {
     public boolean status;
     public Timestamp created_time;
     public Timestamp last_update_time;
-
-    public User() {
-        super();
-        this.TableName = "users";
-    }
+    public String username;
+    public String password;
 
     public void set(UUID id, String name, String phonenum, String address, UUID avatar_id, boolean status,
-            Timestamp created_time, Timestamp last_update_time) {
+            Timestamp created_time, Timestamp last_update_time, String username, String password) {
         this.id = id;
         this.name = name;
         this.phonenum = phonenum;
@@ -29,39 +25,88 @@ public class User extends Table {
         this.status = status;
         this.created_time = created_time;
         this.last_update_time = last_update_time;
+        this.username = username;
+        this.password = password;
     }
 
-    public static String GetTableName() {
-		return "users";
-	}
-    
-
-    @Override
-    public String Get_Insert_Fields_SQL() {
-        return "id, name, phonenum, address, avatar_id, status, created_time, last_update_time";
+    public UUID getId() {
+        return id;
     }
 
-    @Override
-    public String Get_Insert_Values_SQL() {
-        return "gen_random_uuid(), '" + name + "', '" + phonenum + "', '" + address + "', '" + avatar_id + "', '"
-                + status + "', '" + created_time + "', '" + last_update_time + "'";
+    public void setId(UUID id) {
+        this.id = id;
     }
 
-    @Override
-    public String Get_Update_Values_SQL() {
-        return "name = '" + name + "', phonenum = '" + phonenum + "', address = '" + address + "', avatar_id = '"
-                + avatar_id + "', status = '" + status + "', created_time = '" + created_time
-                + "', last_update_time = '" + last_update_time + "'";
-    }public String To_Json_String() {
-		return "{" +
-				JsonUtils.PropToJson("id", id, true) +
-				JsonUtils.PropToJson("name", name, true) +
-				JsonUtils.PropToJson("phonenum", phonenum, true) +
-                JsonUtils.PropToJson("address", address, true) +
-				JsonUtils.PropToJson("avatar_id", avatar_id, true) +
-                JsonUtils.PropToJson("status", status, false) +
-				JsonUtils.PropToJson("created_time", created_time, true) +
-                JsonUtils.PropToJson("last_update_time", last_update_time, true) +
-				"}";
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhonenum() {
+        return phonenum;
+    }
+
+    public void setPhonenum(String phonenum) {
+        this.phonenum = phonenum;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public UUID getAvatar_id() {
+        return avatar_id;
+    }
+
+    public void setAvatar_id(UUID avatar_id) {
+        this.avatar_id = avatar_id;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Timestamp getCreated_time() {
+        return created_time;
+    }
+
+    public void setCreated_time(Timestamp created_time) {
+        this.created_time = created_time;
+    }
+
+    public Timestamp getLast_update_time() {
+        return last_update_time;
+    }
+
+    public void setLast_update_time(Timestamp last_update_time) {
+        this.last_update_time = last_update_time;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
