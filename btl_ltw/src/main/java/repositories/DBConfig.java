@@ -1,4 +1,4 @@
-package models;
+package repositories;
 public class DBConfig {
     public static String url = "jdbc:postgresql://localhost:5432/btl_ltw";
     public static String username = "postgres";

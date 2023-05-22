@@ -19,12 +19,14 @@ request.getSession().removeAttribute("messageType");
 			<th>Thao tác</th>
 		</tr>
 		<c:forEach var="category" items="${listCategories}">
-			<tr>
+			<tr id="tr-${category.getId()}">
 				<td>${category.getId()}</td>
 				<td>${category.getName()}</td>
-				<td>${category.getStatus()}</td>
+				<td><a
+					href="/btl_ltw/admin/category/change-status?id=${category.getId()}">${category.getStatus()}</a>
+				</td>
 				<td>
-					<button onclick="showEditModal()">Sửa</button>
+					<button onclick="showEditModal('tr-${category.getId()}')">Sửa</button>
 					<button>Xóa</button>
 				</td>
 			</tr>
@@ -46,24 +48,24 @@ request.getSession().removeAttribute("messageType");
 </div>
 
 <div id="edit-modal" class="modal">
-	<form method="put" action="/btl_ltw/admin/category" id="edit-form">
+	<form method="post" action="/btl_ltw/admin/category" id="edit-form">
 		<h3>Sửa danh mục</h3>
-
+		<input id="edit-hidden" type="hidden" name="id" value="" />
 		<div class="form-data-text">
 			<p>Tên danh mục</p>
-			<input name="name" placeholder="Nhập tên danh mục" id="edit-name">
-		</div>
-		<div class="form-data-checkbox">
-			<p>Trạng thái</p>
-			<input name="status" type="checkbox" id="edit-status">
+			<input id="edit-name" name="name" placeholder="Nhập tên danh mục"
+				id="edit-name">
 		</div>
 		<div class="form-data-button">
 			<button type="submit">Sửa</button>
 			<button type="button">Hoàn tác</button>
-			<button type="button" id="add-cancel" onclick="closeEditModal()">Hủy</button>
+			<button type="button" id="edit-cancel" onclick="closeEditModal()">Hủy</button>
 		</div>
 
 	</form>
 </div>
 <script src="/btl_ltw/admin/resources/js/content.js"
+	type="text/javascript"></script>
+
+<script src="/btl_ltw/admin/resources/js/category.js"
 	type="text/javascript"></script>

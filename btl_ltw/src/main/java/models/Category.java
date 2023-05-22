@@ -2,11 +2,18 @@ package models;
 
 import java.util.UUID;
 
-import utils.JsonUtils;
-
-public class Category extends Table {
+public class Category {
+	public UUID id;
 	public String name;
 	public boolean status;
+	public String url;
+
+	public void set(UUID id, String name, boolean status, String url) {
+		this.id = id;
+		this.name = name;
+		this.status = status;
+		this.url = url;
+	}
 
 	public UUID getId() {
 		return id;
@@ -32,41 +39,13 @@ public class Category extends Table {
 		this.status = status;
 	}
 
-	public Category() {
-		super();
-		TableName = "categories";
+	public String getUrl() {
+		return url;
 	}
 
-	public void set(UUID id, String name, boolean status) {
-		this.id = id;
-		this.name = name;
-		this.status = status;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	public static String GetTableName() {
-		return "categories";
-	}
-
-	@Override
-	public String Get_Insert_Fields_SQL() {
-		return "id, name, status";
-	}
-
-	@Override
-	public String Get_Insert_Values_SQL() {
-		return "gen_random_uuid(), '" + name + "', " + status + "";
-	}
-
-	@Override
-	public String Get_Update_Values_SQL() {
-		return "name = '" + name + "', status = " + status + "";
-	}
-	public String To_Json_String() {
-		return "{" +
-				JsonUtils.PropToJson("id", id, true) +
-				JsonUtils.PropToJson("name", name, true) +
-				JsonUtils.PropToJson("status", status, false) +
-				"}";
-	}
-
+	
 };
