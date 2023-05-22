@@ -37,7 +37,7 @@ public class BookRepo extends Repo<Book> {
         try {
             sql = "SELECT * FROM books WHERE id=?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 book = setObjectFromResultSet(resultSet);
@@ -79,7 +79,7 @@ public class BookRepo extends Repo<Book> {
         try {
             sql = "SELECT * FROM books WHERE category_id=? LIMIT ? OFFSET ?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, uuid.toString());
+            statement.setObject(1, UUID.fromString(uuid));
             statement.setInt(2, size);
             statement.setInt(3, (page - 1) * size);
             resultSet = statement.executeQuery();

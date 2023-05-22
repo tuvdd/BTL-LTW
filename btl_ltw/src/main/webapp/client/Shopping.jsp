@@ -69,7 +69,7 @@
                         <ul class="item">
                             <c:forEach items="${news}" var="p">
                                 <li>
-                                    <a href="#">
+                                    <a href="detail?bookid=${p.getId()}">
                                         <img src="data:image/png;base64,${p.getImageBase64()}" alt="" width="80px" height="80px" />
                                         <p>${p.name}</p>
                                         <p>gia goc: <span class="old">${(p.price)}</span>VND</p>
@@ -87,7 +87,7 @@
                         <ul class="item">
                             <c:forEach items="${olds}" var="p">
                                 <li>
-                                    <a href="#">
+                                    <a href="detail?bookid=${p.getId()}">
                                         <img src="data:image/png;base64,${p.getImageBase64()}" alt="" width="80px" height="80px" />
                                         <p>${p.name}</p>
                                         <p>gia goc: <span class="old">${(p.price)}</span>VND</p>
@@ -105,7 +105,7 @@
                         <ul class="item">
                             <c:forEach items="${list}" var="p">
                                 <li>
-                                    <a href="#">
+                                    <a href="detail?bookid=${p.getId()}">
                                         <img src="data:image/png;base64,${p.getImageBase64()}" alt="" width="80px" height="80px" />
                                         <p>${p.name}</p>
                                         <p>gia goc: <span class="old">${(p.price)}</span>VND</p>

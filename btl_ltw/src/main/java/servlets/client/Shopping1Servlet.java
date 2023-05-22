@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Book;
 import models.Category;
-import repositories.impls.BookRepo;
-import repositories.impls.CategoryRepo;
+import repositories.BookRepo;
+import repositories.CategoryRepo;
 import repositories.impls.DAO;
 
 import java.io.IOException;
@@ -30,16 +30,9 @@ public class Shopping1Servlet extends HttpServlet {
         DAO d = new DAO();
         CategoryRepo repoC = new CategoryRepo();
         BookRepo repoB = new BookRepo();
-        List<Book> products = null, olds = null;
+        List<Book> products = null;
         List<Category> categories = null;
-        try {
-            categories = repoC.Gets("", "");
-            System.out.println("test");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
+        categories = repoC.getAll(-1, -1);
 
         boolean[] chid = new boolean[categories.size() + 1];
         String cid_raw = req.getParameter("cid");
@@ -50,18 +43,10 @@ public class Shopping1Servlet extends HttpServlet {
         if (cid_raw != null) {
             cid = Integer.parseInt(cid_raw);
             if (cid == 0){
-                try {
-                    products = repoB.Gets("","");
-                    chid[0] = true;
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                products = repoB.getAll(1,20);
+                chid[0] = true;
             }else {
-                try {
-                    products = repoB.GetListBookByCategoryID(categories.get(cid-1).getId().toString(),1,20);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                products = repoB.GetListBookByCategoryID(categories.get(cid-1).getId().toString(),1,20);
             }
         }
         if (cidd_raw != null) {
@@ -70,12 +55,9 @@ public class Shopping1Servlet extends HttpServlet {
                 cidd[i] = Integer.parseInt(cidd_raw[i]);
             }
             for (int i = 0; i < cidd.length; i++) {
-                try {
-                    List<Book> products_temp = repoB.GetListBookByCategoryID(categories.get(cidd[i]-1).getId().toString(),1,20);
-                    products.addAll(products_temp);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                List<Book> products_temp = repoB.GetListBookByCategoryID(categories.get(cidd[i]-1).getId().toString(),1,20);
+                products.addAll(products_temp);
+
             }
         }
 
@@ -86,73 +68,47 @@ public class Shopping1Servlet extends HttpServlet {
                 if (price[i].equals("0")) {
                     from = 0;
                     to = 10000000;
-                    try {
-                        products = repoB.GetListBookByPrice(from, to, 1,10);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    products = repoB.GetListBookByPrice(from, to, 1,20);
                     pb[0] = true;
                     break;
                 } else {
                     if (price[i].equals("1")) {
                         from = 0;
                         to = 100000;
-                        try {
-                            temp_book_price = repoB.GetListBookByPrice(from, to, 1,10);
-                            products.addAll(temp_book_price);
+                        temp_book_price = repoB.GetListBookByPrice(from, to, 1,20);
+                        products.addAll(temp_book_price);
 
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
                         pb[1] = true;
                     }
                     if (price[i].equals("2")) {
                         from = 100000;
                         to = 200000;
-                        try {
-                            temp_book_price = repoB.GetListBookByPrice(from, to, 1,10);
-                            products.addAll(temp_book_price);
+                        temp_book_price = repoB.GetListBookByPrice(from, to, 1,20);
+                        products.addAll(temp_book_price);
 
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
                         pb[2] = true;
                     }
                     if (price[i].equals("3")) {
                         from = 200000;
                         to = 500000;
-                        try {
-                            temp_book_price = repoB.GetListBookByPrice(from, to, 1,10);
-                            products.addAll(temp_book_price);
+                        temp_book_price = repoB.GetListBookByPrice(from, to, 1,10);
+                        products.addAll(temp_book_price);
 
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
                         pb[3] = true;
                     }
                     if (price[i].equals("4")) {
                         from = 500000;
                         to = 1000000;
-                        try {
-                            temp_book_price = repoB.GetListBookByPrice(from, to, 1,10);
-                            products.addAll(temp_book_price);
-
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
+                        temp_book_price = repoB.GetListBookByPrice(from, to, 1,10);
+                        products.addAll(temp_book_price);
 
                         pb[4] = true;
                     }
                     if (price[i].equals("5")) {
                         from = 1000000;
                         to = 10000000;
-                        try {
-                            temp_book_price = repoB.GetListBookByPrice(from, to, 1,10);
-                            products.addAll(temp_book_price);
-
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
+                        temp_book_price = repoB.GetListBookByPrice(from, to, 1,10);
+                        products.addAll(temp_book_price);
 
                         pb[5] = true;
                     }
