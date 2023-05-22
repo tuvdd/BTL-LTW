@@ -45,6 +45,7 @@ public class ShoppingServlet extends HttpServlet {
         req.setAttribute("olds", olds);
         req.setAttribute("pp", pp);
         req.setAttribute("pb", pb);
+        req.setAttribute("cid", 0);
         req.setAttribute("chid", chid);
         req.getRequestDispatcher("/client/Shopping.jsp").forward(req, resp);
     }
