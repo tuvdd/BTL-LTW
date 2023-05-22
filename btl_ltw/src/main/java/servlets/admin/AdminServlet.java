@@ -10,7 +10,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Admin;
-import models.dtos.AdminFullDetail;
 import repositories.AdminRepo;
 
 @WebServlet({ "/admin/admin", "/admin/admin/" })
@@ -33,11 +32,11 @@ public class AdminServlet extends BaseServlet {
             return;
         }
 
-        List<AdminFullDetail> listAdminFullDetails;
+        List<Admin> listAdmins;
         try {
 
-            listAdminFullDetails = adminRepo.GetsFullDetail(1, 10);
-            req.setAttribute("listAdminFullDetails", listAdminFullDetails);
+        	listAdmins = adminRepo.getAll(1, 10);
+            req.setAttribute("listAdmins", listAdmins);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

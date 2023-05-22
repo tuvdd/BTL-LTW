@@ -1,9 +1,9 @@
-<%@ page import="java.util.*, servlets.admin.ServletUtil, models.dtos.*"
+<%@ page import="java.util.*, servlets.admin.ServletUtil, models.*"
 	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-List<AdminFullDetail> listAdminFullDetails = (List<AdminFullDetail>) request.getAttribute("listAdminFullDetails");
+List<Admin> listAdmins = (List<Admin>) request.getAttribute("listAdmins");
 String message = (String) request.getSession().getAttribute("message");
 String messageType = (String) request.getSession().getAttribute("messageType");
 request.getSession().removeAttribute("message");
@@ -21,7 +21,7 @@ request.getSession().removeAttribute("messageType");
 			<th>Username</th>
 			<th>Thao tác</th>
 		</tr>
-		<c:forEach var="adminFullDetail" items="${listAdminFullDetails}">
+		<c:forEach var="adminFullDetail" items="${listAdmins}">
 			<tr id="tr-${adminFullDetail.getId()}">
 				<td>${adminFullDetail.getId()}</td>
 				<td>${adminFullDetail.getName()}</td>

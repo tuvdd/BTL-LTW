@@ -78,7 +78,7 @@ public class AdminRepo extends Repo<Admin> {
         try {
             int offset = (page - 1) * pageSize;
             CreateConnection();
-            sql = "SELECT * FROM admin LIMIT ?, ?";
+            sql = "SELECT * FROM admins OFFSET ? LIMIT ? ;";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, offset);
             statement.setInt(2, pageSize);
@@ -109,7 +109,7 @@ public class AdminRepo extends Repo<Admin> {
         Admin admin;
         try {
             CreateConnection();
-            sql = "SELECT * FROM admin WHERE id=?";
+            sql = "SELECT * FROM admin WHERE id=;";
             statement = connection.prepareStatement(sql);
             statement.setString(1, id.toString());
             resultSet = statement.executeQuery();
@@ -175,30 +175,5 @@ public class AdminRepo extends Repo<Admin> {
         admin.phonenum = resultSet.getString("phonenum");
         admin.cccd = resultSet.getString("cccd");
         return admin;
-    }
-
-    public List<AdminFullDetail> GetsFullDetail(int page, int pageSize) throws SQLException {
-        int offset = (page - 1) * pageSize;
-        sql = "SELECT a.id id, a.name name, a.email email, a.phonenum phonenum, a.cccd cccd, al.username username, al.password password "
-                + "FROM admins a, admin_logins al "
-                + "LIMIT ?, ? ;";
-        statement = connection.prepareStatement(sql);
-        statement.setInt(1, offset);
-        statement.setInt(2, pageSize);
-        ResultSet resultSet = statement.executeQuery();
-
-        List<AdminFullDetail> adminFullDetails = new ArrayList<>();
-        while (resultSet.next()) {
-            AdminFullDetail afd = new AdminFullDetail();
-            afd.id = UUID.fromString(resultSet.getString("id"));
-            afd.name = resultSet.getString("name");
-            afd.email = resultSet.getString("email");
-            afd.phonenum = resultSet.getString("phonenum");
-            afd.cccd = resultSet.getString("cccd");
-            afd.username = resultSet.getString("username");
-            afd.password = resultSet.getString("password");
-            adminFullDetails.add(afd);
-        }
-        return adminFullDetails;
     }
 }
