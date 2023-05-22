@@ -21,7 +21,7 @@
                         <p>
                             Giới thiệu...
                         </p>
-                        <a href="/client/shopping/" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a>
+                        <a href="/client/shopping" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a>
                     </div>
                     <div class="col-2">
                         <img src="Book1.png" alt="" />
@@ -54,7 +54,7 @@
         <div class="row">
             <c:forEach items="${listB}" var="o">
                 <div class="col-4">
-                    <a href="#"><img src="${o.image}" alt="" /></a>
+                    <a href="#"><img src="data:image/png;base64,${o.getImageBase64()}" alt="" /></a>
                     <a href="#">
                         <h4>${o.name}</h4>
                     </a>
@@ -74,7 +74,7 @@
         <div class="row">
             <c:forEach items="${listB}" var="m">
                 <div class="col-4">
-                    <a href="#"><img src="${m.image}" alt="" /></a>
+                    <a href="#"><img src="data:image/png;base64,${m.getImageBase64()}" alt="" /></a>
                     <a href="#">
                         <h4>${m.name}</h4>
                     </a>
@@ -96,7 +96,7 @@
         <div class="small-container">
             <div class="row">
                 <div class="col-2">
-                    <img src="${p.image}" alt="" class="offer-img" />
+                    <img src="data:image/png;base64,${p.getImageBase64()}" alt="" class="offer-img" />
                 </div>
                 <div class="col-2">
                     <p>SP đề cử</p>

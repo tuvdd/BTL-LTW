@@ -30,18 +30,19 @@ public class HomeServlet extends HttpServlet{
         try {
             listB = repoB.Gets("","");
             listC = repoC.Gets("", "");
-//            System.out.println(listB);
-//            System.out.println(listC);
-//            System.out.println(listC.get(1).getName());
-//            System.out.println(0);
+            System.out.println(listB);
+            System.out.println(listC);
+            System.out.println(listC.get(1).getName());
+            System.out.println(listC.get(1).getId());
+            System.out.println(0);
 
-            p = listB.get(listB.size()-1);
+            p = listB.get(0);
             System.out.println(1);
             req.setAttribute("listB", listB);
             req.setAttribute("listC", listC);
-//            req.setAttribute("listRB", listRB);
+            req.setAttribute("listRB", listRB);
             req.setAttribute("p",p);
-//            System.out.println(2);
+            System.out.println(2);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
