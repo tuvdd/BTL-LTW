@@ -1,7 +1,5 @@
 package repositories.impls;
 
-import java.sql.Timestamp;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,9 +8,7 @@ import java.util.UUID;
 
 import models.Book;
 import models.dtos.AdminBookView;
-import repositories.interfaces.IBookImageRepo;
 import repositories.interfaces.IBookRepo;
-import repositories.interfaces.ITagRepo;
 import repositories.utils.SQLInjection;
 import repositories.utils.models.LogicalClause;
 import repositories.utils.models.LogicalObject;
