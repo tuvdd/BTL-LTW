@@ -1,43 +1,30 @@
 package models;
 import java.util.UUID;
 
-import utils.JsonUtils;
 
-public class Tag extends Table {
+public class Tag {
+    public UUID id;
     public String tag_name;
-
-    public Tag() {
-        super();
-        this.TableName = "tags";
-    }
 
     public void set(UUID id, String tag_name) {
         this.id = id;
         this.tag_name = tag_name;
     }
 
-    public static String GetTableName() {
-		return "tags";
-	}
-    
-
-    @Override
-    public String Get_Insert_Fields_SQL() {
-        return "id, tag_name";
+    public UUID getId() {
+        return id;
     }
 
-    @Override
-    public String Get_Insert_Values_SQL() {
-        return "gen_random_uuid(), '" + tag_name + "'";
+    public void setId(UUID id) {
+        this.id = id;
     }
 
-    @Override
-    public String Get_Update_Values_SQL() {
-        return "tag_name = '" + tag_name + "'";
-    }public String To_Json_String() {
-		return "{" +
-				JsonUtils.PropToJson("id", id, true) +
-				JsonUtils.PropToJson("tag_name", tag_name, true) +
-				"}";
-	}
+    public String getTag_name() {
+        return tag_name;
+    }
+
+    public void setTag_name(String tag_name) {
+        this.tag_name = tag_name;
+    }
+
 }
