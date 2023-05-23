@@ -26,9 +26,6 @@ public class BookRepo extends Repo<Book> {
                 sql += ";";
                 statement = connection.prepareStatement(sql);
             }
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, size);
-            statement.setInt(2, (page - 1) * size);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Book book = setObjectFromResultSet(resultSet);

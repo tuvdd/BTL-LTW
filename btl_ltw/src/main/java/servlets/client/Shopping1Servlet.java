@@ -9,13 +9,8 @@ import models.Book;
 import models.Category;
 import repositories.BookRepo;
 import repositories.CategoryRepo;
-import repositories.impls.DAO;
-
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @WebServlet({ "/client/shopping1", "/client/shopping1/" })
 public class Shopping1Servlet extends HttpServlet {
@@ -27,7 +22,6 @@ public class Shopping1Servlet extends HttpServlet {
                 "Từ 500k - 1 triệu",
                 "Trên 1 triệu"};
         boolean[] pb = new boolean[pp.length + 1];
-        DAO d = new DAO();
         CategoryRepo repoC = new CategoryRepo();
         BookRepo repoB = new BookRepo();
         List<Book> products = null;

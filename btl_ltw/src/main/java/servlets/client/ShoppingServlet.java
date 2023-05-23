@@ -9,10 +9,7 @@ import models.Book;
 import models.Category;
 import repositories.BookRepo;
 import repositories.CategoryRepo;
-import repositories.impls.DAO;
-
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 @WebServlet({ "/client/shopping", "/client/shopping/" })
 public class ShoppingServlet extends HttpServlet {

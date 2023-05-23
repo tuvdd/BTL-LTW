@@ -9,8 +9,6 @@ import models.Book;
 import repositories.BookRepo;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.UUID;
 
 @WebServlet({ "/client/detail", "/client/detail/" })
