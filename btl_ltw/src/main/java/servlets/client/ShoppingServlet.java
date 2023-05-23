@@ -15,7 +15,6 @@ import java.util.List;
 public class ShoppingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        DAO d = new DAO();
         CategoryRepo repoC = new CategoryRepo();
         BookRepo repoB = new BookRepo();
         List<Book> news, olds = null;
