@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 import models.Admin;
-import models.dtos.AdminFullDetail;
 
 public class AdminRepo extends Repo<Admin> {
     public int add(Admin admin) throws SQLException {
@@ -16,7 +15,7 @@ public class AdminRepo extends Repo<Admin> {
             CreateConnection();
             sql = "INSERT INTO admin (id, name, email, phonenum, cccd, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, admin.id.toString());
+            statement.setObject(1, admin.id);
             statement.setString(2, admin.name);
             statement.setString(3, admin.email);
             statement.setString(4, admin.phonenum);
@@ -45,7 +44,7 @@ public class AdminRepo extends Repo<Admin> {
             statement.setString(4, admin.cccd);
             statement.setString(5, admin.username);
             statement.setString(6, admin.password);
-            statement.setString(7, admin.id.toString());
+            statement.setObject(7, admin.id);
             res = statement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -62,7 +61,7 @@ public class AdminRepo extends Repo<Admin> {
             CreateConnection();
             sql = "DELETE FROM admin WHERE id=?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             res = statement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -76,12 +75,18 @@ public class AdminRepo extends Repo<Admin> {
     public List<Admin> getAll(int page, int pageSize) throws SQLException {
         List<Admin> admins = null;
         try {
-            int offset = (page - 1) * pageSize;
             CreateConnection();
-            sql = "SELECT * FROM admins OFFSET ? LIMIT ? ;";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, offset);
-            statement.setInt(2, pageSize);
+            sql = "SELECT * FROM admins";
+            if (page == -1 || pageSize == -1) {
+                int offset = (page - 1) * pageSize;
+                sql += " OFFSET ? LIMIT ? ;";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, offset);
+                statement.setInt(2, pageSize);
+            } else {
+                sql += ";";
+                statement = connection.prepareStatement(sql);
+            }
             resultSet = statement.executeQuery();
 
             admins = new ArrayList<>();
@@ -111,7 +116,7 @@ public class AdminRepo extends Repo<Admin> {
             CreateConnection();
             sql = "SELECT * FROM admin WHERE id=;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -175,5 +180,24 @@ public class AdminRepo extends Repo<Admin> {
         admin.phonenum = resultSet.getString("phonenum");
         admin.cccd = resultSet.getString("cccd");
         return admin;
+    }
+
+    public int getCount() {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM admins ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
     }
 }

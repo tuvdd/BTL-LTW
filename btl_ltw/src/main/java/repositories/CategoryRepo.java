@@ -14,7 +14,7 @@ public class CategoryRepo extends Repo<Category> {
         List<Category> categories = new ArrayList<>();
         CreateConnection();
         try {
-            if (pageIndex == -1 && pageSize == -1) {
+            if (pageIndex == -1 || pageSize == -1) {
                 sql = "SELECT * FROM categories";
                 statement = connection.prepareStatement(sql);
             } else {
@@ -42,7 +42,7 @@ public class CategoryRepo extends Repo<Category> {
         try {
             sql = "SELECT * FROM categories WHERE id=?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 category = setObjectFromResultSet(resultSet);
@@ -61,7 +61,7 @@ public class CategoryRepo extends Repo<Category> {
         try {
             sql = "INSERT INTO categories (id, name, status, url) VALUES (?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, category.id.toString());
+            statement.setObject(1, category.id);
             statement.setString(2, category.name);
             statement.setBoolean(3, category.status);
             statement.setString(4, category.url);
@@ -83,7 +83,7 @@ public class CategoryRepo extends Repo<Category> {
             statement.setString(1, category.name);
             statement.setBoolean(2, category.status);
             statement.setString(3, category.url);
-            statement.setString(4, category.id.toString());
+            statement.setObject(4, category.id);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,7 +99,7 @@ public class CategoryRepo extends Repo<Category> {
         try {
             sql = "DELETE FROM categories WHERE id=?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,5 +117,24 @@ public class CategoryRepo extends Repo<Category> {
         category.setStatus(resultSet.getBoolean("status"));
         category.setUrl(resultSet.getString("url"));
         return category;
+    }
+
+    public int getCount() {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM categories ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+            	res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
     }
 }

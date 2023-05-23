@@ -9,6 +9,7 @@ public class Order{
     public String address;
     public String phonenum;
     public String buyer_name;
+
     public UUID getId() {
         return id;
     }
@@ -45,5 +46,4 @@ public class Order{
     public void setBuyer_name(String buyer_name) {
         this.buyer_name = buyer_name;
     }
-
 }

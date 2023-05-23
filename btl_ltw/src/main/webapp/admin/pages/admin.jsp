@@ -37,6 +37,32 @@ request.getSession().removeAttribute("messageType");
 		</c:forEach>
 	</table>
 </div>
+<%
+int currentPage = (int) request.getAttribute("currentPage");
+%>
+<%
+int totalPages = (int) request.getAttribute("totalPages");
+%>
+<p style="display: inline;">Trang</p>
+<ul class="pagination" style="display: inline;">
+	<%
+	for (int i = 1; i <= totalPages; i++) {
+	%>
+	<li style="display: inline;">
+		<%
+		if (i != currentPage) {
+		%><a href="/btl_ltw/admin/admin?page=<%=i%>"><%=i%></a>
+		<%
+		} else {
+		%><p style="display: inline;"><%=i%></p>
+		<%
+		}
+		%>
+	</li>
+	<%
+	}
+	%>
+</ul>
 <p class="alert-<%=messageType%>">
 	<%=(message != null ? message : "")%>
 </p>
@@ -51,7 +77,7 @@ request.getSession().removeAttribute("messageType");
 		</div>
 		<div class="form-data-text">
 			<p>Email</p>
-			<input name="email" placeholder="Nhập email"  id="add-email">
+			<input name="email" placeholder="Nhập email" id="add-email">
 		</div>
 		<div class="form-data-text">
 			<p>SDT</p>
@@ -65,7 +91,7 @@ request.getSession().removeAttribute("messageType");
 			<p>Username</p>
 			<input name="username" placeholder="Nhập username" id="add-username">
 		</div>
-		
+
 		<div class="form-data-button">
 			<button type="submit">Thêm</button>
 			<button type="button">Hoàn tác</button>
@@ -78,14 +104,15 @@ request.getSession().removeAttribute("messageType");
 <div id="edit-modal" class="modal">
 	<form method="post" action="/btl_ltw/admin/admin" id="edit-form">
 		<h3>Sửa admin</h3>
-		<input id="edit-hidden" type="hidden" name="id" id="edit_hidden" value="" />
+		<input id="edit-hidden" type="hidden" name="id" id="edit_hidden"
+			value="" />
 		<div class="form-data-text">
 			<p>Tên</p>
 			<input name="name" placeholder="Nhập tên " id="edit-name">
 		</div>
 		<div class="form-data-text">
 			<p>Email</p>
-			<input name="email" placeholder="Nhập email"  id="edit-email">
+			<input name="email" placeholder="Nhập email" id="edit-email">
 		</div>
 		<div class="form-data-text">
 			<p>SDT</p>
@@ -95,7 +122,7 @@ request.getSession().removeAttribute("messageType");
 			<p>CCCD</p>
 			<input name="cccd" placeholder="Nhập cccd" id="edit-cccd">
 		</div>
-		
+
 		<div class="form-data-button">
 			<button type="submit">Sửa</button>
 			<button type="button">Hoàn tác</button>

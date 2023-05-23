@@ -32,11 +32,22 @@ public class AdminServlet extends BaseServlet {
             return;
         }
 
+        int page = 1;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+
         List<Admin> listAdmins;
         try {
-
-        	listAdmins = adminRepo.getAll(1, 10);
+            int pageSize = 10;
+            listAdmins = adminRepo.getAll(page, pageSize);
             req.setAttribute("listAdmins", listAdmins);
+
+            int totalRecords = adminRepo.getCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
