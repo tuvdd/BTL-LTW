@@ -62,6 +62,30 @@ request.getSession().removeAttribute("messageType");
 		</c:forEach>
 	</table>
 </div>
+<%
+int currentPage = (int) request.getAttribute("currentPage");
+%>
+<%
+int totalPages = (int) request.getAttribute("totalPages");
+%>
+<p style="display: inline;">Trang</p>
+<ul class="pagination" style="display: inline;">
+	<%
+	for (int i = 1; i <= totalPages; i++) {
+	%>
+	<li style="display: inline;">
+		<%
+		if (i != currentPage) {
+		%><a href="/btl_ltw/admin/book?page=<%=i%>"><%=i%></a> <%
+ } else {
+ %><p style="display: inline;"><%=i%></p> <%
+ }
+ %>
+	</li>
+	<%
+	}
+	%>
+</ul>
 <p class="alert-<%=messageType%>">
 	<%=(message != null ? message : "")%>
 </p>

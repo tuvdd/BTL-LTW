@@ -21,7 +21,7 @@ public class OrderRepo extends Repo<Order> {
         List<Order> orders = new ArrayList<>();
         CreateConnection();
         try {
-            if (pageIndex == -1 && pageSize == -1) {
+            if (pageIndex == -1 || pageSize == -1) {
                 sql = "SELECT * FROM orders;";
                 statement = connection.prepareStatement(sql);
             } else {
@@ -163,5 +163,24 @@ public class OrderRepo extends Repo<Order> {
         order.setPhonenum(resultSet.getString("phonenum"));
         order.setBuyer_name(resultSet.getString("buyer_name"));
         return order;
+    }
+
+    public int getCount() {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM orders ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+            	res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
     }
 }

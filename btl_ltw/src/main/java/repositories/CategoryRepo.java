@@ -14,7 +14,7 @@ public class CategoryRepo extends Repo<Category> {
         List<Category> categories = new ArrayList<>();
         CreateConnection();
         try {
-            if (pageIndex == -1 && pageSize == -1) {
+            if (pageIndex == -1 || pageSize == -1) {
                 sql = "SELECT * FROM categories";
                 statement = connection.prepareStatement(sql);
             } else {
@@ -117,5 +117,24 @@ public class CategoryRepo extends Repo<Category> {
         category.setStatus(resultSet.getBoolean("status"));
         category.setUrl(resultSet.getString("url"));
         return category;
+    }
+
+    public int getCount() {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM categories ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+            	res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
     }
 }

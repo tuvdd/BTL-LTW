@@ -44,11 +44,24 @@ public class BookServlet extends BaseServlet {
             return;
         }
 
+        int page = 1;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+
         List<AdminBookView> listAdminBookViews;
         List<Category> listCategories;
         try {
-            listAdminBookViews = bookRepo.GetsAdminBookView("");
-            listCategories = categoryRepo.getAll(1,10);
+            int pageSize = 10;
+            listAdminBookViews = bookRepo.GetsAdminBookView(page, pageSize);
+            listCategories = categoryRepo.getAll(-1,-10);
+
+            int totalRecords = bookRepo.getCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
+
             req.setAttribute("listAdminBookViews", listAdminBookViews);
             req.setAttribute("listCategories", listCategories);
         } catch (SQLException e) {

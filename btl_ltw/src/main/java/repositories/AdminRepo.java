@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 import models.Admin;
-import models.dtos.AdminFullDetail;
 
 public class AdminRepo extends Repo<Admin> {
     public int add(Admin admin) throws SQLException {
@@ -76,12 +75,18 @@ public class AdminRepo extends Repo<Admin> {
     public List<Admin> getAll(int page, int pageSize) throws SQLException {
         List<Admin> admins = null;
         try {
-            int offset = (page - 1) * pageSize;
             CreateConnection();
-            sql = "SELECT * FROM admins OFFSET ? LIMIT ? ;";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, offset);
-            statement.setInt(2, pageSize);
+            sql = "SELECT * FROM admins";
+            if (page == -1 || pageSize == -1) {
+                int offset = (page - 1) * pageSize;
+                sql += " OFFSET ? LIMIT ? ;";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, offset);
+                statement.setInt(2, pageSize);
+            } else {
+                sql += ";";
+                statement = connection.prepareStatement(sql);
+            }
             resultSet = statement.executeQuery();
 
             admins = new ArrayList<>();
@@ -175,5 +180,24 @@ public class AdminRepo extends Repo<Admin> {
         admin.phonenum = resultSet.getString("phonenum");
         admin.cccd = resultSet.getString("cccd");
         return admin;
+    }
+
+    public int getCount() {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM admins ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
     }
 }

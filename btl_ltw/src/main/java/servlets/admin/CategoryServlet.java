@@ -30,12 +30,24 @@ public class CategoryServlet extends BaseServlet {
 			resp.sendRedirect("/btl_ltw/admin/login");
 			return;
 		}
+		int page = 1;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+
 
 		List<Category> listCategories;
 		try {
+			int pageSize = 10;
 
-			listCategories = categoryRepo.getAll(1, 10);
+            int totalRecords = categoryRepo.getCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+			listCategories = categoryRepo.getAll(page, pageSize);
 			req.setAttribute("listCategories", listCategories);
+			
+			req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -14,7 +14,18 @@ public class BookRepo extends Repo<Book> {
         List<Book> books = new ArrayList<>();
         CreateConnection();
         try {
-            sql = "SELECT * FROM books LIMIT ? OFFSET ?;";
+            sql = "SELECT * FROM books";
+
+            if (page == -1 || size == -1) {
+                int offset = (page - 1) * size;
+                sql += " OFFSET ? LIMIT ? ;";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, offset);
+                statement.setInt(2, size);
+            } else {
+                sql += ";";
+                statement = connection.prepareStatement(sql);
+            }
             statement = connection.prepareStatement(sql);
             statement.setInt(1, size);
             statement.setInt(2, (page - 1) * size);
@@ -54,7 +65,7 @@ public class BookRepo extends Repo<Book> {
         List<Book> books = new ArrayList<>();
         CreateConnection();
         try {
-            sql = "SELECT * FROM books WHERE price>=? AND price<=? LIMIT ? OFFSET ?;";
+            sql = "SELECT * FROM books WHERE price>=? AND price<=?";
             statement = connection.prepareStatement(sql);
             statement.setDouble(1, fromMoney);
             statement.setDouble(2, toMoney);
@@ -77,7 +88,17 @@ public class BookRepo extends Repo<Book> {
         List<Book> books = new ArrayList<>();
         CreateConnection();
         try {
-            sql = "SELECT * FROM books WHERE category_id=? LIMIT ? OFFSET ?;";
+            sql = "SELECT * FROM books WHERE category_id=?";
+            if (page == -1 || size == -1) {
+                int offset = (page - 1) * size;
+                sql += " OFFSET ? LIMIT ? ;";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, offset);
+                statement.setInt(2, size);
+            } else {
+                sql += ";";
+                statement = connection.prepareStatement(sql);
+            }
             statement = connection.prepareStatement(sql);
             statement.setString(1, uuid.toString());
             statement.setInt(2, size);
@@ -192,8 +213,8 @@ public class BookRepo extends Repo<Book> {
         book.last_update_by = UUID.fromString(resultSet.getString("last_update_by"));
         return book;
     }
-    
-    public List<AdminBookView> GetsAdminBookView(String PaginSQL) throws SQLException {
+
+    public List<AdminBookView> GetsAdminBookView(int page, int size) throws SQLException {
         List<AdminBookView> response = null;
         try {
             String sql = ""
@@ -221,7 +242,8 @@ public class BookRepo extends Repo<Book> {
                     + "        admins ac, "
                     + "        admins au "
                     + "WHERE   b.category_id = c.id AND ac.id = b.create_by AND au.id = b.last_update_by "
-                    + PaginSQL
+                    + "LIMIT " + size +" "
+                    + "OFFSET " + ((page - 1) * size) +" "
                     + " ;";
             CreateConnection();
             statement = connection.prepareStatement(sql);
@@ -260,6 +282,25 @@ public class BookRepo extends Repo<Book> {
         }
 
         return response;
+    }
+
+    public int getCount() {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM books ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+            	res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
     }
 
 }
