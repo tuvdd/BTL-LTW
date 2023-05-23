@@ -2,47 +2,13 @@ package models;
 
 import java.util.UUID;
 
-import utils.JsonUtils;
 
-public class OrderDetail extends Table {
-
+public class OrderDetail{
     public UUID id;
     public UUID order_id;
     public UUID book_id;
     public int quantity;
     public double price;
-
-    public OrderDetail() {
-        super();
-        TableName = "order_details";
-    }
-
-    public static String GetTableName() {
-		return "order_details";
-	}
-    
-
-    @Override
-    public String Get_Insert_Fields_SQL() {
-        return "id,order_id,book_id,quantity,price";
-    }
-
-    @Override
-    public String Get_Insert_Values_SQL() {
-        return "gen_random_uuid(), " +
-                "'" + order_id + "', " +
-                "'" + book_id + "', " +
-                "" + quantity + ", " +
-                "" + price + "";
-    }
-
-    @Override
-    public String Get_Update_Values_SQL() {
-        return " order_id = '" + order_id + "', " +
-                " book_id = '" + book_id + "', " +
-                " quantity = '" + quantity + "', " +
-                " price = '" + price + "'";
-    }
 
     public void set(UUID id, UUID order_id, UUID book_id, int quantity, double price) {
         this.id = id;
@@ -51,13 +17,46 @@ public class OrderDetail extends Table {
         this.quantity = quantity;
         this.price = price;
     }
-    public String To_Json_String() {
-		return "{" +
-				JsonUtils.PropToJson("id", id, true) +
-				JsonUtils.PropToJson("order_id", order_id, true) +
-				JsonUtils.PropToJson("book_id", book_id, true) +
-                JsonUtils.PropToJson("quantity", quantity, false) +
-				JsonUtils.PropToJson("price", price, false) +
-				"}";
-	}
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(UUID order_id) {
+        this.order_id = order_id;
+    }
+
+    public UUID getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(UUID book_id) {
+        this.book_id = book_id;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    
 }

@@ -1,11 +1,9 @@
 package servlets.client;
 
 import models.Book;
-import models.BookImage;
 import models.Category;
-import repositories.impls.BookImageRepo;
-import repositories.impls.BookRepo;
-import repositories.impls.CategoryRepo;
+import repositories.BookRepo;
+import repositories.CategoryRepo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,31 +21,19 @@ public class HomeServlet extends HttpServlet{
 
         CategoryRepo repoC = new CategoryRepo();
         BookRepo repoB = new BookRepo();
-        BookImageRepo repoBI = new BookImageRepo();
         List<Book> listB, listRB = null;
         List<Category> listC;
         Book p;
-        try {
-            listB = repoB.Gets("","");
-            listC = repoC.Gets("", "");
-            System.out.println(listB);
-            System.out.println(listC);
-            System.out.println(listC.get(1).getName());
-            System.out.println(listC.get(1).getId());
-            System.out.println(0);
+        listB = repoB.getAll(1,20);
+        listC = repoC.getAll(-1, -1);
 
-            p = listB.get(0);
-            System.out.println(1);
-            req.setAttribute("listB", listB);
-            req.setAttribute("listC", listC);
-            req.setAttribute("listRB", listRB);
-            req.setAttribute("p",p);
-            System.out.println(2);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            req.getRequestDispatcher("/client/Home.jsp").forward(req, resp);
-        }
+        p = listB.get(0);
+        req.setAttribute("listB", listB);
+        req.setAttribute("listC", listC);
+        req.setAttribute("listRB", listRB);
+        req.setAttribute("p",p);
+        req.getRequestDispatcher("/client/Home.jsp").forward(req, resp);
+
     }
 
     @Override

@@ -1,9 +1,9 @@
-<%@ page import="java.util.*, servlets.admin.ServletUtil, models.dtos.*"
+<%@ page import="java.util.*, servlets.admin.ServletUtil, models.*"
 	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-List<AdminFullDetail> listAdminFullDetails = (List<AdminFullDetail>) request.getAttribute("listAdminFullDetails");
+List<Admin> listAdmins = (List<Admin>) request.getAttribute("listAdmins");
 String message = (String) request.getSession().getAttribute("message");
 String messageType = (String) request.getSession().getAttribute("messageType");
 request.getSession().removeAttribute("message");
@@ -19,20 +19,18 @@ request.getSession().removeAttribute("messageType");
 			<th>SDT</th>
 			<th>CCCD</th>
 			<th>Username</th>
-			<th>Password</th>
 			<th>Thao tác</th>
 		</tr>
-		<c:forEach var="adminFullDetail" items="${listAdminFullDetails}">
-			<tr>
+		<c:forEach var="adminFullDetail" items="${listAdmins}">
+			<tr id="tr-${adminFullDetail.getId()}">
 				<td>${adminFullDetail.getId()}</td>
 				<td>${adminFullDetail.getName()}</td>
 				<td>${adminFullDetail.getEmail()}</td>
 				<td>${adminFullDetail.getPhonenum()}</td>
 				<td>${adminFullDetail.getCccd()}</td>
 				<td>${adminFullDetail.getUsername()}</td>
-				<td>${adminFullDetail.getPassword()}</td>
 				<td>
-					<button onclick="showEditModal()">Sửa</button>
+					<button onclick="showEditModal('tr-${adminFullDetail.getId()}')">Sửa</button>
 					<button>Xóa</button>
 				</td>
 			</tr>
@@ -45,7 +43,7 @@ request.getSession().removeAttribute("messageType");
 <button id="add-new-button" onclick="showAddModal()">Thêm mới</button>
 <div id="add-modal" class="modal">
 	<form method="post" action="/btl_ltw/admin/admin" id="add-form">
-		<h3>Thêm nhân viên</h3>
+		<h3>Thêm admin</h3>
 
 		<div class="form-data-text">
 			<p>Tên</p>
@@ -67,10 +65,6 @@ request.getSession().removeAttribute("messageType");
 			<p>Username</p>
 			<input name="username" placeholder="Nhập username" id="add-username">
 		</div>
-		<div class="form-data-text">
-			<p>Password</p>
-			<input name="password" placeholder="Nhập username"  id="add-password">
-		</div>
 		
 		<div class="form-data-button">
 			<button type="submit">Thêm</button>
@@ -82,9 +76,9 @@ request.getSession().removeAttribute("messageType");
 </div>
 
 <div id="edit-modal" class="modal">
-	<form method="put" action="/btl_ltw/admin/admin" id="edit-form">
-		<h3>Sửa danh mục</h3>
-
+	<form method="post" action="/btl_ltw/admin/admin" id="edit-form">
+		<h3>Sửa admin</h3>
+		<input id="edit-hidden" type="hidden" name="id" id="edit_hidden" value="" />
 		<div class="form-data-text">
 			<p>Tên</p>
 			<input name="name" placeholder="Nhập tên " id="edit-name">
@@ -101,14 +95,6 @@ request.getSession().removeAttribute("messageType");
 			<p>CCCD</p>
 			<input name="cccd" placeholder="Nhập cccd" id="edit-cccd">
 		</div>
-		<div class="form-data-text">
-			<p>Username</p>
-			<input name="username" placeholder="Nhập username" id="edit-username">
-		</div>
-		<div class="form-data-text">
-			<p>Password</p>
-			<input name="password" placeholder="Nhập username"  id="edit-password">
-		</div>
 		
 		<div class="form-data-button">
 			<button type="submit">Sửa</button>
@@ -118,5 +104,7 @@ request.getSession().removeAttribute("messageType");
 
 	</form>
 </div>
+<script src="/btl_ltw/admin/resources/js/admin.js"
+	type="text/javascript"></script>
 <script src="/btl_ltw/admin/resources/js/content.js"
 	type="text/javascript"></script>

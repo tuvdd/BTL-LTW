@@ -17,17 +17,15 @@ import jakarta.servlet.http.Part;
 import models.Book;
 import models.Category;
 import models.dtos.AdminBookView;
-import repositories.impls.BookRepo;
-import repositories.impls.CategoryRepo;
-import repositories.interfaces.IBookRepo;
-import repositories.interfaces.ICategoryRepo;
+import repositories.BookRepo;
+import repositories.CategoryRepo;
 
 @WebServlet({ "/admin/book", "/admin/book/" })
 @MultipartConfig(location = "uploads", fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024
         * 10, maxRequestSize = 1024 * 1024 * 50)
 public class BookServlet extends BaseServlet {
-    private IBookRepo bookRepo;
-    private ICategoryRepo categoryRepo;
+    private BookRepo bookRepo;
+    private CategoryRepo categoryRepo;
 
     public BookServlet() {
         super();
@@ -50,7 +48,7 @@ public class BookServlet extends BaseServlet {
         List<Category> listCategories;
         try {
             listAdminBookViews = bookRepo.GetsAdminBookView("");
-            listCategories = categoryRepo.Gets("", "");
+            listCategories = categoryRepo.getAll(1,10);
             req.setAttribute("listAdminBookViews", listAdminBookViews);
             req.setAttribute("listCategories", listCategories);
         } catch (SQLException e) {
@@ -114,7 +112,7 @@ public class BookServlet extends BaseServlet {
 
             int res;
             if (book.getId() != null) {
-                res = bookRepo.Update(book);
+                res = bookRepo.update(book);
                 if (res == 1) {
                     req.getSession().setAttribute("message", "Sửa thành công!");
                     req.getSession().setAttribute("messageType", "success");
@@ -125,7 +123,7 @@ public class BookServlet extends BaseServlet {
             }
 
             else {
-                res = bookRepo.Add(book);
+                res = bookRepo.add(book);
                 if (res == 1) {
                     req.getSession().setAttribute("message", "Thêm mới thành công!");
                     req.getSession().setAttribute("messageType", "success");
@@ -135,22 +133,11 @@ public class BookServlet extends BaseServlet {
                 }
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             req.getSession().setAttribute("message", e.getMessage());
             req.getSession().setAttribute("messageType", "error");
         } finally {
             resp.sendRedirect("/btl_ltw/admin/book");
         }
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doPut(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     }
 }

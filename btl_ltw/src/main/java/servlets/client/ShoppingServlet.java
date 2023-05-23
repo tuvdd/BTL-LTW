@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Book;
 import models.Category;
-import repositories.impls.BookRepo;
-import repositories.impls.CategoryRepo;
+import repositories.BookRepo;
+import repositories.CategoryRepo;
 import repositories.impls.DAO;
 
 import java.io.IOException;
@@ -23,14 +23,10 @@ public class ShoppingServlet extends HttpServlet {
         BookRepo repoB = new BookRepo();
         List<Book> news, olds = null;
         List<Category> list = null;
-        try {
-            list = repoC.Gets("", "");
-            news = repoB.Gets("","");
-            olds = repoB.Gets("","");
-            System.out.println("test");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        list = repoC.getAll(-1, -1);
+        news = repoB.getAll(1,20);
+        olds = repoB.getAll(1,20);
+
         String[] pp={"Dưới 100k",
                 "Từ 100k - 200k",
                 "Từ 200k - 500k",
