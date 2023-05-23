@@ -49,7 +49,7 @@ public class OrderRepo extends Repo<Order> {
         try {
             sql = "SELECT o.id AS order_id, o.created_time, o.status, o.address, o.phonenum, o.buyer_name, od.id AS detail_id, od.book_id, od.quantity, od.price FROM orders o JOIN order_details od ON o.id = od.order_id WHERE o.id = ?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderId.toString());
+            statement.setObject(1, orderId);
             resultSet = statement.executeQuery();
             List<OrderDetail> orderDetails = new ArrayList<>();
             while (resultSet.next()) {
@@ -87,7 +87,7 @@ public class OrderRepo extends Repo<Order> {
         try {
             sql = "INSERT INTO orders (id, created_time, status, address, phonenum, buyer_name) VALUES (?, ?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderFullDetail.id.toString());
+            statement.setObject(1, orderFullDetail.id);
             statement.setTimestamp(2, orderFullDetail.created_time);
             statement.setInt(3, orderFullDetail.status);
             statement.setString(4, orderFullDetail.address);
@@ -116,7 +116,7 @@ public class OrderRepo extends Repo<Order> {
             statement.setString(3, orderFullDetail.address);
             statement.setString(4, orderFullDetail.phonenum);
             statement.setString(5, orderFullDetail.buyer_name);
-            statement.setString(6, orderFullDetail.id.toString());
+            statement.setObject(6, orderFullDetail.id);
             rowsAffected = statement.executeUpdate();
             for (OrderDetail orderDetail : orderFullDetail.getOrderDetails()) {
                 if (orderDetail.getId() == null) {
@@ -140,11 +140,11 @@ public class OrderRepo extends Repo<Order> {
         try {
             sql = "DELETE FROM order_details WHERE order_id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderId.toString());
+            statement.setObject(1, orderId);
             rowsAffected += statement.executeUpdate();
             sql = "DELETE FROM orders WHERE id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderId.toString());
+            statement.setObject(1, orderId);
             rowsAffected += statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

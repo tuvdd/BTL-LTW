@@ -35,7 +35,7 @@ public class TagRepo extends Repo<Tag> {
         try {
             sql = "SELECT * FROM tags WHERE id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 tag = setObjectFromResultSet(resultSet);
@@ -54,7 +54,7 @@ public class TagRepo extends Repo<Tag> {
         try {
             sql = "INSERT INTO tags (id, tag_name) VALUES (?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, tag.id.toString());
+            statement.setObject(1, tag.id);
             statement.setString(2, tag.tag_name);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class TagRepo extends Repo<Tag> {
             sql = "UPDATE tags SET tag_name = ? WHERE id = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, tag.tag_name);
-            statement.setString(2, tag.id.toString());
+            statement.setObject(2, tag.id);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,7 +88,7 @@ public class TagRepo extends Repo<Tag> {
         try {
             sql = "DELETE FROM tags WHERE id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, tagId.toString());
+            statement.setObject(1, tagId);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

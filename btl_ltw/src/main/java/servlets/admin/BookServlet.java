@@ -54,7 +54,7 @@ public class BookServlet extends BaseServlet {
         try {
             int pageSize = 10;
             listAdminBookViews = bookRepo.GetsAdminBookView(page, pageSize);
-            listCategories = categoryRepo.getAll(-1,-10);
+            listCategories = categoryRepo.getAll(-1, -10);
 
             int totalRecords = bookRepo.getCount();
             int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
@@ -110,8 +110,7 @@ public class BookServlet extends BaseServlet {
         String description = req.getParameter("description");
         String sub_description = req.getParameter("sub_description");
 
-        int status = req.getParameter("status") == null ? -1
-                : Integer.parseInt(req.getParameter("status"));
+        boolean status = true;
 
         Timestamp create_time = Timestamp.from(Instant.now());
         UUID create_by = admin_id;

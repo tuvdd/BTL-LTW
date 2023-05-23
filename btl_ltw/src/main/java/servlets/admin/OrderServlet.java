@@ -41,28 +41,4 @@ public class OrderServlet extends BaseServlet {
 			req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
 		}
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (!ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin/login");
-			return;
-		}
-
-		try {
-			int res = orderRepo.add(null);
-			if (res == 1) {
-				req.getSession().setAttribute("message", "Thêm mới thành công!");
-				req.getSession().setAttribute("messageType", "success");
-			} else {
-				req.getSession().setAttribute("message", "Thêm mới không thành công!");
-				req.getSession().setAttribute("messageType", "error");
-			}
-		} catch (Exception e) {
-			req.getSession().setAttribute("message", e.getMessage());
-			req.getSession().setAttribute("messageType", "error");
-		} finally {
-			resp.sendRedirect("/btl_ltw/admin/order");
-		}
-	}
 }

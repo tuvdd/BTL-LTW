@@ -13,6 +13,6 @@ public class ServletUtil {
 	public static boolean IsSessionExsited(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		HttpSession session = req.getSession();
 		UUID uuid = (UUID) session.getAttribute("id");
-		return (uuid != null && !uuid.toString().equals(""));
+		return (uuid != null && !uuid.equals(""));
 	}
 }

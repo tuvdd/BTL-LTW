@@ -16,7 +16,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> {
         try {
             sql = "SELECT * FROM order_details WHERE order_id = ?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderId.toString());
+            statement.setObject(1, orderId);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 OrderDetail orderDetail = setObjectFromResultSet(resultSet);
@@ -36,9 +36,9 @@ public class OrderDetailRepo extends Repo<OrderDetail> {
         try {
             sql = "INSERT INTO order_details (id, order_id, book_id, quantity, price) VALUES (?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderDetail.id.toString());
-            statement.setString(2, orderDetail.order_id.toString());
-            statement.setString(3, orderDetail.book_id.toString());
+            statement.setObject(1, orderDetail.id);
+            statement.setObject(2, orderDetail.order_id);
+            statement.setObject(3, orderDetail.book_id);
             statement.setInt(4, orderDetail.quantity);
             statement.setDouble(5, orderDetail.price);
             rowsAffected = statement.executeUpdate();
@@ -56,11 +56,11 @@ public class OrderDetailRepo extends Repo<OrderDetail> {
         try {
             sql = "UPDATE order_details SET order_id = ?, book_id = ?, quantity = ?, price = ? WHERE id = ?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderDetail.order_id.toString());
-            statement.setString(2, orderDetail.book_id.toString());
+            statement.setObject(1, orderDetail.order_id);
+            statement.setObject(2, orderDetail.book_id);
             statement.setInt(3, orderDetail.quantity);
             statement.setDouble(4, orderDetail.price);
-            statement.setString(5, orderDetail.id.toString());
+            statement.setObject(5, orderDetail.id);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,7 +76,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> {
         try {
             sql = "DELETE FROM order_details WHERE id = ?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderDetailId.toString());
+            statement.setObject(1, orderDetailId);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

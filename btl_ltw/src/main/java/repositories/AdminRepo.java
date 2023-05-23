@@ -15,7 +15,7 @@ public class AdminRepo extends Repo<Admin> {
             CreateConnection();
             sql = "INSERT INTO admin (id, name, email, phonenum, cccd, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, admin.id.toString());
+            statement.setObject(1, admin.id);
             statement.setString(2, admin.name);
             statement.setString(3, admin.email);
             statement.setString(4, admin.phonenum);
@@ -44,7 +44,7 @@ public class AdminRepo extends Repo<Admin> {
             statement.setString(4, admin.cccd);
             statement.setString(5, admin.username);
             statement.setString(6, admin.password);
-            statement.setString(7, admin.id.toString());
+            statement.setObject(7, admin.id);
             res = statement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -61,7 +61,7 @@ public class AdminRepo extends Repo<Admin> {
             CreateConnection();
             sql = "DELETE FROM admin WHERE id=?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             res = statement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -116,7 +116,7 @@ public class AdminRepo extends Repo<Admin> {
             CreateConnection();
             sql = "SELECT * FROM admin WHERE id=;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
