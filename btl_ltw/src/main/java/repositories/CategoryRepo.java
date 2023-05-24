@@ -15,13 +15,41 @@ public class CategoryRepo extends Repo<Category> {
         CreateConnection();
         try {
             if (pageIndex == -1 || pageSize == -1) {
-                sql = "SELECT * FROM categories";
+                sql = "SELECT * FROM categories ORDER BY status DESC;";
                 statement = connection.prepareStatement(sql);
             } else {
-                sql = "SELECT * FROM categories LIMIT ? OFFSET ?";
+                sql = "SELECT * FROM categories ORDER BY status DESC LIMIT ? OFFSET ? ;";
                 statement = connection.prepareStatement(sql);
                 statement.setInt(1, pageSize);
                 statement.setInt(2, (pageIndex - 1) * pageSize);
+            }
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Category category = setObjectFromResultSet(resultSet);
+                categories.add(category);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        return categories;
+    }
+
+    public List<Category> getAll(int pageIndex, int pageSize, boolean status) {
+        List<Category> categories = new ArrayList<>();
+        CreateConnection();
+        try {
+            if (pageIndex == -1 || pageSize == -1) {
+                sql = "SELECT * FROM categories WHERE status = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setBoolean(1, status);
+            } else {
+                sql = "SELECT * FROM categories WHERE status = ? LIMIT ? OFFSET ?";
+                statement = connection.prepareStatement(sql);
+                statement.setBoolean(1, status);
+                statement.setInt(2, pageSize);
+                statement.setInt(3, (pageIndex - 1) * pageSize);
             }
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -55,20 +83,22 @@ public class CategoryRepo extends Repo<Category> {
         return category;
     }
 
-    public int add(Category category) {
+    public int add(Category category) throws Exception {
         int rowsAffected = 0;
         CreateConnection();
         try {
             sql = "INSERT INTO categories (id, name, status, url) VALUES (?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, category.id);
+            statement.setObject(1, UUID.randomUUID());
             statement.setString(2, category.name);
             statement.setBoolean(3, category.status);
             statement.setString(4, category.url);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
+        	if (e.getMessage().contains("duplicate key value violates unique constraint ")) throw new Exception("Đã tồn tại url");
             e.printStackTrace();
-        } finally {
+        } 
+        finally {
             CloseConnection();
         }
         return rowsAffected;
@@ -127,10 +157,10 @@ public class CategoryRepo extends Repo<Category> {
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-            	res = resultSet.getInt("count");
+                res = resultSet.getInt("count");
             }
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         } finally {
             CloseConnection();
         }

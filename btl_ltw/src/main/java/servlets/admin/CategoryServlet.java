@@ -65,10 +65,12 @@ public class CategoryServlet extends BaseServlet {
 
 		String id = req.getParameter("id");
 		String name = req.getParameter("name");
+		String url = req.getParameter("url");
 
 		Category category = new Category();
 		category.setName(name);
 		category.setStatus(true);
+		category.setUrl(url);
 		if (id != null && id != "") {
 			category.id = UUID.fromString(id);
 			try {
