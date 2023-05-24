@@ -11,7 +11,7 @@ import repositories.BookRepo;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebServlet({ "san-pham" })
+@WebServlet({ "/san-pham" })
 public class DetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
