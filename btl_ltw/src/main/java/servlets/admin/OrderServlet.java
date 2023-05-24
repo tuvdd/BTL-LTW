@@ -7,7 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.Order;
+import models.dtos.AdminOrderPreview;
 import repositories.OrderRepo;
 @WebServlet({ "/admin/order", "/admin/order/" })
 public class OrderServlet extends BaseServlet {
@@ -25,20 +25,33 @@ public class OrderServlet extends BaseServlet {
 		super.doGet(req, resp);
 
 		if (!ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin/login");
-			return;
-		}
+            resp.sendRedirect("/btl_ltw/admin/login");
+            return;
+        }
 
-		List<Order> listCategories;
-		try {
+        int page = 1;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
 
-			listCategories = orderRepo.getAll(1,10);
-			req.setAttribute("listCategories", listCategories);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			req.setAttribute("pageName", "order.jsp");
-			req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
-		}
+        List<AdminOrderPreview> listAdminOrderPreviews;
+    
+        try {
+            int pageSize = 10;
+            listAdminOrderPreviews = orderRepo.getAllAdminOrderView(page, pageSize);
+        
+            int totalRecords = orderRepo.getCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
+
+            req.setAttribute("listAdminOrderPreviews", listAdminOrderPreviews);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            req.setAttribute("pageName", "order.jsp");
+            req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
+        }
 	}
 }

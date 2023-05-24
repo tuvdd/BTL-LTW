@@ -54,7 +54,7 @@ public class BookServlet extends BaseServlet {
         try {
             int pageSize = 10;
             listAdminBookViews = bookRepo.GetsAdminBookView(page, pageSize);
-            listCategories = categoryRepo.getAll(-1, -10);
+            listCategories = categoryRepo.getAll(-1, -1, true);
 
             int totalRecords = bookRepo.getCount();
             int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
