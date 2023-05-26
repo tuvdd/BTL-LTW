@@ -13,7 +13,7 @@ public class AdminRepo extends Repo<Admin> {
         int res;
         try {
             CreateConnection();
-            sql = "INSERT INTO admin (id, name, email, phonenum, cccd, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            sql = "INSERT INTO admins (id, name, email, phonenum, cccd, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, admin.id);
             statement.setString(2, admin.name);
@@ -36,15 +36,13 @@ public class AdminRepo extends Repo<Admin> {
         int res;
         try {
             CreateConnection();
-            sql = "UPDATE admin SET name=?, email=?, phonenum=?, cccd=?, username=?, password=? WHERE id=?";
+            sql = "UPDATE admins SET name=?, email=?, phonenum=?, cccd=? WHERE id=?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, admin.name);
             statement.setString(2, admin.email);
             statement.setString(3, admin.phonenum);
             statement.setString(4, admin.cccd);
-            statement.setString(5, admin.username);
-            statement.setString(6, admin.password);
-            statement.setObject(7, admin.id);
+            statement.setObject(5, admin.id);
             res = statement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -59,7 +57,7 @@ public class AdminRepo extends Repo<Admin> {
         int res;
         try {
             CreateConnection();
-            sql = "DELETE FROM admin WHERE id=?";
+            sql = "DELETE FROM admins WHERE id=?";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, id);
             res = statement.executeUpdate();
@@ -114,7 +112,7 @@ public class AdminRepo extends Repo<Admin> {
         Admin admin;
         try {
             CreateConnection();
-            sql = "SELECT * FROM admin WHERE id=;";
+            sql = "SELECT * FROM admins WHERE id=;";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, id);
             resultSet = statement.executeQuery();

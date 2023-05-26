@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import models.Admin;
 import repositories.AdminRepo;
 
-@WebServlet({ "/admin/login", "/admin/login/" })
+@WebServlet(name="AdminLogin", urlPatterns = "/admin/login")
 public class LoginServlet extends BaseServlet {
 	private AdminRepo adminRepo;
 
