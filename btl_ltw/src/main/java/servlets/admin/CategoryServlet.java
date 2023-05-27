@@ -10,8 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Category;
 import repositories.CategoryRepo;
-
-@WebServlet({ "/admin/category", "/admin/category/" })
+@WebServlet(name="AdminCategory", urlPatterns = "/admin/category")
 public class CategoryServlet extends BaseServlet {
 	private CategoryRepo categoryRepo;
 

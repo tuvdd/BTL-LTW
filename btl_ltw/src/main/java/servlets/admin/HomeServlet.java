@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet({ "/admin", "/admin/" })
+@WebServlet(name="AdminHome", urlPatterns = "/admin")
 public class HomeServlet extends BaseServlet {
 	private static final long serialVersionUID = 22;
 

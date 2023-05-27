@@ -20,7 +20,7 @@ import models.dtos.AdminBookView;
 import repositories.BookRepo;
 import repositories.CategoryRepo;
 
-@WebServlet({ "/admin/book", "/admin/book/" })
+@WebServlet(name="AdminBook", urlPatterns = "/admin/book")
 @MultipartConfig(location = "uploads", fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024
         * 10, maxRequestSize = 1024 * 1024 * 50)
 public class BookServlet extends BaseServlet {

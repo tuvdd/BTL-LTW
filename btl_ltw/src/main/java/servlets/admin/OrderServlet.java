@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.dtos.AdminOrderPreview;
 import repositories.OrderRepo;
-@WebServlet({ "/admin/order", "/admin/order/" })
+@WebServlet(name="AdminOrder", urlPatterns = "/admin/order")
 public class OrderServlet extends BaseServlet {
     private OrderRepo orderRepo;
 
