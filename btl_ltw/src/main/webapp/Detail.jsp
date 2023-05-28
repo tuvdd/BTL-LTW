@@ -2,6 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*, servlets.admin.ServletUtil, models.*" %>
+<% 
+    List<Comment> listComments = (List<Comment>) request.getAttribute("listComments");
+    int numberOfPages = (int) request.getAttribute("numberOfPages");
+    String bookid = (String) request.getAttribute("bookid");
+    Book book = (Book) request.getAttribute("book");
+%>
+<%
+    String error = (String) session.getAttribute("error");
+    if (error != null) {
+%>
+    <script>alert("error", "aa")</script>
+<%  } %>
+            
 <!DOCTYPE html>
 <html>
     <head>
@@ -135,126 +148,49 @@
                 </div>
             </form>
 
-            <%
-                String error = (String) session.getAttribute("error");
-                if (error != null) {
-            %>
-                <script>alert("error", "aa")</script>
-                <%
-                session.removeAttribute("error");
-                }
-            %>
-            <% 
-                List<Comment> listComments = (List<Comment>) request.getAttribute("listComments");
-                if (listComments != null) {
-                    System.out.print("List jsp " + " ");
-                    System.out.println(listComments.size());
-                }
-            %>
+            
             <div class="review-comments">
                 <h1 class="title-reviews">Reviews</h1>
                 <div class="list-comments">
-                    
-                    <c:forEach var="comment" items="${listComments}">
-                        <div class="user_comment">
-                            <div class="rating">
-                                <div class="stars">
-                                   <c:forEach var="number" begin="1" end="${comment.getRate()}">
-                                        <div class="star_yellow">a</div>
-                                    </c:forEach>
-                                    <c:forEach var="number" begin="1" end="${5 - comment.getRate()}">
-                                        <div class="star_gray"></div>
-                                    </c:forEach>
+                    <% if (listComments.size() == 0) { %>
+                        <p>Chưa có review nào!</p>
+                    <%} else { %>
+                        <c:forEach var="comment" items="${listComments}">
+                            <div class="user_comment">
+                                <div class="rating">
+                                    <div class="stars">
+                                    <c:forEach var="number" begin="1" end="${comment.getRate()}">
+                                            <div class="star_yellow">a</div>
+                                        </c:forEach>
+                                        <c:forEach var="number" begin="1" end="${5 - comment.getRate()}">
+                                            <div class="star_gray"></div>
+                                        </c:forEach>
 
+                                    </div>
+                                    <div class="rating_text">
+                                        <p>${comment.getRate()} stars</p>
+                                    </div>
                                 </div>
-                                <div class="rating_text">
-                                    <p>${comment.getRate()} stars</p>
+                                <div class="text_cmt">
+                                    ${comment.getComment()}
                                 </div>
                             </div>
-                            <div class="text_cmt">
-                                ${comment.getComment()}
-                            </div>
-                        </div>
-                    </c:forEach>
+                        </c:forEach>
+                    <%}%>
                 </div>
             </div>
               
             <div class="pagination">
-                <% for (int i = 1; i <= 4; i++) { %>
+                <% for (int i = 1; i <= numberOfPages; i++) { %>
                     <div class="page-item">
-                        <a href="/btl_ltw/detail?page=<%= i %>"><%= i %></a>
+                        <a href="/btl_ltw/detail?bookid=${bookid}&page=<%= i %>"><%= i %></a>
                     </div>
-                  <% } %>
-                  <div class="page-item ellipsis">...</div>
-                  <% for (int i = 5; i <= 10; i++) { %>
-                    <div class="page-item">
-                        <a href="/btl_ltw/detail?page=<%= i %>"><%= i %></a>
-                    </div>
-                  <% } %>
+                <% } %>
               </div>
-              <!-- <div class="pagination">
-                <div class="page-item"><a href="#">1</a></div>
-                <div class="page-item"><a href="#">2</a></div>
-                <div class="page-item"><a href="#">3</a></div>
-                <div class="page-item"><a href="#">4</a></div>
-                <div class="page-item ellipsis">...</div>
-                <div class="page-item"><a href="#">10</a></div>
-              </div> -->
+              
         </div>
         
-        <script>
-            var pagination = document.querySelector('.pagination');
-            var pageItems = pagination.querySelectorAll('.page-item');
-            var ellipsisItem = pagination.querySelector('.ellipsis');
-
-            var maxVisiblePages = 5; // Số lượng page hiển thị tối đa
-            var totalPages = pageItems.length - 1; // Trừ đi 1 vì item ellipsis không được tính là page
-
-            var currentPage = 1;
-
-            function hideAllPages() {
-            pageItems.forEach(function(item) {
-                item.classList.add('hide');
-            });
-            }
-
-            function showPages(startIndex, endIndex) {
-            for (var i = startIndex; i <= endIndex; i++) {
-                pageItems[i].classList.remove('hide');
-            }
-            }
-
-            function updatePagination() {
-            hideAllPages();
-
-            if (currentPage <= 2) {
-                showPages(0, maxVisiblePages - 2);
-                ellipsisItem.classList.remove('hide');
-            } else if (currentPage >= totalPages - 1) {
-                showPages(totalPages - maxVisiblePages + 2, totalPages);
-                ellipsisItem.classList.add('hide');
-            } else {
-                showPages(currentPage - 2, currentPage + 2);
-                ellipsisItem.classList.remove('hide');
-            }
-            }
-
-            function handlePageClick(event) {
-            event.preventDefault();
-            
-            var clickedPage = parseInt(event.target.innerText);
-            
-            if (!isNaN(clickedPage)) {
-                currentPage = clickedPage;
-                updatePagination();
-            }
-            }
-
-            pagination.addEventListener('click', handlePageClick);
-
-            updatePagination();
-
-        </script>
+ 
         <script src="/btl_ltw/resources/detail.js"></script>
     <jsp:include page="Footer.jsp"></jsp:include>
 

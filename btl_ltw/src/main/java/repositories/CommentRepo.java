@@ -111,25 +111,28 @@ public class CommentRepo extends Repo<Comment> {
         return comments;
     }
     
-    public int getLastPage(String book_id) {
-        int res = 1;
-        List<Comment> comments = new ArrayList<>();
+    public int getNumberOfPages(String book_id, int commentsPerPage) {
+        int res = 0;
         CreateConnection();
         try {
-            sql = "SELECT * from comment;";
+            sql = "SELECT * from comment Where book_id=?";
             statement = connection.prepareStatement(sql);
+            statement.setObject(1, UUID.fromString(book_id));
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
-                Comment comment = setObjectFromResultSet(resultSet);
-                comments.add(comment);
+                res += 1;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             CloseConnection();
         }
-        res = comments.size();
-
-        return res;
+        int numberOfPages = 1;
+        if (res % commentsPerPage == 0) {
+            numberOfPages = res/commentsPerPage;
+        } else {
+            numberOfPages = res/commentsPerPage + 1;
+        }
+        return numberOfPages;
     }
 }

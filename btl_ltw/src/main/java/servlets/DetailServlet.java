@@ -17,6 +17,7 @@ import java.util.UUID;
 @WebServlet({ "/detail", "/detail/" })
 public class DetailServlet extends HttpServlet {
     CommentRepo commentRepo;
+    String bookID = "";
     public DetailServlet() {
         commentRepo = new CommentRepo();
     }
@@ -27,17 +28,19 @@ public class DetailServlet extends HttpServlet {
         int commentsPerPage = 5;
         BookRepo repoB = new BookRepo();
         Book book;
-        // String bookid = req.getParameter("bookid");
-        String bookID = "9377f02d-5f88-4bd6-b251-9183a63bcf87";
+        bookID = req.getParameter("bookid");
+        // String bookID = "9377f02d-5f88-4bd6-b251-9183a63bcf87";
         book = repoB.getById(UUID.fromString(bookID));
-        req.setAttribute("book",book);
+        System.out.print("BOOKID");
+        System.out.println(bookID);
         List<Comment> listComments;
         listComments = commentRepo.GetlistCommentByBookID(bookID, currentPage, commentsPerPage);
-        System.out.print("List Count " + " ");
-        System.out.println(listComments.size());
+        int numberOfPages = commentRepo.getNumberOfPages(bookID, commentsPerPage);
+        req.setAttribute("bookid", bookID);
         req.setAttribute("listComments", listComments);
+        req.setAttribute("book",book);
+        req.setAttribute("numberOfPages", numberOfPages);
         req.getRequestDispatcher("/Detail.jsp").forward(req, resp);
-
     }
 
     @Override
@@ -49,19 +52,19 @@ public class DetailServlet extends HttpServlet {
         if (rateStr == null || commentText == null || commentText.isEmpty()) {
             System.out.println("Vui lòng nhập comment và chọn số sao!");
             req.setAttribute("error", "Vui lòng nhập comment và chọn số sao!");
-            resp.sendRedirect("/btl_ltw/detail");
+            resp.sendRedirect("/btl_ltw/detail?bookid="+bookID);
         } else {
             int rate = Integer.parseInt(rateStr);
             System.out.println(rate);
             Comment newComment = new Comment();
-            newComment.set(UUID.randomUUID(), UUID.fromString("9377f02d-5f88-4bd6-b251-9183a63bcf87"), rate, commentText, new Timestamp(new Date().getTime()));
+            newComment.set(UUID.randomUUID(), UUID.fromString(bookID), rate, commentText, new Timestamp(new Date().getTime()));
             int res = commentRepo.Add(newComment);
             System.out.println("okeee");
             if (res != 1) {
                 System.out.println("Thêm mới không thành công!");
                 req.setAttribute("error", "Thêm mới không thành công");
             }
-            resp.sendRedirect("/btl_ltw/detail");
+            resp.sendRedirect("/btl_ltw/detail?bookid="+bookID);
         }
     }
 }
