@@ -119,7 +119,7 @@ public class BookRepo extends Repo<Book> {
         try {
             sql = "INSERT INTO books (id, name, image, author, release_year, category_id, price, promote_price, quantity, description, sub_description, status, create_time, create_by, last_update_time, last_update_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, book.id);
+            statement.setObject(1, UUID.randomUUID());
             statement.setString(2, book.name);
             statement.setBytes(3, book.image);
             statement.setString(4, book.author);

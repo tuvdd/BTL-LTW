@@ -123,7 +123,7 @@ public class BookServlet extends BaseServlet {
         try {
 
             int res;
-            if (book.getId() != null) {
+            if (book.id != null) {
                 res = bookRepo.update(book);
                 if (res == 1) {
                     req.getSession().setAttribute("message", "Sửa thành công!");
