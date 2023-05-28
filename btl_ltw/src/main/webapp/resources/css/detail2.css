@@ -376,3 +376,9 @@ h1 {
 .page-item.hide {
     display: none;
   }
+
+.list-comments p {
+    text-align: center;
+    color: gray;
+    padding: 20px
+}
