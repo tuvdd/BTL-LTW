@@ -23,7 +23,7 @@ public class DeleteAdminServlet extends HttpServlet {
         String adminId = request.getParameter("id");
 
         try {
-            // Xóa admin từ cơ sở dữ liệu theo id
+            
             int res = adminRepository.delete(UUID.fromString(adminId));
             if (res == 2) {
                 request.getSession().setAttribute("message", "Xóa thành công!");
@@ -32,8 +32,7 @@ public class DeleteAdminServlet extends HttpServlet {
                 request.getSession().setAttribute("message", "Xóa không thành công!");
                 request.getSession().setAttribute("messageType", "error");
             }
-            response.sendRedirect("/btl_ltw/admin/category");
-            // Chuyển hướng về trang danh sách admin
+            
             response.sendRedirect(request.getContextPath() + "/admin/admin");
         } catch (SQLException e) {
             e.printStackTrace();

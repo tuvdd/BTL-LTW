@@ -22,7 +22,10 @@ public class BookChangeStatusServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String bookId = request.getParameter("id");
-
+        if (bookId == null || bookId.isEmpty()) {
+        	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing ID parameter");
+			return;
+		}
         try {
             Book book = bookRepository.getById(UUID.fromString(bookId));
             book.setStatus(!book.getStatus());

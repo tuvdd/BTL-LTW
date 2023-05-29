@@ -5,12 +5,13 @@ import java.util.UUID;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import repositories.OrderRepo;
 
 @WebServlet("/admin/order/change-status")
-public class OrderChangeStatusServlet {
+public class OrderChangeStatusServlet extends HttpServlet {
     OrderRepo orderRepo;
 
     public OrderChangeStatusServlet() {
@@ -20,7 +21,10 @@ public class OrderChangeStatusServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String orderId = request.getParameter("id");
-
+        if (orderId == null || orderId.isEmpty()) {
+        	response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing ID parameter");
+			return;
+		}
         try {
             int status = Integer.parseInt(request.getParameter("status"));
             int res = orderRepo.updateStatus(UUID.fromString(orderId), status);

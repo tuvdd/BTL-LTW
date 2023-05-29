@@ -23,22 +23,22 @@ OrderFullDetail orderFullDetail = (OrderFullDetail) request.getAttribute("orderF
             <td>${orderFullDetail.address}</td>
             <td>${orderFullDetail.phonenum}</td>
             <td>
-                <select name="status" onchange="updateStatus('${order.id}', this.value)">
-                    <option value="0" <c:if test="${order.status == 0}">selected</c:if>>Chưa xác
+                <select name="status" onchange="updateStatus('${orderFullDetail.id}', this.value)">
+                    <option value="0" <c:if test="${orderFullDetail.status == 0}">selected</c:if>>Chưa xác
                         nhận</option>
-                        <option value="1" <c:if test="${order.status == 1}">selected</c:if>>Đã
+                        <option value="1" <c:if test="${orderFullDetail.status == 1}">selected</c:if>>Đã
                             xác nhận chờ thanh toán</option>
-                        <option value="2" <c:if test="${order.status == 2}">selected</c:if>>Đã
+                        <option value="2" <c:if test="${orderFullDetail.status == 2}">selected</c:if>>Đã
                             thanh toán chờ vận chuyển</option>
-                        <option value="3" <c:if test="${order.status == 3}">selected</c:if>>Đang
+                        <option value="3" <c:if test="${orderFullDetail.status == 3}">selected</c:if>>Đang
                             vận chuyển</option>
-                        <option value="4" <c:if test="${order.status == 4}">selected</c:if>>Đã
+                        <option value="4" <c:if test="${orderFullDetail.status == 4}">selected</c:if>>Đã
                             vận chuyển</option>
-                        <option value="5" <c:if test="${order.status == 5}">selected</c:if>>Hủy
+                        <option value="5" <c:if test="${orderFullDetail.status == 5}">selected</c:if>>Hủy
                             đơn trước khi vận chuyển</option>
-                        <option value="6" <c:if test="${order.status == 6}">selected</c:if>>Hủy
+                        <option value="6" <c:if test="${orderFullDetail.status == 6}">selected</c:if>>Hủy
                             đơn khi đang vận chuyển</option>
-                        <option value="7" <c:if test="${order.status == 7}">selected</c:if>>Hoàn
+                        <option value="7" <c:if test="${orderFullDetail.status == 7}">selected</c:if>>Hoàn
                             đơn</option>
                 </select>
                 <script>
