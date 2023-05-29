@@ -51,7 +51,7 @@ public class OrderRepo extends Repo<Order> {
                 + "    SUM(od.price) AS totalPrice "
                 + "FROM "
                 + "    orders o "
-                + "    JOIN order_detail od ON o.id = od.order_id "
+                + "    JOIN order_details od ON o.id = od.order_id "
                 + "GROUP BY "
                 + "    o.id, "
                 + "    o.created_time, "
@@ -123,7 +123,7 @@ public class OrderRepo extends Repo<Order> {
         OrderFullDetail orderFullDetail = null;
         CreateConnection();
         try {
-            sql = "SELECT o.id AS order_id, o.created_time, o.status, o.address, o.phonenum, o.buyer_name, od.id AS detail_id, od.book_id, od.quantity, od.price FROM orders o JOIN order_details od ON o.id = od.order_id WHERE o.id = ?;";
+            sql = "SELECT o.id AS order_id, o.created_time, o.status, o.address, o.phonenum, o.buyer_name, od.id AS detail_id, od.book_id, b.\"name\", od.quantity, od.price FROM orders o JOIN order_details od ON o.id = od.order_id JOIN books b ON od.book_id = b.id WHERE o.id = ?;";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, orderId);
             resultSet = statement.executeQuery();
@@ -140,6 +140,7 @@ public class OrderRepo extends Repo<Order> {
                 }
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setId(UUID.fromString(resultSet.getString("detail_id")));
+                orderDetail.setBook_name(resultSet.getString("name"));
                 orderDetail.setOrder_id(UUID.fromString(resultSet.getString("order_id")));
                 orderDetail.setBook_id(UUID.fromString(resultSet.getString("book_id")));
                 orderDetail.setQuantity(resultSet.getInt("quantity"));

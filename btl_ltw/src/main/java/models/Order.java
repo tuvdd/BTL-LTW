@@ -1,5 +1,6 @@
 package models;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 public class Order{
@@ -45,5 +46,8 @@ public class Order{
     }
     public void setBuyer_name(String buyer_name) {
         this.buyer_name = buyer_name;
+    }
+    public String getCreate_time_string(){
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(created_time);
     }
 }
