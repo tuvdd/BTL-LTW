@@ -31,7 +31,7 @@ request.getSession().removeAttribute("messageType");
 				</td>
 				<td>
 					<button onclick="showEditModal('tr-${category.getId()}')">Sửa</button>
-					<button>Xóa</button>
+					<button onclick="window.location.href='/btl_ltw/admin/category/delete?id=${category.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>

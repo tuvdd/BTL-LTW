@@ -15,7 +15,7 @@ public class AdminRepo extends Repo<Admin> {
             CreateConnection();
             sql = "INSERT INTO admins (id, name, email, phonenum, cccd, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, admin.id);
+            statement.setObject(1, admin.getId());
             statement.setString(2, admin.name);
             statement.setString(3, admin.email);
             statement.setString(4, admin.phonenum);

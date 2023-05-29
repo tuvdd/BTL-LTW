@@ -234,13 +234,12 @@ public class BookRepo extends Repo<Book> {
                     + "        b.last_update_time last_update_time, "
                     + "        b.last_update_by last_update_by, "
                     + "        au.name last_update_by_name "
-                    + "FROM    books b, "
-                    + "        categories c, "
-                    + "        admins ac, "
-                    + "        admins au "
-                    + "WHERE   b.category_id = c.id AND ac.id = b.create_by AND au.id = b.last_update_by "
-                    + "LIMIT " + size +" "
-                    + "OFFSET " + ((page - 1) * size) +" "
+                    + "FROM    books b "
+                    + "LEFT JOIN categories c ON b.category_id = c.id "
+                    + "LEFT JOIN admins ac ON ac.id = b.create_by "
+                    + "LEFT JOIN admins au ON au.id = b.last_update_by  "
+                    + "LIMIT " + size + " "
+                    + "OFFSET " + ((page - 1) * size) + " "
                     + " ;";
             CreateConnection();
             statement = connection.prepareStatement(sql);
@@ -248,28 +247,40 @@ public class BookRepo extends Repo<Book> {
             response = new ArrayList<>();
 
             while (rs.next()) {
-                AdminBookView bfd = new AdminBookView();
-                bfd.id = UUID.fromString(rs.getString("id"));
-                bfd.name = rs.getString("name");
-                bfd.image = rs.getBytes("image");
-                bfd.author = rs.getString("author");
-                bfd.release_year = rs.getInt("release_year");
-                bfd.category_id = UUID.fromString(rs.getString("category_id"));
-                bfd.category_name = rs.getString("category_name");
-                bfd.price = rs.getDouble("price");
-                bfd.promote_price = rs.getDouble("promote_price");
-                bfd.quantity = rs.getInt("quantity");
-                bfd.description = rs.getString("description");
-                bfd.sub_description = rs.getString("sub_description");
-                bfd.status = rs.getBoolean("status");
-                bfd.create_time = rs.getTimestamp("create_time");
-                bfd.create_by = UUID.fromString(rs.getString("create_by"));
-                bfd.create_by_name = rs.getString("create_by_name");
-                bfd.last_update_time = rs.getTimestamp("last_update_time");
-                bfd.last_update_by = UUID.fromString(rs.getString("last_update_by"));
-                bfd.last_update_by_name = rs.getString("last_update_by_name");
+                try {
+                    AdminBookView bfd = new AdminBookView();
+                    bfd.id = UUID.fromString(rs.getString("id"));
+                    bfd.name = rs.getString("name");
+                    bfd.image = rs.getBytes("image");
+                    bfd.author = rs.getString("author");
+                    bfd.release_year = rs.getInt("release_year");
+                    bfd.category_id = UUID.fromString(rs.getString("category_id"));
+                    bfd.category_name = rs.getString("category_name");
+                    bfd.price = rs.getDouble("price");
+                    bfd.promote_price = rs.getDouble("promote_price");
+                    bfd.quantity = rs.getInt("quantity");
+                    bfd.description = rs.getString("description");
+                    bfd.sub_description = rs.getString("sub_description");
+                    bfd.status = rs.getBoolean("status");
+                    bfd.create_time = rs.getTimestamp("create_time");
+                    try {
+                        bfd.create_by = UUID.fromString(rs.getString("create_by"));
+                    } catch (Exception e) {
+                        bfd.create_by = null;
+                    }
+                    bfd.create_by_name = rs.getString("create_by_name");
+                    bfd.last_update_time = rs.getTimestamp("last_update_time");
+                    try {
+                        bfd.last_update_by = UUID.fromString(rs.getString("last_update_by"));
+                    } catch (Exception e) {
+                        bfd.last_update_by = null;
+                    }
+                    bfd.last_update_by_name = rs.getString("last_update_by_name");
 
-                response.add(bfd);
+                    response.add(bfd);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
         } catch (Exception e) {
@@ -289,10 +300,10 @@ public class BookRepo extends Repo<Book> {
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-            	res = resultSet.getInt("count");
+                res = resultSet.getInt("count");
             }
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         } finally {
             CloseConnection();
         }

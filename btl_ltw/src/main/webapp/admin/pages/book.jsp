@@ -58,7 +58,7 @@ request.getSession().removeAttribute("messageType");
 				<td>${adminBookView.getLast_update_by_name()}</td>
 				<td>
 					<button onclick="showEditModal('tr-${adminBookView.getId()}')">Sửa</button>
-					<button>Xóa</button>
+					<button onclick="window.location.href='/btl_ltw/admin/book/delete?id=${adminBookView.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>

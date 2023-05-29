@@ -94,7 +94,7 @@ public class AdminServlet extends BaseServlet {
         }
         try {
             int res = adminRepo.add(admin);
-            if (res == 2) {
+            if (res >0) {
                 req.getSession().setAttribute("message", "Thêm mới thành công!");
                 req.getSession().setAttribute("messageType", "success");
             } else {

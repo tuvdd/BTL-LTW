@@ -31,7 +31,7 @@ request.getSession().removeAttribute("messageType");
 				<td>${adminFullDetail.getUsername()}</td>
 				<td>
 					<button onclick="showEditModal('tr-${adminFullDetail.getId()}')">Sửa</button>
-					<button>Xóa</button>
+					<button onclick="window.location.href='/btl_ltw/admin/admin/delete?id=${adminFullDetail.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>
@@ -90,6 +90,11 @@ int totalPages = (int) request.getAttribute("totalPages");
 		<div class="form-data-text">
 			<p>Username</p>
 			<input name="username" placeholder="Nhập username" id="add-username">
+		</div>
+
+		<div class="form-data-text">
+			<p>Password</p>
+			<input name="password" placeholder="Nhập password" id="add-username" type="password">
 		</div>
 
 		<div class="form-data-button">

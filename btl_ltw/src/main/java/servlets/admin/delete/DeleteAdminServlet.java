@@ -25,7 +25,7 @@ public class DeleteAdminServlet extends HttpServlet {
         try {
             
             int res = adminRepository.delete(UUID.fromString(adminId));
-            if (res == 2) {
+            if (res >0) {
                 request.getSession().setAttribute("message", "Xóa thành công!");
                 request.getSession().setAttribute("messageType", "success");
             } else {
