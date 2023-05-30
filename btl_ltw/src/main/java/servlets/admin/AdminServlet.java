@@ -84,7 +84,7 @@ public class AdminServlet extends BaseServlet {
                     req.getSession().setAttribute("message", "Sửa không thành công!");
                     req.getSession().setAttribute("messageType", "error");
                 }
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 req.getSession().setAttribute("message", e.getMessage());
                 req.getSession().setAttribute("messageType", "error");
             } finally {
@@ -101,7 +101,7 @@ public class AdminServlet extends BaseServlet {
                 req.getSession().setAttribute("message", "Thêm mới không thành công!");
                 req.getSession().setAttribute("messageType", "error");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             req.getSession().setAttribute("message", e.getMessage());
             req.getSession().setAttribute("messageType", "error");
         } finally {

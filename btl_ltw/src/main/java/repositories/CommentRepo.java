@@ -10,13 +10,12 @@ import models.Comment;
 
 public class CommentRepo extends Repo<Comment> {
 	public int Add(Comment comment) {
-		// TODO Auto-generated method stub
         int response = 0;
         CreateConnection();
         try {
             sql = "INSERT INTO comment (id, book_id, rate, comment, create_at) VALUES (?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, comment.getId());
+            statement.setObject(1, UUID.randomUUID());
             statement.setObject(2, comment.getBookId());
             statement.setInt(3, comment.getRate());
             statement.setString(4, comment.getComment());
