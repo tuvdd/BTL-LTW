@@ -20,7 +20,7 @@ import models.dtos.AdminBookView;
 import repositories.BookRepo;
 import repositories.CategoryRepo;
 
-@WebServlet({ "/admin/book", "/admin/book/" })
+@WebServlet(name="AdminBook", urlPatterns = "/admin/book")
 @MultipartConfig(location = "uploads", fileSizeThreshold = 1024 * 1024 * 2, maxFileSize = 1024 * 1024
         * 10, maxRequestSize = 1024 * 1024 * 50)
 public class BookServlet extends BaseServlet {
@@ -44,11 +44,24 @@ public class BookServlet extends BaseServlet {
             return;
         }
 
+        int page = 1;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+
         List<AdminBookView> listAdminBookViews;
         List<Category> listCategories;
         try {
-            listAdminBookViews = bookRepo.GetsAdminBookView("");
-            listCategories = categoryRepo.getAll(1,10);
+            int pageSize = 10;
+            listAdminBookViews = bookRepo.GetsAdminBookView(page, pageSize);
+            listCategories = categoryRepo.getAll(-1, -1, true);
+
+            int totalRecords = bookRepo.getCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
+
             req.setAttribute("listAdminBookViews", listAdminBookViews);
             req.setAttribute("listCategories", listCategories);
         } catch (SQLException e) {
@@ -97,8 +110,7 @@ public class BookServlet extends BaseServlet {
         String description = req.getParameter("description");
         String sub_description = req.getParameter("sub_description");
 
-        int status = req.getParameter("status") == null ? -1
-                : Integer.parseInt(req.getParameter("status"));
+        boolean status = true;
 
         Timestamp create_time = Timestamp.from(Instant.now());
         UUID create_by = admin_id;
@@ -111,7 +123,7 @@ public class BookServlet extends BaseServlet {
         try {
 
             int res;
-            if (book.getId() != null) {
+            if (book.id != null) {
                 res = bookRepo.update(book);
                 if (res == 1) {
                     req.getSession().setAttribute("message", "Sửa thành công!");

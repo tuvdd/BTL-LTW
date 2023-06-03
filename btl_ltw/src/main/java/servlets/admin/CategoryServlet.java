@@ -10,8 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Category;
 import repositories.CategoryRepo;
-
-@WebServlet({ "/admin/category", "/admin/category/" })
+@WebServlet(name="AdminCategory", urlPatterns = "/admin/category")
 public class CategoryServlet extends BaseServlet {
 	private CategoryRepo categoryRepo;
 
@@ -30,12 +29,24 @@ public class CategoryServlet extends BaseServlet {
 			resp.sendRedirect("/btl_ltw/admin/login");
 			return;
 		}
+		int page = 1;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+
 
 		List<Category> listCategories;
 		try {
+			int pageSize = 10;
 
-			listCategories = categoryRepo.getAll(1, 10);
+            int totalRecords = categoryRepo.getCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+			listCategories = categoryRepo.getAll(page, pageSize);
 			req.setAttribute("listCategories", listCategories);
+			
+			req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -53,10 +64,12 @@ public class CategoryServlet extends BaseServlet {
 
 		String id = req.getParameter("id");
 		String name = req.getParameter("name");
+		String url = req.getParameter("url");
 
 		Category category = new Category();
 		category.setName(name);
 		category.setStatus(true);
+		category.setUrl(url);
 		if (id != null && id != "") {
 			category.id = UUID.fromString(id);
 			try {

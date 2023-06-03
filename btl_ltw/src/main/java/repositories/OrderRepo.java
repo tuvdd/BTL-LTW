@@ -8,20 +8,96 @@ import java.util.UUID;
 
 import models.Order;
 import models.OrderDetail;
+import models.dtos.AdminOrderPreview;
 import models.dtos.OrderFullDetail;
 
 public class OrderRepo extends Repo<Order> {
     private OrderDetailRepo odr;
+
     public OrderRepo() {
         super();
         odr = new OrderDetailRepo();
+    }
+
+    public Order GetByID(UUID id) {
+        Order res = null;
+        try {
+            CreateConnection();
+            sql = "SELECT * FROM orders WHERE id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setObject(1, id);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = setObjectFromResultSet(resultSet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        return res;
+    }
+
+    public List<AdminOrderPreview> getAllAdminOrderView(int pageIndex, int pageSize) {
+        List<AdminOrderPreview> res = new ArrayList<>();
+        sql = "    SELECT "
+                + "    o.id AS id, "
+                + "    o.created_time AS created_time, "
+                + "    o.status AS status, "
+                + "    o.address AS address, "
+                + "    o.phonenum AS phonenum, "
+                + "    o.buyer_name AS buyer_name, "
+                + "    SUM(od.quantity) AS totalProduct, "
+                + "    SUM(od.price) AS totalPrice "
+                + "FROM "
+                + "    orders o "
+                + "    JOIN order_details od ON o.id = od.order_id "
+                + "GROUP BY "
+                + "    o.id, "
+                + "    o.created_time, "
+                + "    o.status, "
+                + "    o.address, "
+                + "    o.phonenum, "
+                + "    o.buyer_name "
+                + "ORDER BY "
+                + "    o.created_time DESC ";
+        try {
+            CreateConnection();
+            if (pageIndex == -1 || pageSize == -1) {
+                sql += " ;";
+                statement = connection.prepareStatement(sql);
+            } else {
+                sql += "LIMIT ? OFFSET ? ;";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, pageSize);
+                statement.setInt(2, (pageIndex - 1) * pageSize);
+            }
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                AdminOrderPreview adminOrderPreview = new AdminOrderPreview();
+                adminOrderPreview.id = UUID.fromString(resultSet.getString("id"));
+                adminOrderPreview.created_time = resultSet.getTimestamp("created_time");
+                adminOrderPreview.status = resultSet.getInt("status");
+                adminOrderPreview.address = resultSet.getString("address");
+                adminOrderPreview.phonenum = resultSet.getString("phonenum");
+                adminOrderPreview.buyer_name = resultSet.getString("buyer_name");
+                adminOrderPreview.totalProduct = resultSet.getInt("totalProduct");
+                adminOrderPreview.totalPrice = resultSet.getInt("totalPrice");
+                res.add(adminOrderPreview);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        return res;
     }
 
     public List<Order> getAll(int pageIndex, int pageSize) {
         List<Order> orders = new ArrayList<>();
         CreateConnection();
         try {
-            if (pageIndex == -1 && pageSize == -1) {
+            if (pageIndex == -1 || pageSize == -1) {
                 sql = "SELECT * FROM orders;";
                 statement = connection.prepareStatement(sql);
             } else {
@@ -47,9 +123,9 @@ public class OrderRepo extends Repo<Order> {
         OrderFullDetail orderFullDetail = null;
         CreateConnection();
         try {
-            sql = "SELECT o.id AS order_id, o.created_time, o.status, o.address, o.phonenum, o.buyer_name, od.id AS detail_id, od.book_id, od.quantity, od.price FROM orders o JOIN order_details od ON o.id = od.order_id WHERE o.id = ?;";
+            sql = "SELECT o.id AS order_id, o.created_time, o.status, o.address, o.phonenum, o.buyer_name, od.id AS detail_id, od.book_id, b.\"name\", od.quantity, od.price FROM orders o JOIN order_details od ON o.id = od.order_id JOIN books b ON od.book_id = b.id WHERE o.id = ?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderId.toString());
+            statement.setObject(1, orderId);
             resultSet = statement.executeQuery();
             List<OrderDetail> orderDetails = new ArrayList<>();
             while (resultSet.next()) {
@@ -64,6 +140,7 @@ public class OrderRepo extends Repo<Order> {
                 }
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setId(UUID.fromString(resultSet.getString("detail_id")));
+                orderDetail.setBook_name(resultSet.getString("name"));
                 orderDetail.setOrder_id(UUID.fromString(resultSet.getString("order_id")));
                 orderDetail.setBook_id(UUID.fromString(resultSet.getString("book_id")));
                 orderDetail.setQuantity(resultSet.getInt("quantity"));
@@ -87,7 +164,7 @@ public class OrderRepo extends Repo<Order> {
         try {
             sql = "INSERT INTO orders (id, created_time, status, address, phonenum, buyer_name) VALUES (?, ?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderFullDetail.id.toString());
+            statement.setObject(1, orderFullDetail.id);
             statement.setTimestamp(2, orderFullDetail.created_time);
             statement.setInt(3, orderFullDetail.status);
             statement.setString(4, orderFullDetail.address);
@@ -116,16 +193,33 @@ public class OrderRepo extends Repo<Order> {
             statement.setString(3, orderFullDetail.address);
             statement.setString(4, orderFullDetail.phonenum);
             statement.setString(5, orderFullDetail.buyer_name);
-            statement.setString(6, orderFullDetail.id.toString());
+            statement.setObject(6, orderFullDetail.id);
             rowsAffected = statement.executeUpdate();
             for (OrderDetail orderDetail : orderFullDetail.getOrderDetails()) {
                 if (orderDetail.getId() == null) {
-                    orderDetail.id =UUID.randomUUID();
-                    rowsAffected+=odr.add(orderDetail);
+                    orderDetail.id = UUID.randomUUID();
+                    rowsAffected += odr.add(orderDetail);
                 } else {
-                    rowsAffected+=odr.update(orderDetail);
+                    rowsAffected += odr.update(orderDetail);
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        return rowsAffected;
+    }
+
+    public int updateStatus(UUID id, int status) {
+        int rowsAffected = 0;
+        CreateConnection();
+        try {
+            sql = "UPDATE orders SET status = ? WHERE id = ?;";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, status);
+            statement.setObject(2, id);
+            rowsAffected += statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -140,11 +234,11 @@ public class OrderRepo extends Repo<Order> {
         try {
             sql = "DELETE FROM order_details WHERE order_id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderId.toString());
+            statement.setObject(1, orderId);
             rowsAffected += statement.executeUpdate();
             sql = "DELETE FROM orders WHERE id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, orderId.toString());
+            statement.setObject(1, orderId);
             rowsAffected += statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -163,5 +257,24 @@ public class OrderRepo extends Repo<Order> {
         order.setPhonenum(resultSet.getString("phonenum"));
         order.setBuyer_name(resultSet.getString("buyer_name"));
         return order;
+    }
+
+    public int getCount() {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM orders ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
     }
 }

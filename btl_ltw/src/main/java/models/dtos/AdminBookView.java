@@ -18,7 +18,7 @@ public class AdminBookView {
     public int quantity;
     public String description;
     public String sub_description;
-    public int status;
+    public boolean status;
     public Timestamp create_time;
     public UUID create_by;
     public String create_by_name;
@@ -100,10 +100,10 @@ public class AdminBookView {
     public void setSub_description(String sub_description) {
         this.sub_description = sub_description;
     }
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
     public Timestamp getCreate_time() {

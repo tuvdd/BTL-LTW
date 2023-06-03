@@ -7,9 +7,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.Order;
+import models.dtos.AdminOrderPreview;
 import repositories.OrderRepo;
-@WebServlet({ "/admin/order", "/admin/order/" })
+@WebServlet(name="AdminOrder", urlPatterns = "/admin/order")
 public class OrderServlet extends BaseServlet {
     private OrderRepo orderRepo;
 
@@ -25,44 +25,33 @@ public class OrderServlet extends BaseServlet {
 		super.doGet(req, resp);
 
 		if (!ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin/login");
-			return;
-		}
+            resp.sendRedirect("/btl_ltw/admin/login");
+            return;
+        }
 
-		List<Order> listCategories;
-		try {
+        int page = 1;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
 
-			listCategories = orderRepo.getAll(1,10);
-			req.setAttribute("listCategories", listCategories);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			req.setAttribute("pageName", "order.jsp");
-			req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
-		}
-	}
+        List<AdminOrderPreview> listAdminOrderPreviews;
+    
+        try {
+            int pageSize = 10;
+            listAdminOrderPreviews = orderRepo.getAllAdminOrderView(page, pageSize);
+        
+            int totalRecords = orderRepo.getCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (!ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin/login");
-			return;
-		}
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
 
-		try {
-			int res = orderRepo.add(null);
-			if (res == 1) {
-				req.getSession().setAttribute("message", "Thêm mới thành công!");
-				req.getSession().setAttribute("messageType", "success");
-			} else {
-				req.getSession().setAttribute("message", "Thêm mới không thành công!");
-				req.getSession().setAttribute("messageType", "error");
-			}
-		} catch (Exception e) {
-			req.getSession().setAttribute("message", e.getMessage());
-			req.getSession().setAttribute("messageType", "error");
-		} finally {
-			resp.sendRedirect("/btl_ltw/admin/order");
-		}
+            req.setAttribute("listAdminOrderPreviews", listAdminOrderPreviews);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            req.setAttribute("pageName", "order.jsp");
+            req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);
+        }
 	}
 }

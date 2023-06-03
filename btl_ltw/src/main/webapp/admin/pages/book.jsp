@@ -49,19 +49,45 @@ request.getSession().removeAttribute("messageType");
 				<td>${adminBookView.getQuantity()}</td>
 				<td>${adminBookView.getDescription()}</td>
 				<td>${adminBookView.getSub_description()}</td>
-				<td>${adminBookView.getStatus()}</td>
+				<td><a
+					href="/btl_ltw/admin/book/change-status?id=${adminBookView.getId()}">${adminBookView.getStatus()}</a>
+				</td>
 				<td>${adminBookView.getCreate_time_string()}</td>
 				<td>${adminBookView.getCreate_by_name()}</td>
 				<td>${adminBookView.getLast_update_time_string()}</td>
 				<td>${adminBookView.getLast_update_by_name()}</td>
 				<td>
 					<button onclick="showEditModal('tr-${adminBookView.getId()}')">Sửa</button>
-					<button>Xóa</button>
+					<button onclick="window.location.href='/btl_ltw/admin/book/delete?id=${adminBookView.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
 </div>
+<%
+int currentPage = (int) request.getAttribute("currentPage");
+%>
+<%
+int totalPages = (int) request.getAttribute("totalPages");
+%>
+<p style="display: inline;">Trang</p>
+<ul class="pagination" style="display: inline;">
+	<%
+	for (int i = 1; i <= totalPages; i++) {
+	%>
+	<li style="display: inline;">
+		<%
+		if (i != currentPage) {
+		%><a href="/btl_ltw/admin/book?page=<%=i%>"><%=i%></a> <%
+ } else {
+ %><p style="display: inline;"><%=i%></p> <%
+ }
+ %>
+	</li>
+	<%
+	}
+	%>
+</ul>
 <p class="alert-<%=messageType%>">
 	<%=(message != null ? message : "")%>
 </p>
@@ -114,14 +140,6 @@ request.getSession().removeAttribute("messageType");
 		<div class="form-data-text">
 			<p>Tóm tắt</p>
 			<textarea name="sub_description" placeholder="Tóm tắt"></textarea>
-		</div>
-		<div class="form-data-text">
-			<p>Trạng thái</p>
-			<select name="status" id="status" placeholder="Trạng thái">
-				<option value="1">Bán</option>
-				<option value="2">Chưa bán</option>
-				<option value="3">Dừng bán</option>
-			</select>
 		</div>
 		<div class="form-data-button">
 			<button type="submit">Thêm</button>
@@ -185,14 +203,6 @@ request.getSession().removeAttribute("messageType");
 			<p>Tóm tắt</p>
 			<textarea id="edit-sub_description" name="sub_description"
 				placeholder="Tóm tắt"></textarea>
-		</div>
-		<div class="form-data-text">
-			<p>Trạng thái</p>
-			<select name="status" id="select_status" placeholder="Trạng thái">
-				<option value="1">Bán</option>
-				<option value="0">Chưa bán</option>
-				<option value="-1">Dừng bán</option>
-			</select>
 		</div>
 		<div class="form-data-button">
 			<button type="submit">Sửa</button>

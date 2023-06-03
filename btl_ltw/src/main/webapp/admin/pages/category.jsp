@@ -16,6 +16,7 @@ request.getSession().removeAttribute("messageType");
 			<th>ID</th>
 			<th>Tên</th>
 			<th>Trạng thái</th>
+			<th>Đường dẫn</th>
 			<th>Thao tác</th>
 		</tr>
 		<c:forEach var="category" items="${listCategories}">
@@ -25,14 +26,41 @@ request.getSession().removeAttribute("messageType");
 				<td><a
 					href="/btl_ltw/admin/category/change-status?id=${category.getId()}">${category.getStatus()}</a>
 				</td>
+				<td><a
+					href="/btl_ltw/${category.getUrl()}">${category.getUrl()}</a>
+				</td>
 				<td>
 					<button onclick="showEditModal('tr-${category.getId()}')">Sửa</button>
-					<button>Xóa</button>
+					<button onclick="window.location.href='/btl_ltw/admin/category/delete?id=${category.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
 </div>
+<%
+int currentPage = (int) request.getAttribute("currentPage");
+%>
+<%
+int totalPages = (int) request.getAttribute("totalPages");
+%>
+<p style="display: inline;">Trang</p>
+<ul class="pagination" style="display: inline;">
+	<%
+	for (int i = 1; i <= totalPages; i++) {
+	%>
+	<li style="display: inline;">
+		<%
+		if (i != currentPage) {
+		%><a href="/btl_ltw/admin/category?page=<%=i%>"><%=i%></a> <%
+ } else {
+ %><p style="display: inline;"><%=i%></p> <%
+ }
+ %>
+	</li>
+	<%
+	}
+	%>
+</ul>
 <p class="alert-<%=messageType%>">
 	<%=(message != null ? message : "")%>
 </p>
@@ -41,6 +69,7 @@ request.getSession().removeAttribute("messageType");
 	<form method="post" action="/btl_ltw/admin/category" id="add-form">
 		<h3>Thêm danh mục</h3>
 		<input name="name" placeholder="Nhập tên danh mục" />
+		<input name="url" placeholder="Nhập đường dẫn" />
 		<button type="submit">Thêm</button>
 		<button type="reset">Hoàn tác</button>
 		<button type="button" id="add-cancel" onclick="closeAddModal()">Hủy</button>
@@ -54,6 +83,11 @@ request.getSession().removeAttribute("messageType");
 		<div class="form-data-text">
 			<p>Tên danh mục</p>
 			<input id="edit-name" name="name" placeholder="Nhập tên danh mục"
+				id="edit-name">
+		</div>
+		<div class="form-data-text">
+			<p>Đường dẫn</p>
+			<input id="edit-name" name="url" placeholder="Nhập đường dẫn"
 				id="edit-name">
 		</div>
 		<div class="form-data-button">

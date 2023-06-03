@@ -15,4 +15,6 @@ public class OrderFullDetail extends Order {
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
     }
+
+    
 }

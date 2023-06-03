@@ -31,12 +31,38 @@ request.getSession().removeAttribute("messageType");
 				<td>${adminFullDetail.getUsername()}</td>
 				<td>
 					<button onclick="showEditModal('tr-${adminFullDetail.getId()}')">Sửa</button>
-					<button>Xóa</button>
+					<button onclick="window.location.href='/btl_ltw/admin/admin/delete?id=${adminFullDetail.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
 </div>
+<%
+int currentPage = (int) request.getAttribute("currentPage");
+%>
+<%
+int totalPages = (int) request.getAttribute("totalPages");
+%>
+<p style="display: inline;">Trang</p>
+<ul class="pagination" style="display: inline;">
+	<%
+	for (int i = 1; i <= totalPages; i++) {
+	%>
+	<li style="display: inline;">
+		<%
+		if (i != currentPage) {
+		%><a href="/btl_ltw/admin/admin?page=<%=i%>"><%=i%></a>
+		<%
+		} else {
+		%><p style="display: inline;"><%=i%></p>
+		<%
+		}
+		%>
+	</li>
+	<%
+	}
+	%>
+</ul>
 <p class="alert-<%=messageType%>">
 	<%=(message != null ? message : "")%>
 </p>
@@ -47,25 +73,30 @@ request.getSession().removeAttribute("messageType");
 
 		<div class="form-data-text">
 			<p>Tên</p>
-			<input name="name" placeholder="Nhập tên " id="add-name">
+			<input name="name" placeholder="Nhập tên " id="add-name" required>
 		</div>
 		<div class="form-data-text">
 			<p>Email</p>
-			<input name="email" placeholder="Nhập email"  id="add-email">
+			<input name="email" placeholder="Nhập email" id="add-email" type="email" required>
 		</div>
 		<div class="form-data-text">
 			<p>SDT</p>
-			<input name="phonenum" placeholder="Nhập SDT" id="add-phonenum">
+			<input name="phonenum" placeholder="Nhập SDT" id="add-phonenum" maxlength="12" type="text"  required>
 		</div>
 		<div class="form-data-text">
 			<p>CCCD</p>
-			<input name="cccd" placeholder="Nhập cccd" id="add-cccd">
+			<input name="cccd" placeholder="Nhập cccd" id="add-cccd" maxlength="12" type="text"  required>
 		</div>
 		<div class="form-data-text">
 			<p>Username</p>
-			<input name="username" placeholder="Nhập username" id="add-username">
+			<input name="username" placeholder="Nhập username" id="add-username" required>
 		</div>
-		
+
+		<div class="form-data-text">
+			<p>Password</p>
+			<input name="password" placeholder="Nhập password" id="add-username" type="password" required>
+		</div>
+
 		<div class="form-data-button">
 			<button type="submit">Thêm</button>
 			<button type="button">Hoàn tác</button>
@@ -78,24 +109,25 @@ request.getSession().removeAttribute("messageType");
 <div id="edit-modal" class="modal">
 	<form method="post" action="/btl_ltw/admin/admin" id="edit-form">
 		<h3>Sửa admin</h3>
-		<input id="edit-hidden" type="hidden" name="id" id="edit_hidden" value="" />
+		<input id="edit-hidden" type="hidden" name="id" id="edit_hidden"
+			value="" required/>
 		<div class="form-data-text">
 			<p>Tên</p>
-			<input name="name" placeholder="Nhập tên " id="edit-name">
+			<input name="name" placeholder="Nhập tên " id="edit-name" required>
 		</div>
 		<div class="form-data-text">
 			<p>Email</p>
-			<input name="email" placeholder="Nhập email"  id="edit-email">
+			<input name="email" placeholder="Nhập email" id="edit-email" required type="email">
 		</div>
 		<div class="form-data-text">
 			<p>SDT</p>
-			<input name="phonenum" placeholder="Nhập SDT" id="edit-phonenum">
+			<input name="phonenum" placeholder="Nhập SDT" id="edit-phonenum" required type="text"  maxlength="12">
 		</div>
 		<div class="form-data-text">
 			<p>CCCD</p>
-			<input name="cccd" placeholder="Nhập cccd" id="edit-cccd">
+			<input name="cccd" placeholder="Nhập cccd" id="edit-cccd" required type="text"  maxlength="12">
 		</div>
-		
+
 		<div class="form-data-button">
 			<button type="submit">Sửa</button>
 			<button type="button">Hoàn tác</button>

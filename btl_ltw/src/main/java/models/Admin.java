@@ -22,9 +22,13 @@ public class Admin {
 		this.email = email;
 		this.phonenum = phonenum;
 		this.cccd = cccd;
+		this.username = username;
+		this.password = password;
 	}
 
 	public UUID getId() {
+		if (id == null)
+			id = UUID.randomUUID();
 		return id;
 	}
 
@@ -80,5 +84,4 @@ public class Admin {
 		this.password = password;
 	}
 
-	
 };

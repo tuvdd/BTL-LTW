@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import models.Admin;
 import repositories.AdminRepo;
 
-@WebServlet({ "/admin/login", "/admin/login/" })
+@WebServlet(name="AdminLogin", urlPatterns = "/admin/login")
 public class LoginServlet extends BaseServlet {
 	private AdminRepo adminRepo;
 
@@ -45,7 +45,7 @@ public class LoginServlet extends BaseServlet {
 
 		try {
 			Admin admin = adminRepo.getByUsernameAndPassword(username, password);
-			if (admin.id == null) {
+			if (admin == null) {
 				req.getSession().setAttribute("error", "Tên tài khoản hoặc mật khẩu không đúng");
 				resp.sendRedirect("/btl_ltw/admin/login");
 				return;

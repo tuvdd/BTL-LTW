@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.Admin;
 import repositories.AdminRepo;
 
-@WebServlet({ "/admin/admin", "/admin/admin/" })
+@WebServlet(name="AdminAdmin", urlPatterns = "/admin/admin")
 public class AdminServlet extends BaseServlet {
     private AdminRepo adminRepo;
 
@@ -32,11 +32,22 @@ public class AdminServlet extends BaseServlet {
             return;
         }
 
+        int page = 1;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+
         List<Admin> listAdmins;
         try {
-
-        	listAdmins = adminRepo.getAll(1, 10);
+            int pageSize = 10;
+            listAdmins = adminRepo.getAll(page, pageSize);
             req.setAttribute("listAdmins", listAdmins);
+
+            int totalRecords = adminRepo.getCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -73,7 +84,7 @@ public class AdminServlet extends BaseServlet {
                     req.getSession().setAttribute("message", "Sửa không thành công!");
                     req.getSession().setAttribute("messageType", "error");
                 }
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 req.getSession().setAttribute("message", e.getMessage());
                 req.getSession().setAttribute("messageType", "error");
             } finally {
@@ -83,14 +94,14 @@ public class AdminServlet extends BaseServlet {
         }
         try {
             int res = adminRepo.add(admin);
-            if (res == 2) {
+            if (res >0) {
                 req.getSession().setAttribute("message", "Thêm mới thành công!");
                 req.getSession().setAttribute("messageType", "success");
             } else {
                 req.getSession().setAttribute("message", "Thêm mới không thành công!");
                 req.getSession().setAttribute("messageType", "error");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             req.getSession().setAttribute("message", e.getMessage());
             req.getSession().setAttribute("messageType", "error");
         } finally {

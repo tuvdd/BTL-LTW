@@ -28,11 +28,14 @@
 	padding: 30px;
 	margin-top: 30px;
 }
-textarea{
-	resize:vertical;
+
+textarea {
+	resize: vertical;
 }
 
-input,textarea, select {
+input,
+textarea,
+select {
 	border: 2px solid #355b9a;
 	border-radius: 10px;
 	margin: 10px 0;
@@ -265,6 +268,16 @@ th {
 
 .overflow {
 	width: 1000px;
-	height: 400px;
+	height: 500px;
 	overflow: auto;
+}
+
+ul {}
+
+li {
+	display: inline;
+}
+
+li a {
+	display: inline;
 }

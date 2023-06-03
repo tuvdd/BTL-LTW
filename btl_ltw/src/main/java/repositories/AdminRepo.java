@@ -7,16 +7,28 @@ import java.util.List;
 import java.util.UUID;
 
 import models.Admin;
-import models.dtos.AdminFullDetail;
+import utils.Utils;
 
 public class AdminRepo extends Repo<Admin> {
-    public int add(Admin admin) throws SQLException {
+    public int add(Admin admin) throws Exception {
+        if (admin.name == null || admin.email == null || admin.phonenum == null || admin.cccd == null
+                || admin.username == null || admin.password == null) {
+            throw new Exception("Thiếu dữ liệu");
+        }
+        if (Utils.isExistNotNumberChar(admin.phonenum)) {
+            throw new Exception("Số điện thoại không hợp lệ");
+        }
+
+        if (Utils.isExistNotNumberChar(admin.cccd) || admin.cccd.length() != 12) {
+            throw new Exception("CCCD không hợp lệ");
+        }
+
         int res;
         try {
             CreateConnection();
-            sql = "INSERT INTO admin (id, name, email, phonenum, cccd, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            sql = "INSERT INTO admins (id, name, email, phonenum, cccd, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, admin.id.toString());
+            statement.setObject(1, UUID.randomUUID());
             statement.setString(2, admin.name);
             statement.setString(3, admin.email);
             statement.setString(4, admin.phonenum);
@@ -33,19 +45,30 @@ public class AdminRepo extends Repo<Admin> {
         return res;
     }
 
-    public int update(Admin admin) throws SQLException {
+    public int update(Admin admin) throws Exception {
+        if (admin.id == null || admin.name == null || admin.email == null || admin.phonenum == null
+                || admin.cccd == null
+                || admin.username == null || admin.password == null) {
+            throw new Exception("Thiếu dữ liệu");
+        }
+        if (Utils.isExistNotNumberChar(admin.phonenum)) {
+            throw new Exception("Số điện thoại không hợp lệ");
+        }
+
+        if (Utils.isExistNotNumberChar(admin.cccd) || admin.cccd.length() != 12) {
+            throw new Exception("CCCD không hợp lệ");
+        }
+
         int res;
         try {
             CreateConnection();
-            sql = "UPDATE admin SET name=?, email=?, phonenum=?, cccd=?, username=?, password=? WHERE id=?";
+            sql = "UPDATE admins SET name=?, email=?, phonenum=?, cccd=? WHERE id=?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, admin.name);
             statement.setString(2, admin.email);
             statement.setString(3, admin.phonenum);
             statement.setString(4, admin.cccd);
-            statement.setString(5, admin.username);
-            statement.setString(6, admin.password);
-            statement.setString(7, admin.id.toString());
+            statement.setObject(5, admin.id);
             res = statement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -60,9 +83,9 @@ public class AdminRepo extends Repo<Admin> {
         int res;
         try {
             CreateConnection();
-            sql = "DELETE FROM admin WHERE id=?";
+            sql = "DELETE FROM admins WHERE id=?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             res = statement.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -76,12 +99,18 @@ public class AdminRepo extends Repo<Admin> {
     public List<Admin> getAll(int page, int pageSize) throws SQLException {
         List<Admin> admins = null;
         try {
-            int offset = (page - 1) * pageSize;
             CreateConnection();
-            sql = "SELECT * FROM admins OFFSET ? LIMIT ? ;";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, offset);
-            statement.setInt(2, pageSize);
+            sql = "SELECT * FROM admins";
+            if (page > 0 && pageSize > 0) {
+                int offset = (page - 1) * pageSize;
+                sql += " OFFSET ? LIMIT ? ;";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, offset);
+                statement.setInt(2, pageSize);
+            } else {
+                sql += " ;";
+                statement = connection.prepareStatement(sql);
+            }
             resultSet = statement.executeQuery();
 
             admins = new ArrayList<>();
@@ -109,9 +138,9 @@ public class AdminRepo extends Repo<Admin> {
         Admin admin;
         try {
             CreateConnection();
-            sql = "SELECT * FROM admin WHERE id=;";
+            sql = "SELECT * FROM admins WHERE id=?;";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, id.toString());
+            statement.setObject(1, id);
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -175,5 +204,24 @@ public class AdminRepo extends Repo<Admin> {
         admin.phonenum = resultSet.getString("phonenum");
         admin.cccd = resultSet.getString("cccd");
         return admin;
+    }
+
+    public int getCount() {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM admins ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
     }
 }
