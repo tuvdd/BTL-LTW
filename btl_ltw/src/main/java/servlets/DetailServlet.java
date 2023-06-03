@@ -27,10 +27,15 @@ public class DetailServlet extends HttpServlet {
         int currentPage = Integer.parseInt(req.getParameter("page") != null ? req.getParameter("page") : "1");
         int commentsPerPage = 5;
         BookRepo repoB = new BookRepo();
-        Book book;
+        Book book = null;;
         bookID = req.getParameter("bookid");
         // String bookID = "9377f02d-5f88-4bd6-b251-9183a63bcf87";
-        book = repoB.getById(UUID.fromString(bookID));
+        try {
+            book = repoB.getById(UUID.fromString(bookID));
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         System.out.print("BOOKID");
         System.out.println(bookID);
         List<Comment> listComments;

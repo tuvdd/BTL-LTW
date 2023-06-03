@@ -16,14 +16,14 @@ public class BookRepo extends Repo<Book> {
         try {
             sql = "SELECT * FROM books";
 
-            if (page == -1 || size == -1) {
+            if (page > 0 && size > 0) {
                 int offset = (page - 1) * size;
                 sql += " OFFSET ? LIMIT ? ;";
                 statement = connection.prepareStatement(sql);
                 statement.setInt(1, offset);
                 statement.setInt(2, size);
             } else {
-                sql += ";";
+                sql += " ;";
                 statement = connection.prepareStatement(sql);
             }
             resultSet = statement.executeQuery();
@@ -39,9 +39,11 @@ public class BookRepo extends Repo<Book> {
         return books;
     }
 
-    public Book getById(UUID id) {
+    public Book getById(UUID id) throws Exception {
         Book book = null;
         CreateConnection();
+        if (id == null)
+            throw new Exception("ID = null");
         try {
             sql = "SELECT * FROM books WHERE id=?;";
             statement = connection.prepareStatement(sql);
@@ -113,9 +115,14 @@ public class BookRepo extends Repo<Book> {
         return books;
     }
 
-    public int add(Book book) {
+    public int add(Book book) throws Exception {
         int rowsAffected = 0;
         CreateConnection();
+
+        if (book.id == null || book.name == null || book.image == null) {
+            throw new Exception("Thiếu dữ liệu");
+        }
+
         try {
             sql = "INSERT INTO books (id, name, image, author, release_year, category_id, price, promote_price, quantity, description, sub_description, status, create_time, create_by, last_update_time, last_update_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
@@ -148,23 +155,30 @@ public class BookRepo extends Repo<Book> {
         int rowsAffected = 0;
         CreateConnection();
         try {
-            sql = "UPDATE books SET name=?, image=?, author=?, release_year=?, category_id=?, price=?, promote_price=?, quantity=?, description=?, sub_description=?, status=?, last_update_time=?, last_update_by=? WHERE id=?;";
+            sql = "UPDATE books SET name=?, author=?, release_year=?, category_id=?, price=?, promote_price=?, quantity=?, description=?, sub_description=?, status=?, last_update_time=?, last_update_by=? WHERE id=?;";
             statement = connection.prepareStatement(sql);
             statement.setString(1, book.name);
-            statement.setBytes(2, book.image);
-            statement.setString(3, book.author);
-            statement.setInt(4, book.release_year);
-            statement.setObject(5, book.category_id);
-            statement.setDouble(6, book.price);
-            statement.setDouble(7, book.promote_price);
-            statement.setInt(8, book.quantity);
-            statement.setString(9, book.description);
-            statement.setString(10, book.sub_description);
-            statement.setBoolean(11, book.status);
-            statement.setTimestamp(12, book.last_update_time);
-            statement.setObject(13, book.last_update_by);
-            statement.setObject(14, book.id);
+            statement.setString(2, book.author);
+            statement.setInt(3, book.release_year);
+            statement.setObject(4, book.category_id);
+            statement.setDouble(5, book.price);
+            statement.setDouble(6, book.promote_price);
+            statement.setInt(7, book.quantity);
+            statement.setString(8, book.description);
+            statement.setString(9, book.sub_description);
+            statement.setBoolean(10, book.status);
+            statement.setTimestamp(11, book.last_update_time);
+            statement.setObject(12, book.last_update_by);
+            statement.setObject(13, book.id);
             rowsAffected = statement.executeUpdate();
+            if (book.image != null)
+                if (book.image.length > 0) {
+                    sql = "UPDATE books SET image=? WHERE id=?;";
+                    statement.setBytes(1, book.image);
+                    statement.setObject(2, book.id);
+                    rowsAffected += statement.executeUpdate();
+                }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

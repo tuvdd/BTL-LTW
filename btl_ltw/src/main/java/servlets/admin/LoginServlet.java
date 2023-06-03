@@ -45,7 +45,7 @@ public class LoginServlet extends BaseServlet {
 
 		try {
 			Admin admin = adminRepo.getByUsernameAndPassword(username, password);
-			if (admin.id == null) {
+			if (admin == null) {
 				req.getSession().setAttribute("error", "Tên tài khoản hoặc mật khẩu không đúng");
 				resp.sendRedirect("/btl_ltw/admin/login");
 				return;

@@ -7,21 +7,19 @@ public class User {
     public UUID id;
     public String name;
     public String phonenum;
-    public String address;
-    public UUID avatar_id;
+    public String email;
     public boolean status;
     public Timestamp created_time;
     public Timestamp last_update_time;
     public String username;
     public String password;
 
-    public void set(UUID id, String name, String phonenum, String address, UUID avatar_id, boolean status,
+    public void set(UUID id, String name, String phonenum, String email, boolean status,
             Timestamp created_time, Timestamp last_update_time, String username, String password) {
         this.id = id;
         this.name = name;
         this.phonenum = phonenum;
-        this.address = address;
-        this.avatar_id = avatar_id;
+        this.email = email;
         this.status = status;
         this.created_time = created_time;
         this.last_update_time = last_update_time;
@@ -53,23 +51,15 @@ public class User {
         this.phonenum = phonenum;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public UUID getAvatar_id() {
-        return avatar_id;
-    }
-
-    public void setAvatar_id(UUID avatar_id) {
-        this.avatar_id = avatar_id;
-    }
-
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -109,4 +99,5 @@ public class User {
         this.password = password;
     }
 
+    
 }

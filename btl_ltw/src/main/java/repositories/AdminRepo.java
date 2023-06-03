@@ -7,15 +7,28 @@ import java.util.List;
 import java.util.UUID;
 
 import models.Admin;
+import utils.Utils;
 
 public class AdminRepo extends Repo<Admin> {
-    public int add(Admin admin) throws SQLException {
+    public int add(Admin admin) throws Exception {
+        if (admin.name == null || admin.email == null || admin.phonenum == null || admin.cccd == null
+                || admin.username == null || admin.password == null) {
+            throw new Exception("Thiếu dữ liệu");
+        }
+        if (Utils.isExistNotNumberChar(admin.phonenum)) {
+            throw new Exception("Số điện thoại không hợp lệ");
+        }
+
+        if (Utils.isExistNotNumberChar(admin.cccd) || admin.cccd.length() != 12) {
+            throw new Exception("CCCD không hợp lệ");
+        }
+
         int res;
         try {
             CreateConnection();
             sql = "INSERT INTO admins (id, name, email, phonenum, cccd, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, admin.getId());
+            statement.setObject(1, UUID.randomUUID());
             statement.setString(2, admin.name);
             statement.setString(3, admin.email);
             statement.setString(4, admin.phonenum);
@@ -32,7 +45,20 @@ public class AdminRepo extends Repo<Admin> {
         return res;
     }
 
-    public int update(Admin admin) throws SQLException {
+    public int update(Admin admin) throws Exception {
+        if (admin.id == null || admin.name == null || admin.email == null || admin.phonenum == null
+                || admin.cccd == null
+                || admin.username == null || admin.password == null) {
+            throw new Exception("Thiếu dữ liệu");
+        }
+        if (Utils.isExistNotNumberChar(admin.phonenum)) {
+            throw new Exception("Số điện thoại không hợp lệ");
+        }
+
+        if (Utils.isExistNotNumberChar(admin.cccd) || admin.cccd.length() != 12) {
+            throw new Exception("CCCD không hợp lệ");
+        }
+
         int res;
         try {
             CreateConnection();
@@ -75,14 +101,14 @@ public class AdminRepo extends Repo<Admin> {
         try {
             CreateConnection();
             sql = "SELECT * FROM admins";
-            if (page == -1 || pageSize == -1) {
+            if (page > 0 && pageSize > 0) {
                 int offset = (page - 1) * pageSize;
                 sql += " OFFSET ? LIMIT ? ;";
                 statement = connection.prepareStatement(sql);
                 statement.setInt(1, offset);
                 statement.setInt(2, pageSize);
             } else {
-                sql += ";";
+                sql += " ;";
                 statement = connection.prepareStatement(sql);
             }
             resultSet = statement.executeQuery();
@@ -112,7 +138,7 @@ public class AdminRepo extends Repo<Admin> {
         Admin admin;
         try {
             CreateConnection();
-            sql = "SELECT * FROM admins WHERE id=;";
+            sql = "SELECT * FROM admins WHERE id=?;";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, id);
             resultSet = statement.executeQuery();

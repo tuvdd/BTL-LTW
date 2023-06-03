@@ -42,6 +42,15 @@
 			<img class="left-sidebar-item-button-img"
 				src="/btl_ltw/admin/resources/img/next.png" style="float: right;" />
 		</button>
+
+		<button class="left-sidebar-item-button"
+			onclick="redirect('/btl_ltw/admin/user')">
+			<img class="left-sidebar-item-button-img"
+				src="/btl_ltw/admin/resources/img/user.png" />
+			<p class="left-sidebar-item-button-text">Quản lý người dùng</p>
+			<img class="left-sidebar-item-button-img"
+				src="/btl_ltw/admin/resources/img/next.png" style="float: right;" />
+		</button>
 		<button class="left-sidebar-item-button"
 			onclick="redirect('/btl_ltw/admin/category')">
 			<img class="left-sidebar-item-button-img"
