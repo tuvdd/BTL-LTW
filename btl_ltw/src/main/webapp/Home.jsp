@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/btl_ltw/resources/css/home.css" />
+    <link rel="stylesheet" href="/resources/css/home.css" />
     <title>Ecommerce Website</title>
 </head>
 
@@ -21,10 +21,10 @@
                         <p>
                             Giới thiệu...
                         </p>
-                        <a href="/client/shopping" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a>
+                        <a href="/shopping" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a>
                     </div>
                     <div class="col-2">
-                        <img src="/btl_ltw/resources/img/Book1.png" alt="" />
+                        <img src="/resources/img/Book1.png" alt="" />
                     </div>
                 </div>
             </div>
@@ -35,13 +35,13 @@
             <div class="small-container">
                 <div class="row">
                     <div class="col-3">
-                        <img src="/btl_ltw/resources/img/category-1.jpg" alt="" />
+                        <img src="/resources/img/category-1.jpg" alt="" />
                     </div>
                     <div class="col-3">
-                        <img src="/btl_ltw/resources/img/category-2.jpg" alt="" />
+                        <img src="/resources/img/category-2.jpg" alt="" />
                     </div>
                     <div class="col-3">
-                        <img src="/btl_ltw/resources/img/category-3.jpg" alt="" />
+                        <img src="/resources/img/category-3.jpg" alt="" />
                     </div>
                 </div>
             </div>

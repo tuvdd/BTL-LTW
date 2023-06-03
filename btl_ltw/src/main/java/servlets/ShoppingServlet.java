@@ -11,7 +11,7 @@ import repositories.BookRepo;
 import repositories.CategoryRepo;
 import java.io.IOException;
 import java.util.List;
-@WebServlet({ "/client/shopping", "/client/shopping/" })
+@WebServlet({ "/shopping", "/shopping/" })
 public class ShoppingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +39,7 @@ public class ShoppingServlet extends HttpServlet {
         req.setAttribute("pb", pb);
         req.setAttribute("cid", 0);
         req.setAttribute("chid", chid);
-        req.getRequestDispatcher("/client/Shopping.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Shopping.jsp").forward(req, resp);
     }
 
     @Override

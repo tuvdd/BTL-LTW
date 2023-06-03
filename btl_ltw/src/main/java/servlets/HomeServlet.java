@@ -41,19 +41,19 @@ public class HomeServlet extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			}
 		} else {
-			// CategoryRepo repoC = new CategoryRepo();
-			// BookRepo repoB = new BookRepo();
-			// List<Book> listB, listRB = null;
-			// List<Category> listC;
-			// Book p;
-			// listB = repoB.getAll(1, 20);
-			// listC = repoC.getAll(-1, -1);
+			 CategoryRepo repoC = new CategoryRepo();
+			 BookRepo repoB = new BookRepo();
+			 List<Book> listB, listRB = null;
+			 List<Category> listC;
+			 Book p;
+			 listB = repoB.getAll(1, 20);
+			 listC = repoC.getAll(-1, -1);
 
-			// p = listB.get(0);
-			// request.setAttribute("listB", listB);
-			// request.setAttribute("listC", listC);
-			// request.setAttribute("listRB", listRB);
-			// request.setAttribute("p", p);
+			 p = listB.get(0);
+			 request.setAttribute("listB", listB);
+			 request.setAttribute("listC", listC);
+			 request.setAttribute("listRB", listRB);
+			 request.setAttribute("p", p);
 			request.getRequestDispatcher("Home.jsp").forward(request, response);
 
 		}

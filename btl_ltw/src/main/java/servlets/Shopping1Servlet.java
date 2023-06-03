@@ -12,7 +12,7 @@ import repositories.CategoryRepo;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet({ "/client/shopping1", "/client/shopping1/" })
+@WebServlet({ "/shopping1", "/shopping1/" })
 public class Shopping1Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -132,7 +132,7 @@ public class Shopping1Servlet extends HttpServlet {
         req.setAttribute("pb", pb);
         req.setAttribute("cid", cid);
         req.setAttribute("chid", chid);
-        req.getRequestDispatcher("/client/Shopping.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Shopping.jsp").forward(req, resp);
 
     }
 
