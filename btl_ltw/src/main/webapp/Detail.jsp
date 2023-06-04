@@ -7,6 +7,10 @@
     int numberOfPages = (int) request.getAttribute("numberOfPages");
     String bookid = (String) request.getAttribute("bookid");
     Book book = (Book) request.getAttribute("book");
+    int numberComment = (int) request.getAttribute("numberComment");
+    float averageComment = (float) request.getAttribute("averageComment");
+    int fullStars = (int) averageComment;
+    boolean hasHalfStar = averageComment % 1 != 0;
 %>
 <%
     String error = (String) session.getAttribute("error");
@@ -42,40 +46,31 @@
                             <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
                         </div>
                     </div>
-                    <div class = "img-select">
-                        <div class = "img-item">
-                            <a href = "#" data-id = "1">
-                                <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
-                            </a>
-                        </div>
-                        <div class = "img-item">
-                            <a href = "#" data-id = "2">
-                                <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
-                            </a>
-                        </div>
-                        <div class = "img-item">
-                            <a href = "#" data-id = "3">
-                                <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
-                            </a>
-                        </div>
-                        <div class = "img-item">
-                            <a href = "#" data-id = "4">
-                                <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
                 <!-- card right -->
                 <div class = "product-content">
                     <h2 class = "product-title">${book.name}</h2>
-                    <a href = "#" class = "product-link">visit nike store</a>
                     <div class = "product-rating">
-                        <i class = "fas fa-star"></i>
-                        <i class = "fas fa-star"></i>
-                        <i class = "fas fa-star"></i>
-                        <i class = "fas fa-star"></i>
-                        <i class = "fas fa-star-half-alt"></i>
-                        <span>4.7(21)</span>
+                        <%
+                            int countLocal = 0;
+                            for (int i = 0; i < fullStars; i++) {
+                                countLocal += 1;
+                        %>
+                            <div class="star_yellow"></div>
+                        <%
+                            }
+                            if (hasHalfStar) {
+                                countLocal += 1;
+                        %>
+                            <div class="half_star"></div>
+                        <%
+                            }
+                            for (int i=0; i< 5-countLocal; i++) {
+                        %>      
+                            <div class="star_gray"></div>
+                        <% } %>
+                        <span>Rating ${averageComment} (${numberComment})</span>
                     </div>
 
                     <div class = "product-price">
@@ -86,13 +81,7 @@
                     <div class = "product-detail">
                         <h2>about this item: </h2>
                         <p>${book.description}</p>
-                        <ul>
-                            <li>Color: <span>Black</span></li>
-                            <li>Available: <span>Còn hàng</span></li>
-                            <li>Category: <span>Trinh thám</span></li>
-                            <li>Shipping Area: <span>Toàn thế giới</span></li>
-                            <li>Shipping Fee: <span>Free</span></li>
-                        </ul>
+                        <p> Còn lại: ${book.getQuantity()}</p>
                     </div>
 
                     <div class = "purchase-info">
@@ -100,7 +89,6 @@
                         <button type = "button" class = "btn">
                             Add to Cart <i class = "fas fa-shopping-cart"></i>
                         </button>
-                        <button type = "button" class = "btn">Compare</button>
                     </div>
 
                     <div class = "social-links">
@@ -144,7 +132,7 @@
                     </div>
 
                     <textarea id="comment_text", name="comment_text" placeholder="Write your comment..."></textarea>
-                    <button class="btn" onclick="submitReview()">Submit</button>
+                    <button class="btn">Submit</button>
                 </div>
             </form>
 
@@ -157,10 +145,14 @@
                     <%} else { %>
                         <c:forEach var="comment" items="${listComments}">
                             <div class="user_comment">
+                                <div class="username">
+                                    <h3>${comment.getUsername()}</h3>
+                                    <p>${comment.getStringCreate_at()}</p>
+                                </div>
                                 <div class="rating">
                                     <div class="stars">
                                     <c:forEach var="number" begin="1" end="${comment.getRate()}">
-                                            <div class="star_yellow">a</div>
+                                            <div class="star_yellow"></div>
                                         </c:forEach>
                                         <c:forEach var="number" begin="1" end="${5 - comment.getRate()}">
                                             <div class="star_gray"></div>

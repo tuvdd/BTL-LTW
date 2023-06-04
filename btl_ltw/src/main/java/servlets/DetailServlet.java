@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Book;
 import models.Comment;
 import repositories.BookRepo;
@@ -32,6 +33,7 @@ public class DetailServlet extends HttpServlet {
         // String bookID = "9377f02d-5f88-4bd6-b251-9183a63bcf87";
         try {
             book = repoB.getById(UUID.fromString(bookID));
+            System.out.println(book.getName());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -41,15 +43,30 @@ public class DetailServlet extends HttpServlet {
         List<Comment> listComments;
         listComments = commentRepo.GetlistCommentByBookID(bookID, currentPage, commentsPerPage);
         int numberOfPages = commentRepo.getNumberOfPages(bookID, commentsPerPage);
+        int numberComment = repoB.getNumberComments(bookID);
+        float averageComment = repoB.getAverageComment(bookID);
+        System.out.print("count");
+        System.out.println(numberComment);
+        System.out.println(averageComment);
         req.setAttribute("bookid", bookID);
         req.setAttribute("listComments", listComments);
         req.setAttribute("book",book);
         req.setAttribute("numberOfPages", numberOfPages);
+        req.setAttribute("averageComment", averageComment);
+        req.setAttribute("numberComment", numberComment);
         req.getRequestDispatcher("/Detail.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userID") == null) {
+            // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+            resp.sendRedirect("/btl_ltw/user/login");
+            return;
+        } 
+        String userID = (String) session.getAttribute("userID");
         String rateStr = req.getParameter("rate");
         String commentText = req.getParameter("comment_text");
         System.out.println("comment text:");
@@ -62,7 +79,7 @@ public class DetailServlet extends HttpServlet {
             int rate = Integer.parseInt(rateStr);
             System.out.println(rate);
             Comment newComment = new Comment();
-            newComment.set(UUID.randomUUID(), UUID.fromString(bookID), rate, commentText, new Timestamp(new Date().getTime()));
+            newComment.set(UUID.randomUUID(), UUID.fromString(userID), UUID.fromString(bookID), rate, commentText, new Timestamp(new Date().getTime()));
             int res = commentRepo.Add(newComment);
             System.out.println("okeee");
             if (res != 1) {

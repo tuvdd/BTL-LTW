@@ -168,6 +168,29 @@ public class UserRepo extends Repo<User> {
         return user;
     }
 
+    public User getUserByPhoneNumber(String phoneNumber) throws Exception {
+        User user;
+        try {
+            CreateConnection();
+            sql = "SELECT * FROM users WHERE phonenum=?;";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, phoneNumber);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = setObjectFromResultSet(resultSet);
+
+            } else {
+                user = null;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            CloseConnection();
+        }
+        return user;
+    }
+
     @Override
     protected User setObjectFromResultSet(ResultSet resultSet) throws SQLException {
         User user = new User();
