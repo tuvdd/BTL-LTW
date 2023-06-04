@@ -8,10 +8,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import repositories.BookRepo;
+import servlets.admin.ServletUtil;
 
 @WebServlet("/admin/book/delete")
 public class DeleteBookServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ServletUtil.IsSessionExsited(request, response)) {
+            response.sendRedirect("/btl_ltw/admin/login");
+            return;
+        }
+        
         String idParam = request.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Book ID parameter is missing or empty");
