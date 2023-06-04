@@ -102,7 +102,6 @@ img{
 .product-detail h2{
     text-transform: capitalize;
     color: #12263a;
-    padding-bottom: 0.6rem;
 }
 .product-detail p{
     font-size: 0.9rem;
@@ -306,11 +305,18 @@ h1 {
     padding: 20px;
 }
 
+.user_comment .username {
+    display: flex;
+    height: 20px;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
 .rating {
     display: flex;
     align-items: center;
     height: 20px;
-
 }
 
 .stars {
@@ -328,7 +334,7 @@ h1 {
 .half_star {
     width: 20px;
     height: 20px;
-    content: url(/half_star.png);
+    content: url(../img/half_star.png);
     display: inline-block;
 }
 

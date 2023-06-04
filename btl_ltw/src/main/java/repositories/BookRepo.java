@@ -39,8 +39,32 @@ public class BookRepo extends Repo<Book> {
         return books;
     }
 
+    public List<Book> searchBooks(String searchQuery, int page, int size) {
+        List<Book> books = new ArrayList<>();
+        CreateConnection();
+        try {
+            String sql = "SELECT * FROM books WHERE name LIKE ? OR author LIKE ? OR category LIKE ? OR description LIKE ?";
+            statement = connection.prepareStatement(sql);
+            String searchParam = "%" + searchQuery + "%";
+            statement.setString(1, searchParam);
+            statement.setString(2, searchParam);
+            statement.setString(3, searchParam);
+            statement.setString(4, searchParam);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Book book = setObjectFromResultSet(resultSet);
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        return books;
+    }
+
     public Book getById(UUID id) throws Exception {
-        Book book = null;
+        Book book = new Book();
         CreateConnection();
         if (id == null)
             throw new Exception("ID = null");
@@ -100,8 +124,8 @@ public class BookRepo extends Repo<Book> {
             }
             statement = connection.prepareStatement(sql);
             statement.setObject(1, UUID.fromString(uuid));
-            statement.setInt(2, size);
-            statement.setInt(3, (page - 1) * size);
+            statement.setInt(3, size);
+            statement.setInt(2, (page - 1) * size);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Book book = setObjectFromResultSet(resultSet);
@@ -322,6 +346,49 @@ public class BookRepo extends Repo<Book> {
             CloseConnection();
         }
 
+        return res;
+    }
+
+    public float getAverageComment(String bookID) {
+        float res = 0;
+        sql = "SELECT COUNT(*) AS comment_count, SUM(rate) AS total_rate FROM books LEFT JOIN comment ON books.id = comment.book_id WHERE books.id = ?;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setObject(1, UUID.fromString(bookID));
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int commentCount = resultSet.getInt("comment_count");
+                int totalRate = resultSet.getInt("total_rate");
+                System.out.println(commentCount);
+                System.out.println(totalRate);
+                res = (float)totalRate/ (float)commentCount;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        String formattedNumber = String.format("%.2f", res);
+        return Float.parseFloat(formattedNumber);
+    }
+
+    public int getNumberComments(String bookID) {
+        int res = 0;
+        sql = "SELECT COUNT(*) AS comment_count FROM books LEFT JOIN comment ON books.id = comment.book_id WHERE books.id = ?;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setObject(1, UUID.fromString(bookID));
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getInt("comment_count");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
         return res;
     }
 
