@@ -9,10 +9,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import repositories.CategoryRepo;
+import servlets.admin.ServletUtil;
 
 @WebServlet("/admin/category/delete")
 public class DeleteCategoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ServletUtil.IsSessionExsited(request, response)) {
+            response.sendRedirect("/btl_ltw/admin/login");
+            return;
+        }
         String idParam = request.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Category ID parameter is missing or empty");
