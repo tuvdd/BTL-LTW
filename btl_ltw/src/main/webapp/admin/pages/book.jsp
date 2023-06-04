@@ -15,53 +15,58 @@ request.getSession().removeAttribute("messageType");
 <h1 id="title-page">Quản lý sách</h1>
 <div class="overflow">
 	<table class="content-table">
-		<tr>
-			<td>ID</td>
-			<td>Tên</td>
-			<td>Ảnh</td>
-			<td>Tác giả</td>
-			<td>Năm phát hành</td>
-			<td>Danh mục sách</td>
-			<td>Giá</td>
-			<td>Giảm giá</td>
-			<td>Số lượng trong kho</td>
-			<td>Chi tiết</td>
-			<td>Tóm tắt</td>
-			<td>Trạng thái</td>
-			<td>Ngày tạo</td>
-			<td>Người tạo</td>
-			<td>Ngày sửa</td>
-			<td>Người sửa</td>
-			<td>Thao tác</td>
-		</tr>
-		<c:forEach var="adminBookView" items="${listAdminBookViews}">
-			<tr id="tr-${adminBookView.getId()}">
-				<td>${adminBookView.getId()}</td>
-				<td>${adminBookView.getName()}</td>
-				<td><img
-					src="data:image/png;base64,${adminBookView.getImageBase64()}"
-					style="max-height: 200px; max-width: 200px;" /></td>
-				<td>${adminBookView.getAuthor()}</td>
-				<td>${adminBookView.getRelease_year()}</td>
-				<td>${adminBookView.getCategory_name()}</td>
-				<td>${adminBookView.getPrice()}</td>
-				<td>${adminBookView.getPromote_price()}</td>
-				<td>${adminBookView.getQuantity()}</td>
-				<td>${adminBookView.getDescription()}</td>
-				<td>${adminBookView.getSub_description()}</td>
-				<td><a
-					href="/btl_ltw/admin/book/change-status?id=${adminBookView.getId()}">${adminBookView.getStatus()}</a>
-				</td>
-				<td>${adminBookView.getCreate_time_string()}</td>
-				<td>${adminBookView.getCreate_by_name()}</td>
-				<td>${adminBookView.getLast_update_time_string()}</td>
-				<td>${adminBookView.getLast_update_by_name()}</td>
-				<td>
-					<button onclick="showEditModal('tr-${adminBookView.getId()}')">Sửa</button>
-					<button onclick="window.location.href='/btl_ltw/admin/book/delete?id=${adminBookView.getId()}'">Xóa</button>
-				</td>
+		<thead>
+			<tr>
+				<td>ID</td>
+				<td style="min-width: 150px;">Tên</td>
+				<td>Ảnh</td>
+				<td style="min-width: 200px;">Tác giả</td>
+				<td>Năm phát hành</td>
+				<td style="min-width: 150px;">Danh mục sách</td>
+				<td style="min-width: 100px;">Giá</td>
+				<td style="min-width: 100px;">Giảm giá</td>
+				<td style="min-width: 500px;">Chi tiết</td>
+				<td style="min-width: 150px;">Tóm tắt</td>
+				<td style="min-width: 50px;">Trạng thái</td>
+				<td style="min-width: 150px;">Ngày tạo</td>
+				<td style="min-width: 150px;">Người tạo</td>
+				<td style="min-width: 150px;">Ngày sửa</td>
+				<td style="min-width: 150px;">Người sửa</td>
+				<td style="min-width: 100px;">Thao tác</td>
 			</tr>
-		</c:forEach>
+		</thead>
+		<tbody>
+			<c:forEach var="adminBookView" items="${listAdminBookViews}">
+				<tr id="tr-${adminBookView.getId()}">
+
+					<td>${adminBookView.getId()}</td>
+					<td>${adminBookView.getName()}</td>
+					<td><img
+						src="data:image/png;base64,${adminBookView.getImageBase64()}"
+						style="max-height: 200px; max-width: 200px;" /></td>
+					<td>${adminBookView.getAuthor()}</td>
+					<td>${adminBookView.getRelease_year()}</td>
+					<td>${adminBookView.getCategory_name()}</td>
+					<td>${adminBookView.getPrice()}</td>
+					<td>${adminBookView.getPromote_price()}</td>
+					<td>${adminBookView.getDescription()}</td>
+					<td>${adminBookView.getSub_description()}</td>
+					<td><a
+						href="/btl_ltw/admin/book/change-status?id=${adminBookView.getId()}">${adminBookView.getStatus()}</a>
+					</td>
+					<td>${adminBookView.getCreate_time_string()}</td>
+					<td>${adminBookView.getCreate_by_name()}</td>
+					<td>${adminBookView.getLast_update_time_string()}</td>
+					<td>${adminBookView.getLast_update_by_name()}</td>
+					<td>
+						<button onclick="showEditModal('tr-${adminBookView.getId()}')">Sửa</button>
+						<button
+							onclick="window.location.href='/btl_ltw/admin/book/delete?id=${adminBookView.getId()}'">Xóa</button>
+					</td>
+
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 </div>
 <%
@@ -78,9 +83,14 @@ int totalPages = (int) request.getAttribute("totalPages");
 	<li style="display: inline;">
 		<%
 		if (i != currentPage) {
-		%><a href="/btl_ltw/admin/book?page=<%=i%>"><%=i%></a> <%
+		%><a href="/btl_ltw/admin/book?page=<%=i%>">
+			<%=i%>
+	</a> <%
  } else {
- %><p style="display: inline;"><%=i%></p> <%
+ %>
+		<p style="display: inline;">
+			<%=i%>
+		</p> <%
  }
  %>
 	</li>
@@ -117,7 +127,8 @@ int totalPages = (int) request.getAttribute("totalPages");
 			<p>Danh mục</p>
 			<select name="category_id" id="status" placeholder="Trạng thái">
 				<c:forEach var="category" items="${listCategories}">
-					<option value="${category.getId()}">${category.getName()}</option>
+					<option value="${category.getId()}">${category.getName()}
+					</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -130,16 +141,12 @@ int totalPages = (int) request.getAttribute("totalPages");
 			<input name="promote_price" placeholder="Giá giảm" />
 		</div>
 		<div class="form-data-text">
-			<p>Số lượng trong kho</p>
-			<input name="quantity" placeholder="Số lượng trong kho" />
-		</div>
-		<div class="form-data-text">
 			<p>Mô tả</p>
-			<textarea name="description" placeholder="Mô tả"></textarea>
+			<textarea name="description" placeholder="Mô tả" style="min-height: 200px"></textarea>
 		</div>
 		<div class="form-data-text">
 			<p>Tóm tắt</p>
-			<textarea name="sub_description" placeholder="Tóm tắt"></textarea>
+			<textarea name="sub_description" placeholder="Tóm tắt" style="min-height: 100px"></textarea>
 		</div>
 		<div class="form-data-button">
 			<button type="submit">Thêm</button>
@@ -176,7 +183,8 @@ int totalPages = (int) request.getAttribute("totalPages");
 			<select name="category_id" id="select_category_id"
 				placeholder="Trạng thái">
 				<c:forEach var="category" items="${listCategories}">
-					<option value="${category.getId()}">${category.getName()}</option>
+					<option value="${category.getId()}">${category.getName()}
+					</option>
 				</c:forEach>
 			</select>
 		</div>
@@ -188,11 +196,6 @@ int totalPages = (int) request.getAttribute("totalPages");
 			<p>Giá giảm</p>
 			<input id="edit-promote_price" name="promote_price"
 				placeholder="Giá giảm" />
-		</div>
-		<div class="form-data-text">
-			<p>Số lượng trong kho</p>
-			<input id="edit-quantity" name="quantity"
-				placeholder="Số lượng trong kho" />
 		</div>
 		<div class="form-data-text">
 			<p>Mô tả</p>

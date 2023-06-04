@@ -123,7 +123,25 @@ public class OrderRepo extends Repo<Order> {
         OrderFullDetail orderFullDetail = null;
         CreateConnection();
         try {
-            sql = "SELECT o.id AS order_id, o.created_time, o.status, o.address, o.phonenum, o.buyer_name, od.id AS detail_id, od.book_id, b.\"name\", od.quantity, od.price FROM orders o JOIN order_details od ON o.id = od.order_id JOIN books b ON od.book_id = b.id WHERE o.id = ?;";
+            sql = "     SELECT o.id AS order_id, " +
+                    "          o.created_time, " +
+                    "          o.address,  " +
+                    "          o.phonenum, " +
+                    "          o.buyer_name, " +
+                    "          od.id AS detail_id, " +
+                    "          od.book_id, " +
+                    "          od.quantity, " +
+                    "          b.\"name\", " +
+                    "          od.quantity, " +
+                    "          od.price, " +
+                    "          o.status " +
+                    "     FROM orders o  " +
+                    "LEFT JOIN order_details od  " +
+                    "       ON o.id = od.order_id  " +
+                    "LEFT JOIN books b  " +
+                    "       ON od.book_id = b.id  " +
+                    "    WHERE o.id = ?; ";
+
             statement = connection.prepareStatement(sql);
             statement.setObject(1, orderId);
             resultSet = statement.executeQuery();
