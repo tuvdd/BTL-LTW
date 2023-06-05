@@ -81,7 +81,7 @@
                     <div class = "product-detail">
                         <h2>about this item: </h2>
                         <p>${book.description}</p>
-                        <p> Còn lại: ${book.getQuantity()}</p>
+                        <!-- <p> Còn lại: ${book.getQuantity()}</p> -->
                     </div>
 
                     <div class = "purchase-info">
