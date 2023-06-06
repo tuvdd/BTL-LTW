@@ -44,27 +44,23 @@ public class OrderRepo extends Repo<Order> {
 
     public List<AdminOrderPreview> getAllAdminOrderView(int pageIndex, int pageSize) {
         List<AdminOrderPreview> res = new ArrayList<>();
-        sql = "    SELECT "
-                + "    o.id AS id, "
-                + "    o.created_time AS created_time, "
-                + "    o.status AS status, "
-                + "    o.address AS address, "
-                + "    o.phonenum AS phonenum, "
-                + "    o.buyer_name AS buyer_name, "
-                + "    SUM(od.quantity) AS totalProduct, "
-                + "    SUM(od.price) AS totalPrice "
-                + "FROM "
-                + "    orders o "
-                + "    JOIN order_details od ON o.id = od.order_id "
-                + "GROUP BY "
-                + "    o.id, "
-                + "    o.created_time, "
-                + "    o.status, "
-                + "    o.address, "
-                + "    o.phonenum, "
-                + "    o.buyer_name "
-                + "ORDER BY "
-                + "    o.created_time DESC ";
+        sql = "       SELECT o.id AS id, "
+                + "          o.created_time AS created_time, "
+                + "          o.status AS status, "
+                + "          o.address AS address, "
+                + "          o.phonenum AS phonenum, "
+                + "          o.buyer_name AS buyer_name, "
+                + "          SUM(od.quantity) AS totalProduct, "
+                + "          SUM(od.price) AS totalPrice "
+                + "     FROM orders o "
+                + "LEFT JOIN order_details od ON o.id = od.order_id "
+                + " GROUP BY o.id, "
+                + "          o.created_time, "
+                + "          o.status, "
+                + "          o.address, "
+                + "          o.phonenum, "
+                + "          o.buyer_name "
+                + " ORDER BY o.created_time DESC ";
         try {
             CreateConnection();
             if (pageIndex == -1 || pageSize == -1) {
@@ -386,10 +382,10 @@ public class OrderRepo extends Repo<Order> {
 
     public List<BookDashboardDTO> layDanhSachBookIdMuaNhieuNhatTrongKhoangThoiGian(Timestamp from, Timestamp to,
             int soLuong) {
-        sql = "SELECT od.book_id AS id, b.name AS name, SUM(quantity) AS total_quantity "
+        sql = "SELECT b.id AS id, b.\"name\" AS name, SUM(quantity) AS total_quantity "
                 + "FROM order_details od, books b "
-                + "WHERE od.book_id = b.id AND created_time BETWEEN ? AND ? "
-                + "GROUP BY book_id "
+                + "WHERE od.book_id = b.id AND create_time BETWEEN ? AND ? "
+                + "GROUP BY b.id "
                 + "ORDER BY total_quantity DESC "
                 + "LIMIT ?;";
         List<BookDashboardDTO> res = null;
