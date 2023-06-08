@@ -25,7 +25,7 @@
 <html>
 <head>
     <title>E-Commerce Cart</title>
-    <link rel="stylesheet" href="/resources/css/cart.css">
+    <link rel="stylesheet" href="/btl_ltw/resources/css/cart.css">
 
     <style type="text/css">
 
