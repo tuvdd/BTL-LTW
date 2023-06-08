@@ -347,7 +347,7 @@ public class BookRepo extends Repo<Book> {
 
     public float getAverageComment(String bookID) {
         float res = 0;
-        sql = "SELECT COUNT(*) AS comment_count, SUM(rate) AS total_rate FROM books LEFT JOIN comment ON books.id = comment.book_id WHERE books.id = ?;";
+        sql = "SELECT COUNT(*) AS comment_count, SUM(rate) AS total_rate FROM books LEFT JOIN comments ON books.id = comments.book_id WHERE books.id = ?;";
         try {
             CreateConnection();
             statement = connection.prepareStatement(sql);
@@ -371,7 +371,7 @@ public class BookRepo extends Repo<Book> {
 
     public int getNumberComments(String bookID) {
         int res = 0;
-        sql = "SELECT COUNT(*) AS comment_count FROM books LEFT JOIN comment ON books.id = comment.book_id WHERE books.id = ?;";
+        sql = "SELECT COUNT(*) AS comment_count FROM books LEFT JOIN comments ON books.id = comments.book_id WHERE books.id = ?;";
         try {
             CreateConnection();
             statement = connection.prepareStatement(sql);

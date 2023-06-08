@@ -12,13 +12,7 @@
     int fullStars = (int) averageComment;
     boolean hasHalfStar = averageComment % 1 != 0;
 %>
-<%
-    String error = (String) session.getAttribute("error");
-    if (error != null) {
-%>
-    <script>alert("error", "aa")</script>
-<%  } %>
-            
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -78,12 +72,6 @@
                         <p class = "new-price">New Price: <span>${book.promote_price}</span></p>
                     </div>
 
-                    <div class = "product-detail">
-                        <h2>about this item: </h2>
-                        <p>${book.description}</p>
-                        <!-- <p> Còn lại: ${book.getQuantity()}</p> -->
-                    </div>
-
                     <div class = "purchase-info">
                         <input type = "number" min = "0" value = "1">
                         <button type = "button" class = "btn">
@@ -113,6 +101,11 @@
             </div>
         </div>
 
+        <div class = "product-detail">
+            <h2>about this book: </h2>
+            <p>${book.description}</p>
+        </div>
+
         <div class="comment-wrapper">
             <form action="/btl_ltw/detail" method="post">
                 <div class="add-comment">
@@ -133,6 +126,15 @@
 
                     <textarea id="comment_text", name="comment_text" placeholder="Write your comment..."></textarea>
                     <button class="btn">Submit</button>
+                    <%
+                    String error = (String) request.getSession().getAttribute("error");
+                    if (error != null) {
+                    %>
+                    <p style="color: red; font-size: 15px;"><%=error%></p>
+                    <%
+                    request.getSession().removeAttribute("error");
+                    }
+                    %>
                 </div>
             </form>
 
@@ -182,7 +184,7 @@
               
         </div>
         
- 
+        
         <script src="/btl_ltw/resources/detail.js"></script>
     <jsp:include page="Footer.jsp"></jsp:include>
 

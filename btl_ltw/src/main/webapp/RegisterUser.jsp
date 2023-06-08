@@ -13,14 +13,24 @@
 		<div id="login-form" class="container center _80pc login-panel">
 			<img class="center" src="/btl_ltw/admin/resources/img/logo.png"
 				style="width: 30%; margin-left: 35%; margin-bottom: 15px;" />
-			<h3 class="center form-header">Đăng nhập</h3>
+			<h3 class="center form-header">Đăng Kí</h3>
 			<!-- <h4 class="center form-header">hihi</h4> -->
-			<form class="center" method="post" action="/btl_ltw/user/login">
+			<form class="center" method="post" action="/btl_ltw/user/register">
+				<div class="form-label">
+					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/email.png">
+					<label class="form-label-text">Email:</label>
+				</div>
+				<input type="text" name="email">
                 <div class="form-label">
 					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/phonecall.png">
 					<label class="form-label-text">Số điện thoại:</label>
 				</div>
 				<input type="text" name="phoneNumber">
+				<div class="form-label">
+					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/usericon.png">
+					<label class="form-label-text">Tên đăng nhập:</label>
+				</div>
+				<input type="text" name="username">
 				<div class="form-label">
 					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/passicon.png">
 					<label class="form-label-text">Mật khẩu:</label>
@@ -37,17 +47,8 @@
 				request.getSession().removeAttribute("error");
 				}
 				%>
-				
-				<div class="btn-form">
-					<div class="btn-login">
-						<button class="btn1" type="submit">Đăng nhập</button>
-					</div>
-					
-					<div class="btn-register">
-						<p>Chưa có tài khoản? </p>
-						<a class="underline-link" href="/btl_ltw/user/register">Đăng ký</a>
-					</div>
-				</div>
+
+				<button class="btn1 right" type="submit">Đăng kí</button>
 			</form>
 		</div>
 	</div>
