@@ -1,14 +1,21 @@
 package servlets.admin;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import repositories.OrderRepo;
 
-@WebServlet(name="AdminHome", urlPatterns = "/admin")
+@WebServlet(name = "AdminHome", urlPatterns = "/admin")
 public class HomeServlet extends BaseServlet {
-	private static final long serialVersionUID = 22;
+	OrderRepo orderRepo;
+
+	public HomeServlet() {
+		orderRepo = new OrderRepo();
+	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		super.doGet(req, resp);
@@ -17,6 +24,16 @@ public class HomeServlet extends BaseServlet {
 			resp.sendRedirect("/btl_ltw/admin/login");
 			return;
 		}
+
+		Timestamp t = new Timestamp(System.currentTimeMillis());
+
+		req.setAttribute("Số lượng đơn chờ xác nhận", orderRepo.getCountOrderByStatus(0));
+		req.setAttribute("Số lượng đơn chờ thanh toán", orderRepo.getCountOrderByStatus(1));
+		req.setAttribute("Số lượng đơn chờ vận chuyển", orderRepo.getCountOrderByStatus(2));
+		req.setAttribute("Tổng doanh thu tháng", orderRepo.tinhTongDoanhThuTheoThang(t));
+		req.setAttribute("Tổng doanh thu năm", orderRepo.tinhTongDoanhThuTheoNam(t));
+		req.setAttribute("Top sách mua nhiều nhất tháng", orderRepo.layDanhSachBookIdMuaNhieuNhatTrongThang(t, 5));
+		req.setAttribute("Top sách mua nhiều nhất năm", orderRepo.layDanhSachBookIdMuaNhieuNhatTrongNam(t, 5));
 
 		req.setAttribute("pageName", "home.jsp");
 		req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);

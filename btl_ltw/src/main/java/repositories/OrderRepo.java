@@ -1,14 +1,18 @@
 package repositories;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
 import models.Order;
 import models.OrderDetail;
 import models.dtos.AdminOrderPreview;
+import models.dtos.BookDashboardDTO;
 import models.dtos.OrderFullDetail;
 
 public class OrderRepo extends Repo<Order> {
@@ -40,27 +44,23 @@ public class OrderRepo extends Repo<Order> {
 
     public List<AdminOrderPreview> getAllAdminOrderView(int pageIndex, int pageSize) {
         List<AdminOrderPreview> res = new ArrayList<>();
-        sql = "    SELECT "
-                + "    o.id AS id, "
-                + "    o.created_time AS created_time, "
-                + "    o.status AS status, "
-                + "    o.address AS address, "
-                + "    o.phonenum AS phonenum, "
-                + "    o.buyer_name AS buyer_name, "
-                + "    SUM(od.quantity) AS totalProduct, "
-                + "    SUM(od.price) AS totalPrice "
-                + "FROM "
-                + "    orders o "
-                + "    JOIN order_details od ON o.id = od.order_id "
-                + "GROUP BY "
-                + "    o.id, "
-                + "    o.created_time, "
-                + "    o.status, "
-                + "    o.address, "
-                + "    o.phonenum, "
-                + "    o.buyer_name "
-                + "ORDER BY "
-                + "    o.created_time DESC ";
+        sql = "       SELECT o.id AS id, "
+                + "          o.created_time AS created_time, "
+                + "          o.status AS status, "
+                + "          o.address AS address, "
+                + "          o.phonenum AS phonenum, "
+                + "          o.buyer_name AS buyer_name, "
+                + "          SUM(od.quantity) AS totalProduct, "
+                + "          SUM(od.price) AS totalPrice "
+                + "     FROM orders o "
+                + "LEFT JOIN order_details od ON o.id = od.order_id "
+                + " GROUP BY o.id, "
+                + "          o.created_time, "
+                + "          o.status, "
+                + "          o.address, "
+                + "          o.phonenum, "
+                + "          o.buyer_name "
+                + " ORDER BY o.created_time DESC ";
         try {
             CreateConnection();
             if (pageIndex == -1 || pageSize == -1) {
@@ -123,7 +123,25 @@ public class OrderRepo extends Repo<Order> {
         OrderFullDetail orderFullDetail = null;
         CreateConnection();
         try {
-            sql = "SELECT o.id AS order_id, o.created_time, o.status, o.address, o.phonenum, o.buyer_name, od.id AS detail_id, od.book_id, b.\"name\", od.quantity, od.price FROM orders o JOIN order_details od ON o.id = od.order_id JOIN books b ON od.book_id = b.id WHERE o.id = ?;";
+            sql = "     SELECT o.id AS order_id, " +
+                    "          o.created_time, " +
+                    "          o.address,  " +
+                    "          o.phonenum, " +
+                    "          o.buyer_name, " +
+                    "          od.id AS detail_id, " +
+                    "          od.book_id, " +
+                    "          od.quantity, " +
+                    "          b.\"name\", " +
+                    "          od.quantity, " +
+                    "          od.price, " +
+                    "          o.status " +
+                    "     FROM orders o  " +
+                    "LEFT JOIN order_details od  " +
+                    "       ON o.id = od.order_id  " +
+                    "LEFT JOIN books b  " +
+                    "       ON od.book_id = b.id  " +
+                    "    WHERE o.id = ?; ";
+
             statement = connection.prepareStatement(sql);
             statement.setObject(1, orderId);
             resultSet = statement.executeQuery();
@@ -188,7 +206,7 @@ public class OrderRepo extends Repo<Order> {
         try {
             sql = "UPDATE orders SET created_time = ?, status = ?, address = ?, phonenum = ?, buyer_name = ? WHERE id = ?;";
             statement = connection.prepareStatement(sql);
-            statement.setTimestamp(1, orderFullDetail.created_time);
+            statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             statement.setInt(2, orderFullDetail.status);
             statement.setString(3, orderFullDetail.address);
             statement.setString(4, orderFullDetail.phonenum);
@@ -275,6 +293,141 @@ public class OrderRepo extends Repo<Order> {
             CloseConnection();
         }
 
+        return res;
+    }
+
+    public int getCountOrderByStatus(int status) {
+        int res = -1;
+        sql = "SELECT COUNT(*) AS count FROM orders WHERE status = ?";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, status);
+            resultSet = statement.executeQuery();
+            if (resultSet.next())
+                res = resultSet.getInt("count");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        return res;
+    }
+
+    public BigDecimal tinhTongDoanhThuTheoThang(Timestamp current) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(current);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        Timestamp from = new Timestamp(cal.getTimeInMillis());
+        cal.add(Calendar.MONTH, 1);
+        Timestamp to = new Timestamp(cal.getTimeInMillis());
+
+        return tinhDoanhThuTheoThoiGian(from, to);
+    }
+
+    public BigDecimal tinhTongDoanhThuTheoNam(Timestamp current) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(current);
+        cal.set(Calendar.MONTH, 1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        Timestamp from = new Timestamp(cal.getTimeInMillis());
+        cal.add(Calendar.YEAR, 1);
+        Timestamp to = new Timestamp(cal.getTimeInMillis());
+
+        return tinhDoanhThuTheoThoiGian(from, to);
+    }
+
+    public List<BookDashboardDTO> layDanhSachBookIdMuaNhieuNhatTrongThang(Timestamp current,
+            int soLuong) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(current);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        Timestamp from = new Timestamp(cal.getTimeInMillis());
+        cal.add(Calendar.MONTH, 1);
+        Timestamp to = new Timestamp(cal.getTimeInMillis());
+        return layDanhSachBookIdMuaNhieuNhatTrongKhoangThoiGian(from, to, soLuong);
+    }
+
+    public List<BookDashboardDTO> layDanhSachBookIdMuaNhieuNhatTrongNam(Timestamp current,
+            int soLuong) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(current);
+        cal.set(Calendar.MONTH, 1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        Timestamp from = new Timestamp(cal.getTimeInMillis());
+        cal.add(Calendar.YEAR, 1);
+        Timestamp to = new Timestamp(cal.getTimeInMillis());
+        return layDanhSachBookIdMuaNhieuNhatTrongKhoangThoiGian(from, to, soLuong);
+    }
+
+    public List<BookDashboardDTO> layDanhSachBookIdMuaNhieuNhatTrongKhoangThoiGian(Timestamp from, Timestamp to,
+            int soLuong) {
+        sql = "SELECT b.id AS id, b.\"name\" AS name, SUM(quantity) AS total_quantity "
+                + "FROM order_details od, books b "
+                + "WHERE od.book_id = b.id AND create_time BETWEEN ? AND ? "
+                + "GROUP BY b.id "
+                + "ORDER BY total_quantity DESC "
+                + "LIMIT ?;";
+        List<BookDashboardDTO> res = null;
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setTimestamp(1, from);
+            statement.setTimestamp(2, to);
+            statement.setInt(3, soLuong);
+            resultSet = statement.executeQuery();
+            res = new ArrayList<>();
+            while (resultSet.next()) {
+                BookDashboardDTO b = new BookDashboardDTO();
+                b.setId(UUID.fromString(resultSet.getString("id")));
+                b.setName(resultSet.getString("name"));
+                b.setQuantity(resultSet.getInt("quantity"));
+                res.add(b);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        return res;
+    }
+
+    public BigDecimal tinhDoanhThuTheoThoiGian(Timestamp from, Timestamp to) {
+        BigDecimal res = BigDecimal.valueOf(-1);
+        sql = "SELECT SUM(od.quantity * od.price) AS tdt FROM orders o, order_details od WHERE o.id = od.order_id AND o.created_time BETWEEN ? AND ?;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setTimestamp(1, from);
+            statement.setTimestamp(2, to);
+            resultSet = statement.executeQuery();
+            if (resultSet.next())
+                res = BigDecimal.valueOf(resultSet.getDouble("tdt"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
         return res;
     }
 }

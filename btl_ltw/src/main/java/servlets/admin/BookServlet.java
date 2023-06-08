@@ -104,9 +104,6 @@ public class BookServlet extends BaseServlet {
         double promote_price = req.getParameter("promote_price") == null ? -1
                 : Double.parseDouble(req.getParameter("promote_price"));
 
-        int quantity = req.getParameter("promote_price") == null ? -1
-                : Integer.parseInt(req.getParameter("quantity"));
-
         String description = req.getParameter("description");
         String sub_description = req.getParameter("sub_description");
 
@@ -118,8 +115,8 @@ public class BookServlet extends BaseServlet {
         UUID last_update_by = admin_id;
         Book book = new Book();
         book.set((id == null ? null : UUID.fromString(id)), name, image, author, release_year, category_id, price,
-                promote_price, quantity, description,
-                sub_description, status, create_time, create_by, last_update_time, last_update_by);
+                promote_price, description, sub_description, status, create_time, create_by,
+                last_update_time, last_update_by);
         try {
 
             int res;

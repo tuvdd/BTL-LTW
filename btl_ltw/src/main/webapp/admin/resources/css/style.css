@@ -22,7 +22,7 @@
 
 .login-panel {
 	background-color: white;
-	height: 470px;
+	height: fit-content;
 	width: 350px;
 	border-radius: 10px;
 	padding: 30px;
@@ -33,9 +33,7 @@ textarea {
 	resize: vertical;
 }
 
-input,
-textarea,
-select {
+input, textarea, select {
 	border: 2px solid #355b9a;
 	border-radius: 10px;
 	margin: 10px 0;
@@ -44,9 +42,7 @@ select {
 	width: 94%;
 }
 
-body,
-html,
-div {
+body, html, div {
 	font-family: sans-serif;
 	font-size: 20px;
 	padding: 0;
@@ -192,8 +188,7 @@ button {
 	width: 100%;
 }
 
-.content-table td,
-th {
+.content-table td, th {
 	border: 1px solid #dddddd;
 	text-align: left;
 	padding: 8px;
@@ -267,12 +262,14 @@ th {
 }
 
 .overflow {
-	width: 1000px;
-	height: 500px;
+	width: 1400px;
+	height: 700px;
 	overflow: auto;
 }
 
-ul {}
+ul {
+	
+}
 
 li {
 	display: inline;
@@ -280,4 +277,12 @@ li {
 
 li a {
 	display: inline;
+}
+
+td {
+	padding: 0px 20px
+}
+
+.td-number {
+	text-align: center;
 }
