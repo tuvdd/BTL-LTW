@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/btl_ltw/resources/css/shopping.css" />
+    <link rel="stylesheet" href="/resources/css/shopping.css" />
     <title>Ecommerce Website</title>
 </head>
 
