@@ -12,16 +12,17 @@ public class CategoryRepo extends Repo<Category> {
 
     public List<Category> getAll(int pageIndex, int pageSize) {
         List<Category> categories = new ArrayList<>();
+        sql = "SELECT * FROM categories ORDER BY status DESC";
         CreateConnection();
         try {
-            if (pageIndex == -1 || pageSize == -1) {
-                sql = "SELECT * FROM categories ORDER BY status DESC;";
-                statement = connection.prepareStatement(sql);
-            } else {
-                sql = "SELECT * FROM categories ORDER BY status DESC LIMIT ? OFFSET ? ;";
+            if (pageIndex > 0 && pageSize > 0) {
+                sql += " LIMIT ? OFFSET ? ;";
                 statement = connection.prepareStatement(sql);
                 statement.setInt(1, pageSize);
                 statement.setInt(2, (pageIndex - 1) * pageSize);
+            } else {
+                sql = ";";
+                statement = connection.prepareStatement(sql);
             }
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -40,7 +41,7 @@ public class CategoryRepo extends Repo<Category> {
         List<Category> categories = new ArrayList<>();
         CreateConnection();
         try {
-            if (pageIndex == -1 || pageSize == -1) {
+            if (pageIndex <= 0 || pageSize <= 0) {
                 sql = "SELECT * FROM categories WHERE status = ?";
                 statement = connection.prepareStatement(sql);
                 statement.setBoolean(1, status);
@@ -84,6 +85,9 @@ public class CategoryRepo extends Repo<Category> {
     }
 
     public int add(Category category) throws Exception {
+        if (category.name == null || category.url == null)
+            throw new Exception("Thiếu dữ liệu");
+
         int rowsAffected = 0;
         CreateConnection();
         try {
@@ -95,10 +99,10 @@ public class CategoryRepo extends Repo<Category> {
             statement.setString(4, category.url);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
-        	if (e.getMessage().contains("duplicate key value violates unique constraint ")) throw new Exception("Đã tồn tại url");
+            if (e.getMessage().contains("duplicate key value violates unique constraint "))
+                throw new Exception("Đã tồn tại url");
             e.printStackTrace();
-        } 
-        finally {
+        } finally {
             CloseConnection();
         }
         return rowsAffected;

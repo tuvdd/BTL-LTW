@@ -73,28 +73,28 @@ int totalPages = (int) request.getAttribute("totalPages");
 
 		<div class="form-data-text">
 			<p>Tên</p>
-			<input name="name" placeholder="Nhập tên " id="add-name">
+			<input name="name" placeholder="Nhập tên " id="add-name" required>
 		</div>
 		<div class="form-data-text">
 			<p>Email</p>
-			<input name="email" placeholder="Nhập email" id="add-email">
+			<input name="email" placeholder="Nhập email" id="add-email" type="email" required>
 		</div>
 		<div class="form-data-text">
 			<p>SDT</p>
-			<input name="phonenum" placeholder="Nhập SDT" id="add-phonenum">
+			<input name="phonenum" placeholder="Nhập SDT" id="add-phonenum" maxlength="12" type="text"  required>
 		</div>
 		<div class="form-data-text">
 			<p>CCCD</p>
-			<input name="cccd" placeholder="Nhập cccd" id="add-cccd">
+			<input name="cccd" placeholder="Nhập cccd" id="add-cccd" maxlength="12" type="text"  required>
 		</div>
 		<div class="form-data-text">
 			<p>Username</p>
-			<input name="username" placeholder="Nhập username" id="add-username">
+			<input name="username" placeholder="Nhập username" id="add-username" required>
 		</div>
 
 		<div class="form-data-text">
 			<p>Password</p>
-			<input name="password" placeholder="Nhập password" id="add-username" type="password">
+			<input name="password" placeholder="Nhập password" id="add-username" type="password" required>
 		</div>
 
 		<div class="form-data-button">
@@ -110,22 +110,22 @@ int totalPages = (int) request.getAttribute("totalPages");
 	<form method="post" action="/btl_ltw/admin/admin" id="edit-form">
 		<h3>Sửa admin</h3>
 		<input id="edit-hidden" type="hidden" name="id" id="edit_hidden"
-			value="" />
+			value="" required/>
 		<div class="form-data-text">
 			<p>Tên</p>
-			<input name="name" placeholder="Nhập tên " id="edit-name">
+			<input name="name" placeholder="Nhập tên " id="edit-name" required>
 		</div>
 		<div class="form-data-text">
 			<p>Email</p>
-			<input name="email" placeholder="Nhập email" id="edit-email">
+			<input name="email" placeholder="Nhập email" id="edit-email" required type="email">
 		</div>
 		<div class="form-data-text">
 			<p>SDT</p>
-			<input name="phonenum" placeholder="Nhập SDT" id="edit-phonenum">
+			<input name="phonenum" placeholder="Nhập SDT" id="edit-phonenum" required type="text"  maxlength="12">
 		</div>
 		<div class="form-data-text">
 			<p>CCCD</p>
-			<input name="cccd" placeholder="Nhập cccd" id="edit-cccd">
+			<input name="cccd" placeholder="Nhập cccd" id="edit-cccd" required type="text"  maxlength="12">
 		</div>
 
 		<div class="form-data-button">
