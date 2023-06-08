@@ -78,38 +78,19 @@
                             Add to Cart <i class = "fas fa-shopping-cart"></i>
                         </button>
                     </div>
-
-                    <div class = "social-links">
-                        <p>Share At: </p>
-                        <a href = "#">
-                            <i class = "fab fa-facebook-f"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-twitter"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-instagram"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-whatsapp"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-pinterest"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
 
         <div class = "product-detail">
-            <h2>about this book: </h2>
+            <h2>Giới thiệu về sách:</h2>
             <p>${book.description}</p>
         </div>
 
         <div class="comment-wrapper">
             <form action="/btl_ltw/detail" method="post">
                 <div class="add-comment">
-                    <h1>Add Comment</h1>
+                    <h1>Thêm đánh giá</h1>
                     <h3>Rating</h3>
                     <div class="rate">
                         <input type="radio" id="star5" name="rate" value="5" />
@@ -140,7 +121,7 @@
 
             
             <div class="review-comments">
-                <h1 class="title-reviews">Reviews</h1>
+                <h1 class="title-reviews">Tất cả đánh giá</h1>
                 <div class="list-comments">
                     <% if (listComments.size() == 0) { %>
                         <p>Chưa có review nào!</p>
