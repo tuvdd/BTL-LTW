@@ -18,7 +18,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Product Card/Page</title>
+        <title>Chi tiết sản phẩm</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/btl_ltw/resources/css/detail2.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
@@ -64,18 +64,18 @@
                         %>      
                             <div class="star_gray"></div>
                         <% } %>
-                        <span>Rating ${averageComment} (${numberComment})</span>
+                        <span>Xếp hạng ${averageComment} (${numberComment})</span>
                     </div>
 
                     <div class = "product-price">
-                        <p class = "last-price">Old Price: <span>${book.price}</span></p>
-                        <p class = "new-price">New Price: <span>${book.promote_price}</span></p>
+                        <p class = "last-price">Giá cũ: <span>${book.price}</span></p>
+                        <p class = "new-price">Giá mới: <span>${book.promote_price}</span></p>
                     </div>
 
                     <div class = "purchase-info">
                         <input type = "number" min = "0" value = "1">
                         <button type = "button" class = "btn">
-                            Add to Cart <i class = "fas fa-shopping-cart"></i>
+                            Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
                         </button>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
             <form action="/btl_ltw/detail" method="post">
                 <div class="add-comment">
                     <h1>Thêm đánh giá</h1>
-                    <h3>Rating</h3>
+                    <h3>Xếp hạng</h3>
                     <div class="rate">
                         <input type="radio" id="star5" name="rate" value="5" />
                         <label for="star5" title="text">5 stars</label>
@@ -106,7 +106,7 @@
                     </div>
 
                     <textarea id="comment_text", name="comment_text" placeholder="Write your comment..."></textarea>
-                    <button class="btn">Submit</button>
+                    <button class="btn">Gửi</button>
                     <%
                     String error = (String) request.getSession().getAttribute("error");
                     if (error != null) {
