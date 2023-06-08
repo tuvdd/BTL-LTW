@@ -1,21 +1,19 @@
 package models.cart_demo;
 
 
-public class Customer {
-    
+public class User {
     private int id;
     private String name;
-    private double amount;
-    private String username,password;
+    private String email;
+    private String password;
 
-    public Customer() {
+    public User() {
     }
 
-    public Customer(int id, String name, double amount, String username, String password) {
+    public User(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
-        this.amount = amount;
-        this.username = username;
+        this.email = email;
         this.password = password;
     }
 
@@ -35,20 +33,12 @@ public class Customer {
         this.name = name;
     }
 
-    public double getAmount() {
-        return amount;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -58,5 +48,10 @@ public class Customer {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+    }
+
 }

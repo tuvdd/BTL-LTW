@@ -1,52 +1,55 @@
 package models.cart_demo;
 
-public class Order {
-    
-    private int id;
+
+public class Order extends Product {
+    private int orderId;
+    private int uid;
+    private int qunatity;
     private String date;
-    private int cusid;
-    private double totalmoney;
 
     public Order() {
     }
 
-    public Order(int id, String date, int cusid, double totalmoney) {
-        this.id = id;
+    public Order(int orderId, int uid, int qunatity, String date) {
+        super();
+        this.orderId = orderId;
+        this.uid = uid;
+        this.qunatity = qunatity;
         this.date = date;
-        this.cusid = cusid;
-        this.totalmoney = totalmoney;
     }
 
-    public int getId() {
-        return id;
+    public Order(int uid, int qunatity, String date) {
+        super();
+        this.uid = uid;
+        this.qunatity = qunatity;
+        this.date = date;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getOrderId() {
+        return orderId;
+    }
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getQunatity() {
+        return qunatity;
+    }
+    public void setQunatity(int qunatity) {
+        this.qunatity = qunatity;
+    }
     public String getDate() {
         return date;
     }
-
     public void setDate(String date) {
         this.date = date;
     }
-
-    public int getCusid() {
-        return cusid;
-    }
-
-    public void setCusid(int cusid) {
-        this.cusid = cusid;
-    }
-
-    public double getTotalmoney() {
-        return totalmoney;
-    }
-
-    public void setTotalmoney(double totalmoney) {
-        this.totalmoney = totalmoney;
-    }
-    
 }

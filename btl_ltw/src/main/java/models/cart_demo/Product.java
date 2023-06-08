@@ -1,21 +1,26 @@
 package models.cart_demo;
 
 public class Product {
-    
     private int id;
     private String name;
-    private double price;
-    private int quantity;
+    private String category;
+    private Double price;
+    private String image;
+
 
     public Product() {
     }
 
-    public Product(int id, String name, double price, int quantity) {
+
+    public Product(int id, String name, String category, Double price, String image) {
+        super();
         this.id = id;
         this.name = name;
+        this.category = category;
         this.price = price;
-        this.quantity = quantity;
+        this.image = image;
     }
+
 
     public int getId() {
         return id;
@@ -33,23 +38,35 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getImage() {
+        return image;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setImage(String image) {
+        this.image = image;
     }
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", name=" + name + ", category=" + category + ", price=" + price + ", image="
+                + image + "]";
+    }
+
+
 }
