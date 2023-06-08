@@ -64,7 +64,7 @@
                         %>      
                             <div class="star_gray"></div>
                         <% } %>
-                        <span>Xếp hạng ${averageComment} (${numberComment})</span>
+                        <span>  Xếp hạng ${averageComment} (${numberComment})</span>
                     </div>
 
                     <div class = "product-price">
@@ -105,7 +105,7 @@
                         <label for="star1" title="text">1 star</label>
                     </div>
 
-                    <textarea id="comment_text", name="comment_text" placeholder="Write your comment..."></textarea>
+                    <textarea id="comment_text", name="comment_text" placeholder="Viết đánh giá của bạn..."></textarea>
                     <button class="btn">Gửi</button>
                     <%
                     String error = (String) request.getSession().getAttribute("error");
@@ -124,7 +124,7 @@
                 <h1 class="title-reviews">Tất cả đánh giá</h1>
                 <div class="list-comments">
                     <% if (listComments.size() == 0) { %>
-                        <p>Chưa có review nào!</p>
+                        <p>Chưa có đánh giá nào!</p>
                     <%} else { %>
                         <c:forEach var="comment" items="${listComments}">
                             <div class="user_comment">
