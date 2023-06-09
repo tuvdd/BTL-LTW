@@ -7,10 +7,6 @@
 		response.sendRedirect("/btl_ltw/admin"+pageUri);
 		return;
 	}
-	if (ServletUtil.IsSessionExsited(request, response)) {
-		response.sendRedirect("home.jsp");
-		return;
-	}
 %>
 <!DOCTYPE html>
 <html>
@@ -33,12 +29,12 @@
 					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/usericon.png">
 					<label class="form-label-text">Tên đăng nhập:</label>
 				</div>
-				<input type="text" name="username">
+				<input type="text" name="username" required>
 				<div class="form-label">
 					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/passicon.png">
 					<label class="form-label-text">Mật khẩu:</label>
 				</div>
-				<input type="password" name="password"> <br />
+				<input type="password" name="password" required> <br />
 
 				<%
 				String error = (String) request.getSession().getAttribute("error");

@@ -1,65 +1,87 @@
-<%@ page
-	import="java.util.*, servlets.admin.ServletUtil, models.*"
-	language="java" 
-	contentType="text/html; charset=UTF-8"
+<%@ page import="java.util.*, servlets.admin.ServletUtil, models.dtos.*"
+	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <h1 id="title-page">Quản lý đơn hàng</h1>
-
+<%
+List<AdminOrderPreview> listAdminOrderPreviews = (List<AdminOrderPreview>) request.getAttribute("listAdminBookViews");
+String message = (String) request.getSession().getAttribute("message");
+String messageType = (String) request.getSession().getAttribute("messageType");
+request.getSession().removeAttribute("message");
+request.getSession().removeAttribute("messageType");
+%>
 <div class="overflow">
-	<table class="content-table">
-		<tr>
-			<th>ID</th>
-			<th>Tên</th>
-			<th>Trạng thái</th>
-			<th>Thao tác</th>
-		</tr>
-		<c:forEach var="admin" items="${listCategories}">
+	<table>
+		<thead>
 			<tr>
-				<td>${admin.getId()}</td>
-				<td>${admin.getName()}</td>
-				<td>${admin.getStatus()}</td>
-				<td>
-					<button onclick="showEditModal()">Sửa</button>
-					<button>Xóa</button>
-				</td>
+				<th>ID</th>
+				<th>Ngày tạo</th>
+				<th>Trạng thái</th>
+				<th>Địa chỉ</th>
+				<th>SDT</th>
+				<th>Người mua</th>
+				<th>Tổng số sản phẩm</th>
+				<th>Tổng tiền</th>
+				<th>Thao tác</th>
 			</tr>
-		</c:forEach>
+		</thead>
+		<tbody>
+			<c:forEach var="order" items="${listAdminOrderPreviews}">
+				<tr>
+					<td>${order.id}</td>
+					<td>${order.getCreate_time_string()}</td>
+					<td><select name="status"
+						onchange="updateStatus('${order.id}', this.value)">
+							<option value="0"
+								<c:if test="${order.status == 0}">selected</c:if>>Chưa
+								xác nhận</option>
+							<option value="1"
+								<c:if test="${order.status == 1}">selected</c:if>>Đã
+								xác nhận chờ thanh toán</option>
+							<option value="2"
+								<c:if test="${order.status == 2}">selected</c:if>>Đã
+								thanh toán chờ vận chuyển</option>
+							<option value="3"
+								<c:if test="${order.status == 3}">selected</c:if>>Đang
+								vận chuyển</option>
+							<option value="4"
+								<c:if test="${order.status == 4}">selected</c:if>>Đã
+								vận chuyển</option>
+							<option value="5"
+								<c:if test="${order.status == 5}">selected</c:if>>Hủy
+								đơn trước khi vận chuyển</option>
+							<option value="6"
+								<c:if test="${order.status == 6}">selected</c:if>>Hủy
+								đơn khi đang vận chuyển</option>
+							<option value="7"
+								<c:if test="${order.status == 7}">selected</c:if>>Hoàn
+								đơn</option>
+					</select></td>
+					<td>${order.address}</td>
+					<td>${order.phonenum}</td>
+					<td>${order.buyer_name}</td>
+					<td>${order.totalProduct}</td>
+					<td>${order.totalPrice}</td>
+					<td>
+						<button
+							onclick="window.location.href='/btl_ltw/admin/order/detail?id=${order.id}'">Chi
+							tiết</button>
+						<button
+							onclick="window.location.href='/btl_ltw/admin/order/delete?id=${order.id}'">Xóa</button>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
+	<script>
+                        function updateStatus(orderId, status) {
+                          window.location.href = '/btl_ltw/admin/order/change-status?id=' + orderId + '&status=' + status
+                        }
+                    </script>
 </div>
 <p class="alert-<%=messageType%>">
 	<%=(message != null ? message : "")%>
 </p>
-<button id="add-new-button" onclick="showAddModal()">Thêm mới</button>
-<div id="add-modal" class="modal">
-	<form method="post" action="/btl_ltw/admin/admin" id="add-form">
-		<h3>Thêm danh mục</h3>
-		<input name="name" placeholder="Nhập tên danh mục" />
-		<button type="submit">Thêm</button>
-		<button type="reset">Hoàn tác</button>
-		<button type="button" id="add-cancel" onclick="closeAddModal()">Hủy</button>
-	</form>
-</div>
 
-<div id="edit-modal" class="modal">
-	<form method="put" action="/btl_ltw/admin/admin" id="edit-form">
-		<h3>Sửa danh mục</h3>
-
-		<div class="form-data-text">
-			<p>Tên danh mục</p>
-			<input name="name" placeholder="Nhập tên danh mục" id="edit-name">
-		</div>
-		<div class="form-data-checkbox">
-			<p>Trạng thái</p>
-			<input name="status" type="checkbox" id="edit-status">
-		</div>
-		<div class="form-data-button">
-			<button type="submit">Sửa</button>
-			<button type="button">Hoàn tác</button>
-			<button type="button" id="add-cancel" onclick="closeEditModal()">Hủy</button>
-		</div>
-
-	</form>
-</div>
 <script src="/btl_ltw/admin/resources/js/content.js"
 	type="text/javascript"></script>

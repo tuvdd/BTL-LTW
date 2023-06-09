@@ -1,7 +1,8 @@
 package models.dtos;
 
+import java.text.SimpleDateFormat;
 import java.util.Base64;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 public class AdminBookView {
@@ -14,14 +15,13 @@ public class AdminBookView {
     public String category_name;
     public double price;
     public double promote_price;
-    public int quantity;
     public String description;
     public String sub_description;
-    public int status;
-    public Date create_time;
+    public boolean status;
+    public Timestamp create_time;
     public UUID create_by;
     public String create_by_name;
-    public Date last_update_time;
+    public Timestamp last_update_time;
     public UUID last_update_by;
     public String last_update_by_name;
     public UUID getId() {
@@ -81,12 +81,6 @@ public class AdminBookView {
     public void setPromote_price(double promote_price) {
         this.promote_price = promote_price;
     }
-    public int getQuantity() {
-        return quantity;
-    }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
     public String getDescription() {
         return description;
     }
@@ -99,16 +93,16 @@ public class AdminBookView {
     public void setSub_description(String sub_description) {
         this.sub_description = sub_description;
     }
-    public int getStatus() {
+    public boolean getStatus() {
         return status;
     }
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
-    public Date getCreate_time() {
+    public Timestamp getCreate_time() {
         return create_time;
     }
-    public void setCreate_time(Date create_time) {
+    public void setCreate_time(Timestamp create_time) {
         this.create_time = create_time;
     }
     public UUID getCreate_by() {
@@ -123,10 +117,10 @@ public class AdminBookView {
     public void setCreate_by_name(String create_by_name) {
         this.create_by_name = create_by_name;
     }
-    public Date getLast_update_time() {
+    public Timestamp getLast_update_time() {
         return last_update_time;
     }
-    public void setLast_update_time(Date last_update_time) {
+    public void setLast_update_time(Timestamp last_update_time) {
         this.last_update_time = last_update_time;
     }
     public UUID getLast_update_by() {
@@ -141,5 +135,10 @@ public class AdminBookView {
     public void setLast_update_by_name(String last_update_by_name) {
         this.last_update_by_name = last_update_by_name;
     }
-    
+    public String getCreate_time_string(){
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(create_time);
+    }
+    public String getLast_update_time_string(){
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(last_update_time);
+    }
 }

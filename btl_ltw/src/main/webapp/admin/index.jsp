@@ -3,13 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-String pageUri = "/category";
 String pageName = "pages/" + (String) request.getAttribute("pageName");
-
-if (request.getAttribute("isAccessFromServlet") == null) {
-	response.sendRedirect("/btl_ltw/admin" + pageUri);
-	return;
-}
 
 if (!ServletUtil.IsSessionExsited(request, response)) {
 	response.sendRedirect("/btl_ltw/admin/login");
