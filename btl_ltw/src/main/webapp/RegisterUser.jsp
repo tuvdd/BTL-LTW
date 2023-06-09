@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Đăng nhập</title>
+<title>Đăng ký</title>
 <link rel="stylesheet" href="/btl_ltw/admin/resources/css/style.css" />
 </head>
 

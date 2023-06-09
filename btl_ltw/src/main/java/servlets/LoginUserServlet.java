@@ -25,13 +25,7 @@ public class LoginUserServlet extends BaseServlet {
 	private static final long serialVersionUID = 20;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// super.doGet(req, resp);
 
-		// if (ServletUtil.IsSessionExsited(req, resp)) {
-		// 	resp.sendRedirect("/btl_ltw/admin");
-		// 	return;
-		// }
-        System.out.println("Zo login");
 		RequestDispatcher rd = req.getRequestDispatcher("/LoginUser.jsp");
 		rd.forward(req, resp);
 		return;
@@ -58,7 +52,10 @@ public class LoginUserServlet extends BaseServlet {
 			} else if (!user.password.equals(password)) {
 				req.getSession().setAttribute("error", "Sai mật khẩu!");
 				resp.sendRedirect("/btl_ltw/user/login");
-				System.out.println("sai tk");
+				return;
+			} else if (user.status == false) {
+				req.getSession().setAttribute("error", "Tài khoản đã bị khoá!");
+				resp.sendRedirect("/btl_ltw/user/login");
 				return;
 			}
 			System.out.println("thanh cong");
