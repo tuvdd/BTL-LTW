@@ -54,8 +54,8 @@
         <div class="row">
             <c:forEach items="${listRB}" var="o">
                 <div class="col-4">
-                    <a href="#"><img src="data:image/png;base64,${o.getImageBase64()}" alt="" /></a>
-                    <a href="#">
+                    <a href="detail?bookid=${o.getId()}"><img src="data:image/png;base64,${o.getImageBase64()}" alt="" /></a>
+                    <a href="detail?bookid=${o.getId()}">
                         <h4>${o.name}</h4>
                     </a>
                     <div class="rating">
@@ -74,8 +74,8 @@
         <div class="row">
             <c:forEach items="${listB}" var="m">
                 <div class="col-4">
-                    <a href="#"><img src="data:image/png;base64,${m.getImageBase64()}" alt="" /></a>
-                    <a href="#">
+                    <a href="detail?bookid=${m.getId()}"><img src="data:image/png;base64,${m.getImageBase64()}" alt="" /></a>
+                    <a href="detail?bookid=${m.getId()}">
                         <h4>${m.name}</h4>
                     </a>
                     <div class="rating">
