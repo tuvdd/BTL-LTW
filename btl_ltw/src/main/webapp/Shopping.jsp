@@ -29,7 +29,7 @@
             <div id="tab1">
                 <div id = "tab11">
                     <c:set var="chid" value="${requestScope.chid}"/>
-                    <h5 style="color: chocolate">TÊN HÃNG</h5>
+                    <h5 style="color: chocolate">TÊN HÀNG</h5>
                     <hr style="border-top: 1px solid chocolate "/>
                     <form id="f1" action="shopping1">
                         <input type="checkbox" id="c0" name="cidd"
@@ -78,9 +78,38 @@
                                 </li>
                             </c:forEach>
                         </ul>
+	                        <%
+							int currentPage = (int) request.getAttribute("currentPage");
+							%>
+							<%
+							int totalPages = (int) request.getAttribute("totalPages");
+							%>
+							<p style="display: inline;">Trang</p>
+							<ul class="pagination" style="display: inline;">
+								<%
+								for (int i = 1; i <= totalPages; i++) {
+								%>
+								<li style="display: inline;">
+									<%
+									if (i != currentPage) {
+									%><a href="/btl_ltw/shopping?newspage=<%=i%>">
+										<%=i%>
+								</a> <%
+							 } else {
+							 %>
+									<p style="display: inline;">
+										<%=i%>
+									</p> <%
+							 }
+							 %>
+								</li>
+								<%
+								}
+								%>
+						</ul>
                         <hr/>
                     </c:if>
-
+			
                     <c:set var="olds" value="${requestScope.olds}"/>
                     <c:if test="${olds!=null}">
                         <h4 style="color: chocolate">SÁCH KHUYẾN MẠI </h4>
@@ -96,6 +125,36 @@
                                 </li>
                             </c:forEach>
                         </ul>
+                        </ul>
+	                        <%
+							int currentPage = (int) request.getAttribute("currentPage");
+							%>
+							<%
+							int totalPages = (int) request.getAttribute("totalPages");
+							%>
+							<p style="display: inline;">Trang</p>
+							<ul class="pagination" style="display: inline;">
+								<%
+								for (int i = 1; i <= totalPages; i++) {
+								%>
+								<li style="display: inline;">
+									<%
+									if (i != currentPage) {
+									%><a href="/btl_ltw/shopping?oldspage=<%=i%>">
+										<%=i%>
+								</a> <%
+							 } else {
+							 %>
+									<p style="display: inline;">
+										<%=i%>
+									</p> <%
+							 }
+							 %>
+								</li>
+								<%
+								}
+								%>
+						</ul>
                         <hr/>
                     </c:if>
 
