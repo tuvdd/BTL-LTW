@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/resources/css/shopping.css" />
+    <link rel="stylesheet" href="/btl_ltw/resources/css/shopping.css" />
     <title>Ecommerce Website</title>
 </head>
 
@@ -29,7 +29,7 @@
             <div id="tab1">
                 <div id = "tab11">
                     <c:set var="chid" value="${requestScope.chid}"/>
-                    <h5 style="color: chocolate">TÊN HÃNG</h5>
+                    <h5 style="color: chocolate">TÊN HÀNG</h5>
                     <hr style="border-top: 1px solid chocolate "/>
                     <form id="f1" action="shopping1">
                         <input type="checkbox" id="c0" name="cidd"
@@ -78,9 +78,38 @@
                                 </li>
                             </c:forEach>
                         </ul>
+	                        <%
+							int currentPage = (int) request.getAttribute("currentPage");
+							%>
+							<%
+							int totalPages = (int) request.getAttribute("totalPages");
+							%>
+							<p style="display: inline;">Trang</p>
+							<ul class="pagination" style="display: inline;">
+								<%
+								for (int i = 1; i <= totalPages; i++) {
+								%>
+								<li style="display: inline;">
+									<%
+									if (i != currentPage) {
+									%><a href="/btl_ltw/shopping?newspage=<%=i%>">
+										<%=i%>
+								</a> <%
+							 } else {
+							 %>
+									<p style="display: inline;">
+										<%=i%>
+									</p> <%
+							 }
+							 %>
+								</li>
+								<%
+								}
+								%>
+						</ul>
                         <hr/>
                     </c:if>
-
+			
                     <c:set var="olds" value="${requestScope.olds}"/>
                     <c:if test="${olds!=null}">
                         <h4 style="color: chocolate">SÁCH KHUYẾN MẠI </h4>
@@ -96,12 +125,42 @@
                                 </li>
                             </c:forEach>
                         </ul>
+                        </ul>
+	                        <%
+							int currentPage = (int) request.getAttribute("currentPage");
+							%>
+							<%
+							int totalPages = (int) request.getAttribute("totalPages");
+							%>
+							<p style="display: inline;">Trang</p>
+							<ul class="pagination" style="display: inline;">
+								<%
+								for (int i = 1; i <= totalPages; i++) {
+								%>
+								<li style="display: inline;">
+									<%
+									if (i != currentPage) {
+									%><a href="/btl_ltw/shopping?oldspage=<%=i%>">
+										<%=i%>
+								</a> <%
+							 } else {
+							 %>
+									<p style="display: inline;">
+										<%=i%>
+									</p> <%
+							 }
+							 %>
+								</li>
+								<%
+								}
+								%>
+						</ul>
                         <hr/>
                     </c:if>
 
-                    <c:set var="list" value="${requestScope.products}"/>
+                    <c:set var="list" value="${products}"/>
                     <c:if test="${list!=null}">
-                        <h4 style="color: chocolate">SÁCH (${list.size()} sản phẩm)</h4>
+                        <h4 style="color: chocolate">SÁCH (${totalRecords} sản phẩm)</h4>
                         <ul class="item">
                             <c:forEach items="${list}" var="p">
                                 <li>
@@ -113,6 +172,39 @@
                                     </a>
                                 </li>
                             </c:forEach>
+                            </ul>
+	                        <%
+							int currentPage = (int) request.getAttribute("currentPage");
+							%>
+							<%
+							int totalPages = (int) request.getAttribute("totalPages");
+							%>
+							<% 
+							String searchQuery = (String) request.getAttribute("searchQuery");
+							%>
+							<p style="display: inline;">Trang</p>
+							<ul class="pagination" style="display: inline;">
+								<%
+								for (int i = 1; i <= totalPages; i++) {
+								%>
+								<li style="display: inline;">
+									<%
+									if (i != currentPage) {
+									%><a href="/btl_ltw/search?search=<%=searchQuery%>&&searchpage=<%=i%>">
+										<%=i%>
+								</a> <%
+							 } else {
+							 %>
+									<p style="display: inline;">
+										<%=i%>
+									</p> <%
+							 }
+							 %>
+								</li>
+								<%
+								}
+								%>
+						</ul>
                         </ul>
                     </c:if>
                 </div>

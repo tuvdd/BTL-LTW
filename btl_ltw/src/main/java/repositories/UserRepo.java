@@ -20,12 +20,12 @@ public class UserRepo extends Repo<User> {
             throw new Exception("Số điện thoại không hợp lệ");
         }
 
-        int res;
+        int res = 0;
         try {
             CreateConnection();
             sql = "INSERT INTO users (id, name, phonenum, email, status, created_time, last_update_time, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, UUID.randomUUID());
+            statement.setObject(1, user.id);
             statement.setString(2, user.name);
             statement.setString(3, user.phonenum);
             statement.setString(4, user.email);
@@ -35,6 +35,10 @@ public class UserRepo extends Repo<User> {
             statement.setString(8, user.username);
             statement.setString(9, user.password);
             res = statement.executeUpdate();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("duplicate key value violates unique constraint "))
+                throw new Exception("Đã tồn tại username email hoặc phonenum");
+            e.printStackTrace();
         } catch (Exception e) {
             throw e;
         } finally {
@@ -144,7 +148,7 @@ public class UserRepo extends Repo<User> {
         return user;
     }
 
-    public User getByUsernameAndPassword(String username, String password) throws SQLException {
+    public User getByUsernameAndPassword(String username, String password) throws Exception {
         User user;
         try {
             CreateConnection();
@@ -156,7 +160,9 @@ public class UserRepo extends Repo<User> {
 
             if (resultSet.next()) {
                 user = setObjectFromResultSet(resultSet);
-
+                if(user.status == false){
+                    throw new Exception("Tài khoản bị khóa");
+                }
             } else {
                 user = null;
             }

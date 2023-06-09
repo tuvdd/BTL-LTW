@@ -21,7 +21,7 @@ public class CategoryRepo extends Repo<Category> {
                 statement.setInt(1, pageSize);
                 statement.setInt(2, (pageIndex - 1) * pageSize);
             } else {
-                sql = ";";
+                sql += ";";
                 statement = connection.prepareStatement(sql);
             }
             resultSet = statement.executeQuery();

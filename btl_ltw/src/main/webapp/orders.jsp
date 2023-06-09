@@ -26,7 +26,7 @@
 <html>
 <head>
   <title>E-Commerce Cart</title>
-  <link rel="stylesheet" href="/resources/css/orders.css">
+  <link rel="stylesheet" href="/btl_ltw/resources/css/orders.css">
 </head>
 <body>
 <jsp:include page="Menu.jsp"></jsp:include>

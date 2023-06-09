@@ -19,10 +19,24 @@ public class ShoppingServlet extends HttpServlet {
         BookRepo repoB = new BookRepo();
         List<Book> news, olds = null;
         List<Category> list = null;
+        int page = 1, pageSize = 9;
+        if (req.getParameter("newspage") != null) {
+            page = Integer.parseInt(req.getParameter("newspage"));
+        }
+        if (req.getParameter("oldspage") != null) {
+            page = Integer.parseInt(req.getParameter("oldspage"));
+        }
         list = repoC.getAll(-1, -1);
-        news = repoB.getAll(1,20);
-        olds = repoB.getAll(1,20);
+        
+        news = repoB.getAll(page, pageSize);
+        olds = repoB.getAll(page , pageSize);
 
+        int totalRecords = repoB.getCount();
+        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+        req.setAttribute("totalPages", totalPages);
+        req.setAttribute("currentPage", page);
+        
         String[] pp={"Dưới 100k",
                 "Từ 100k - 200k",
                 "Từ 200k - 500k",

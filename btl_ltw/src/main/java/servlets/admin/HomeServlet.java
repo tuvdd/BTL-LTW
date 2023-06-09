@@ -32,8 +32,6 @@ public class HomeServlet extends BaseServlet {
 		req.setAttribute("Số lượng đơn chờ vận chuyển", orderRepo.getCountOrderByStatus(2));
 		req.setAttribute("Tổng doanh thu tháng", orderRepo.tinhTongDoanhThuTheoThang(t));
 		req.setAttribute("Tổng doanh thu năm", orderRepo.tinhTongDoanhThuTheoNam(t));
-		req.setAttribute("Top sách mua nhiều nhất tháng", orderRepo.layDanhSachBookIdMuaNhieuNhatTrongThang(t, 5));
-		req.setAttribute("Top sách mua nhiều nhất năm", orderRepo.layDanhSachBookIdMuaNhieuNhatTrongNam(t, 5));
 
 		req.setAttribute("pageName", "home.jsp");
 		req.getRequestDispatcher("/admin/index.jsp").forward(req, resp);

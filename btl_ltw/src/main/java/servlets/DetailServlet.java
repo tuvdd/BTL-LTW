@@ -38,16 +38,16 @@ public class DetailServlet extends HttpServlet {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.print("BOOKID");
-        System.out.println(bookID);
+        // System.out.print("BOOKID");
+        // System.out.println(bookID);
         List<Comment> listComments;
         listComments = commentRepo.GetlistCommentByBookID(bookID, currentPage, commentsPerPage);
         int numberOfPages = commentRepo.getNumberOfPages(bookID, commentsPerPage);
         int numberComment = repoB.getNumberComments(bookID);
         float averageComment = repoB.getAverageComment(bookID);
-        System.out.print("count");
-        System.out.println(numberComment);
-        System.out.println(averageComment);
+        // System.out.print("count");
+        // System.out.println(numberComment);
+        // System.out.println(averageComment);
         req.setAttribute("bookid", bookID);
         req.setAttribute("listComments", listComments);
         req.setAttribute("book",book);
@@ -62,18 +62,18 @@ public class DetailServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         if (session.getAttribute("userID") == null) {
-            // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+            String currentURL = req.getRequestURL().toString();
+            currentURL += "?bookid=" + bookID;
+            session.setAttribute("currentURL", currentURL);
             resp.sendRedirect("/btl_ltw/user/login");
             return;
-        } 
+        }
         String userID = (String) session.getAttribute("userID");
-        String rateStr = req.getParameter("rate");
-        String commentText = req.getParameter("comment_text");
-        System.out.println("comment text:");
-        System.out.println(commentText);
+        String rateStr = req.getParameter("rate").trim();
+        String commentText = req.getParameter("comment_text").trim();
         if (rateStr == null || commentText == null || commentText.isEmpty()) {
             System.out.println("Vui lòng nhập comment và chọn số sao!");
-            req.setAttribute("error", "Vui lòng nhập comment và chọn số sao!");
+            req.getSession().setAttribute("error", "Vui lòng nhập comment và chọn số sao!");
             resp.sendRedirect("/btl_ltw/detail?bookid="+bookID);
         } else {
             int rate = Integer.parseInt(rateStr);
@@ -84,7 +84,7 @@ public class DetailServlet extends HttpServlet {
             System.out.println("okeee");
             if (res != 1) {
                 System.out.println("Thêm mới không thành công!");
-                req.setAttribute("error", "Thêm mới không thành công");
+                req.getSession().setAttribute("error", "Thêm mới không thành công");
             }
             resp.sendRedirect("/btl_ltw/detail?bookid="+bookID);
         }

@@ -74,11 +74,41 @@ request.getSession().removeAttribute("messageType");
 		</tbody>
 	</table>
 	<script>
-                        function updateStatus(orderId, status) {
-                          window.location.href = '/btl_ltw/admin/order/change-status?id=' + orderId + '&status=' + status
-                        }
-                    </script>
+		function updateStatus(orderId, status) {
+			window.location.href = '/btl_ltw/admin/order/change-status?id='
+					+ orderId + '&status=' + status
+		}
+	</script>
 </div>
+<%
+int currentPage = (int) request.getAttribute("currentPage");
+%>
+<%
+int totalPages = (int) request.getAttribute("totalPages");
+%>
+<p style="display: inline;">Trang</p>
+<ul class="pagination" style="display: inline;">
+	<%
+	for (int i = 1; i <= totalPages; i++) {
+	%>
+	<li style="display: inline;">
+		<%
+		if (i != currentPage) {
+		%><a href="/btl_ltw/admin/order?page=<%=i%>">
+			<%=i%>
+	</a> <%
+ } else {
+ %>
+		<p style="display: inline;">
+			<%=i%>
+		</p> <%
+ }
+ %>
+	</li>
+	<%
+	}
+	%>
+</ul>
 <p class="alert-<%=messageType%>">
 	<%=(message != null ? message : "")%>
 </p>

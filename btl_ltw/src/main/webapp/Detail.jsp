@@ -12,21 +12,15 @@
     int fullStars = (int) averageComment;
     boolean hasHalfStar = averageComment % 1 != 0;
 %>
-<%
-    String error = (String) session.getAttribute("error");
-    if (error != null) {
-%>
-    <script>alert("error", "aa")</script>
-<%  } %>
-            
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Product Card/Page</title>
+        <title>Chi tiết sản phẩm</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/resources/css/detail2.css">
+        <link rel="stylesheet" href="/btl_ltw/resources/css/detail2.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
     </head>
@@ -70,54 +64,34 @@
                         %>      
                             <div class="star_gray"></div>
                         <% } %>
-                        <span>Rating ${averageComment} (${numberComment})</span>
+                        <span>  Xếp hạng ${averageComment} (${numberComment})</span>
                     </div>
 
                     <div class = "product-price">
-                        <p class = "last-price">Old Price: <span>${book.price}</span></p>
-                        <p class = "new-price">New Price: <span>${book.promote_price}</span></p>
-                    </div>
-
-                    <div class = "product-detail">
-                        <h2>about this item: </h2>
-                        <p>${book.description}</p>
-                        <!-- <p> Còn lại: ${book.getQuantity()}</p> -->
+                        <p class = "last-price">Giá cũ: <span>${book.price}</span></p>
+                        <p class = "new-price">Giá mới: <span>${book.promote_price}</span></p>
                     </div>
 
                     <div class = "purchase-info">
                         <input type = "number" min = "0" value = "1">
                         <button type = "button" class = "btn">
-                            Add to Cart <i class = "fas fa-shopping-cart"></i>
+                            Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
                         </button>
-                    </div>
-
-                    <div class = "social-links">
-                        <p>Share At: </p>
-                        <a href = "#">
-                            <i class = "fab fa-facebook-f"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-twitter"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-instagram"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-whatsapp"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-pinterest"></i>
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class = "product-detail">
+            <h2>Giới thiệu về sách:</h2>
+            <p>${book.description}</p>
+        </div>
+
         <div class="comment-wrapper">
             <form action="/btl_ltw/detail" method="post">
                 <div class="add-comment">
-                    <h1>Add Comment</h1>
-                    <h3>Rating</h3>
+                    <h1>Thêm đánh giá</h1>
+                    <h3>Xếp hạng</h3>
                     <div class="rate">
                         <input type="radio" id="star5" name="rate" value="5" />
                         <label for="star5" title="text">5 stars</label>
@@ -131,17 +105,26 @@
                         <label for="star1" title="text">1 star</label>
                     </div>
 
-                    <textarea id="comment_text", name="comment_text" placeholder="Write your comment..."></textarea>
-                    <button class="btn">Submit</button>
+                    <textarea id="comment_text", name="comment_text" placeholder="Viết đánh giá của bạn..."></textarea>
+                    <button class="btn">Gửi</button>
+                    <%
+                    String error = (String) request.getSession().getAttribute("error");
+                    if (error != null) {
+                    %>
+                    <p style="color: red; font-size: 15px;"><%=error%></p>
+                    <%
+                    request.getSession().removeAttribute("error");
+                    }
+                    %>
                 </div>
             </form>
 
             
             <div class="review-comments">
-                <h1 class="title-reviews">Reviews</h1>
+                <h1 class="title-reviews">Tất cả đánh giá</h1>
                 <div class="list-comments">
                     <% if (listComments.size() == 0) { %>
-                        <p>Chưa có review nào!</p>
+                        <p>Chưa có đánh giá nào!</p>
                     <%} else { %>
                         <c:forEach var="comment" items="${listComments}">
                             <div class="user_comment">
@@ -182,7 +165,7 @@
               
         </div>
         
- 
+        
         <script src="/btl_ltw/resources/detail.js"></script>
     <jsp:include page="Footer.jsp"></jsp:include>
 

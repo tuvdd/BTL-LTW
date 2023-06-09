@@ -99,32 +99,7 @@ img{
 .new-price span{
     color: #256eff;
 }
-.product-detail h2{
-    text-transform: capitalize;
-    color: #12263a;
-}
-.product-detail p{
-    font-size: 0.9rem;
-    padding: 0.3rem;
-    opacity: 0.8;
-}
-.product-detail ul{
-    margin: 1rem 0;
-    font-size: 0.9rem;
-}
-.product-detail ul li{
-    margin: 0;
-    list-style: none;
-    background: url(/client/checked.png) left center no-repeat;
-    background-size: 18px;
-    padding-left: 1.7rem;
-    margin: 0.4rem 0;
-    font-weight: 600;
-    opacity: 0.9;
-}
-.product-detail ul li span{
-    font-weight: 400;
-}
+
 .purchase-info{
     margin: 1.5rem 0;
 }
@@ -275,7 +250,10 @@ h1 {
     color: white;
     cursor: pointer;
 }
+.add-comment p {
+    text-align: center;
 
+}
 .add-comment .btn:hover {
     background-color: #45a049;
 }
@@ -387,4 +365,21 @@ h1 {
     text-align: center;
     color: gray;
     padding: 20px
+}
+
+.product-detail {
+    width: 80%;
+    height: fit-content;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.product-detail h2{
+    text-transform: capitalize;
+    color: #12263a;
+}
+.product-detail p{
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    opacity: 0.8;
 }

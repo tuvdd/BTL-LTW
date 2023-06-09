@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Đăng nhập</title>
+<title>Đăng ký</title>
 <link rel="stylesheet" href="/btl_ltw/admin/resources/css/style.css" />
 </head>
 
@@ -13,16 +13,16 @@
 		<div id="login-form" class="container center _80pc login-panel">
 			<img class="center" src="/btl_ltw/admin/resources/img/logo.png"
 				style="width: 30%; margin-left: 35%; margin-bottom: 15px;" />
-			<h3 class="center form-header">Đăng nhập</h3>
+			<h3 class="center form-header">Đăng Kí</h3>
 			<!-- <h4 class="center form-header">hihi</h4> -->
-			<form class="center" method="post" action="/btl_ltw/user/login">
+			<form class="center" method="post" action="/btl_ltw/user/register">
 				<div class="form-label">
-					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/usericon.png">
+					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/email.png">
 					<label class="form-label-text">Email:</label>
 				</div>
 				<input type="text" name="email">
                 <div class="form-label">
-					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/usericon.png">
+					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/phonecall.png">
 					<label class="form-label-text">Số điện thoại:</label>
 				</div>
 				<input type="text" name="phoneNumber">
@@ -48,7 +48,7 @@
 				}
 				%>
 
-				<button class="btn1 right" type="submit">Đăng nhập</button>
+				<button class="btn1 right" type="submit">Đăng kí</button>
 			</form>
 		</div>
 	</div>

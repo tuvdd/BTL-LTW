@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/resources/css/home.css" />
+    <link rel="stylesheet" href="/btl_ltw/resources/css/home.css" />
     <title>Ecommerce Website</title>
 </head>
 
@@ -16,12 +16,12 @@
                 <div class="row">
                     <div class="col-2">
                         <h1>
-                            Buy your book
+                            Chào mừng bạn đến với hiệu sách của chúng tôi
                         </h1>
-                        <p>
-                            Giới thiệu...
-                        </p>
-                        <a href="/shopping" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a>
+                        <h2>
+                        	Hiệu sách chúng tôi có tất cả sách mà bạn muốn tìm.
+                        </h2>
+                      <!--   <a href="/shopping" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a> -->
                     </div>
                     <div class="col-2">
                         <img src="/resources/img/Book1.png" alt="" />
@@ -49,13 +49,13 @@
 
     <!-- Featured products -->
     <div class="small-container">
-        <h2 class="title">Featured Products</h2>
+        <h2 class="title">Sản phẩm nổi bật</h2>
     </div>
         <div class="row">
-            <c:forEach items="${listB}" var="o">
+            <c:forEach items="${listRB}" var="o">
                 <div class="col-4">
-                    <a href="#"><img src="data:image/png;base64,${o.getImageBase64()}" alt="" /></a>
-                    <a href="#">
+                    <a href="detail?bookid=${o.getId()}"><img src="data:image/png;base64,${o.getImageBase64()}" alt="" /></a>
+                    <a href="detail?bookid=${o.getId()}">
                         <h4>${o.name}</h4>
                     </a>
                     <div class="rating">
@@ -65,17 +65,17 @@
                         <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
                     </div>
-                    <p>${o.price}</p>
+                    <p>${o.price}vnd</p>
                 </div>
             </c:forEach>
 
         </div>
-        <h2 class="title">Latest Products</h2>
+        <h2 class="title">Sản phẩm mới nhất</h2>
         <div class="row">
             <c:forEach items="${listB}" var="m">
                 <div class="col-4">
-                    <a href="#"><img src="data:image/png;base64,${m.getImageBase64()}" alt="" /></a>
-                    <a href="#">
+                    <a href="detail?bookid=${m.getId()}"><img src="data:image/png;base64,${m.getImageBase64()}" alt="" /></a>
+                    <a href="detail?bookid=${m.getId()}">
                         <h4>${m.name}</h4>
                     </a>
                     <div class="rating">
@@ -85,7 +85,7 @@
                         <i class="fas fa-star"></i>
                         <i class="far fa-star"></i>
                     </div>
-                    <p>Price: $${m.price}</p>
+                    <p>Price: ${m.price}vnd</p>
                 </div>
             </c:forEach>
         </div>
@@ -99,9 +99,14 @@
                     <img src="data:image/png;base64,${p.getImageBase64()}" alt="" class="offer-img" />
                 </div>
                 <div class="col-2">
+<<<<<<< HEAD
                     <p>SP đề cử</p>
                     <h1>${p.name}</h1>
-                    <small>${p.description}</small>
+=======
+                    <h2>SP đề cử</h2>
+                    <h3>${p.name}</h3>
+>>>>>>> origin/Hai
+                    <small>${p.sub_description}</small>
                     <br />
                     <a href="#" class="btn">Buy Now &#8594;</a>
                 </div>
