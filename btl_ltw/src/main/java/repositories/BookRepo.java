@@ -39,6 +39,62 @@ public class BookRepo extends Repo<Book> {
 		return books;
 	}
 
+	public List<Book> searchBooks(String searchQuery, int page, int size) {
+		List<Book> books = new ArrayList<>();
+		CreateConnection();
+		try {
+			String sql = "SELECT * FROM books WHERE name LIKE ? OR author LIKE ?";
+			if (page > 0 && size > 0) {
+				int offset = (page - 1) * size;
+				sql += " OFFSET ? LIMIT ? ;";
+				statement = connection.prepareStatement(sql);
+				String searchParam = "%" + searchQuery + "%";
+				statement.setString(1, searchParam);
+				statement.setString(2, searchParam);
+				statement.setInt(3, offset);
+				statement.setInt(4, size);
+			} else {
+				sql += " ;";
+				statement = connection.prepareStatement(sql);
+				String searchParam = "%" + searchQuery + "%";
+				statement.setString(1, searchParam);
+				statement.setString(2, searchParam);
+			}
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Book book = setObjectFromResultSet(resultSet);
+				books.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+		return books;
+	}
+	
+	public int getCountSearchBook(String searchQuery) {
+		int res = 0;
+		sql = "SELECT COUNT(*) FROM books WHERE name LIKE ? OR author LIKE ?;";
+		try {
+			CreateConnection();
+			statement = connection.prepareStatement(sql);
+			String searchParam = "%" + searchQuery + "%";
+			statement.setString(1, searchParam);
+			statement.setString(2, searchParam);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				res = resultSet.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+
+		return res;
+	}
+	
 	public List<Book> get4LastestBooks() {
 		List<Book> books = new ArrayList<>();
 		CreateConnection();
@@ -58,27 +114,6 @@ public class BookRepo extends Repo<Book> {
 		return books;
 	}
 	
-    public List<Book> searchBooks(String searchQuery) {
-        List<Book> books = new ArrayList<>();
-        CreateConnection();
-        try {
-            String sql = "SELECT * FROM books WHERE name LIKE ? OR author LIKE ?";
-            statement = connection.prepareStatement(sql);
-            String searchParam = "%" + searchQuery + "%";
-            statement.setString(1, searchParam);
-            statement.setString(2, searchParam);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Book book = setObjectFromResultSet(resultSet);
-                books.add(book);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            CloseConnection();
-        }
-        return books;
-    }
 	public Book getById(UUID id) throws Exception {
         Book book = null;
         CreateConnection();

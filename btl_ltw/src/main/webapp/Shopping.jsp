@@ -158,9 +158,9 @@
                         <hr/>
                     </c:if>
 
-                    <c:set var="list" value="${requestScope.products}"/>
+                    <c:set var="list" value="${products}"/>
                     <c:if test="${list!=null}">
-                        <h4 style="color: chocolate">SÁCH (${list.size()} sản phẩm)</h4>
+                        <h4 style="color: chocolate">SÁCH (${totalRecords} sản phẩm)</h4>
                         <ul class="item">
                             <c:forEach items="${list}" var="p">
                                 <li>
@@ -172,6 +172,39 @@
                                     </a>
                                 </li>
                             </c:forEach>
+                            </ul>
+	                        <%
+							int currentPage = (int) request.getAttribute("currentPage");
+							%>
+							<%
+							int totalPages = (int) request.getAttribute("totalPages");
+							%>
+							<% 
+							String searchQuery = (String) request.getAttribute("searchQuery");
+							%>
+							<p style="display: inline;">Trang</p>
+							<ul class="pagination" style="display: inline;">
+								<%
+								for (int i = 1; i <= totalPages; i++) {
+								%>
+								<li style="display: inline;">
+									<%
+									if (i != currentPage) {
+									%><a href="/btl_ltw/search?search=<%=searchQuery%>&&searchpage=<%=i%>">
+										<%=i%>
+								</a> <%
+							 } else {
+							 %>
+									<p style="display: inline;">
+										<%=i%>
+									</p> <%
+							 }
+							 %>
+								</li>
+								<%
+								}
+								%>
+						</ul>
                         </ul>
                     </c:if>
                 </div>
