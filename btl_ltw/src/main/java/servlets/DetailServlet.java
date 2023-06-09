@@ -69,8 +69,8 @@ public class DetailServlet extends HttpServlet {
             return;
         }
         String userID = (String) session.getAttribute("userID");
-        String rateStr = req.getParameter("rate");
-        String commentText = req.getParameter("comment_text");
+        String rateStr = req.getParameter("rate").trim();
+        String commentText = req.getParameter("comment_text").trim();
         if (rateStr == null || commentText == null || commentText.isEmpty()) {
             System.out.println("Vui lòng nhập comment và chọn số sao!");
             req.getSession().setAttribute("error", "Vui lòng nhập comment và chọn số sao!");

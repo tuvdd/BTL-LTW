@@ -1,4 +1,5 @@
 package servlets;
+
 import java.util.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import repositories.BookRepo;
 import repositories.CategoryRepo;
 
 import java.io.IOException;
+
 @WebServlet("/search")
 public class SearchServlet extends HttpServlet {
 

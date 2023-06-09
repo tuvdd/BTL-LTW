@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.User;
 import repositories.UserRepo;
+import servlets.Utilities.StringUtilities;
 import servlets.admin.BaseServlet;
 
 @WebServlet({"/user/register", "/user/register/"})
@@ -40,17 +41,23 @@ public class RegisterUserServlet extends BaseServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String email = req.getParameter("email");
-		String phoneNumber = req.getParameter("phoneNumber");
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+		String email = req.getParameter("email").trim();
+		String phoneNumber = req.getParameter("phoneNumber").trim();
+		String username = req.getParameter("username").trim();
+		String password = req.getParameter("password").trim();
 		if (email == null || email == "" || phoneNumber == null || phoneNumber == "" || username == null || username == "" || password == null || password == "") {
 			req.getSession().setAttribute("error", "Không được để trống!");
 			resp.sendRedirect("/btl_ltw/user/register");
-			System.out.println("nilll");
+			return;
+		} else if (!StringUtilities.isValidEmail(email)) {
+			req.getSession().setAttribute("error", "Không đúng định dạng email!");
+			resp.sendRedirect("/btl_ltw/user/register");
+			return;
+		} else if (!StringUtilities.isValidPhoneNumber(phoneNumber)) {
+			req.getSession().setAttribute("error", "Không đúng định dạng số điện thoại!");
+			resp.sendRedirect("/btl_ltw/user/register");
 			return;
 		}
-
 		try {
 			User user = userRepo.getUserByPhoneNumber(phoneNumber);
 			if (user != null) {

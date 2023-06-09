@@ -14,7 +14,35 @@ public class BookRepo extends Repo<Book> {
 		List<Book> books = new ArrayList<>();
 		CreateConnection();
 		try {
-			sql = "SELECT * FROM books";
+			sql = "SELECT * FROM books ";
+
+			if (page > 0 && size > 0) {
+				int offset = (page - 1) * size;
+				sql += " OFFSET ? LIMIT ? ;";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, offset);
+				statement.setInt(2, size);
+			} else {
+				sql += " ;";
+				statement = connection.prepareStatement(sql);
+			}
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Book book = setObjectFromResultSet(resultSet);
+				books.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+		return books;
+	}
+	public List<Book> getAll(int page, int size, boolean status) {
+		List<Book> books = new ArrayList<>();
+		CreateConnection();
+		try {
+			sql = "SELECT * FROM books WHERE status = " + status + " ";
 
 			if (page > 0 && size > 0) {
 				int offset = (page - 1) * size;
@@ -115,36 +143,68 @@ public class BookRepo extends Repo<Book> {
 	}
 	
 	public Book getById(UUID id) throws Exception {
-        Book book = null;
-        CreateConnection();
-        if (id == null)
-            throw new Exception("ID = null");
-        try {
-            sql = "SELECT * FROM books WHERE id=?;";
-            statement = connection.prepareStatement(sql);
-            statement.setObject(1, id);
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                book = setObjectFromResultSet(resultSet);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            CloseConnection();
-        }
-        return book;
-    }
+		Book book = null;
+		CreateConnection();
+		if (id == null)
+			throw new Exception("ID = null");
+		try {
+			sql = "SELECT * FROM books WHERE id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setObject(1, id);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				book = setObjectFromResultSet(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+		return book;
+	}
+
+	public Book getById(UUID id, boolean status) throws Exception {
+		Book book = null;
+		CreateConnection();
+		if (id == null)
+			throw new Exception("ID = null");
+		try {
+			sql = "SELECT * FROM books WHERE id=? AND status = ?;";
+			statement = connection.prepareStatement(sql);
+			statement.setObject(1, id);
+			statement.setBoolean(2, status);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				book = setObjectFromResultSet(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+		return book;
+	}
 
 	public List<Book> GetListBookByPrice(double fromMoney, double toMoney, int page, int size) {
 		List<Book> books = new ArrayList<>();
 		CreateConnection();
 		try {
-			sql = "SELECT * FROM books WHERE price>=? AND price<=?";
-			statement = connection.prepareStatement(sql);
-			statement.setDouble(1, fromMoney);
-			statement.setDouble(2, toMoney);
-			statement.setInt(3, size);
-			statement.setInt(4, (page - 1) * size);
+			sql = "SELECT * FROM books WHERE price>=? AND price<=? AND status = true";
+			if (page > 0 && size > 0) {
+				sql += " OFFSET ? LIMIT ? ;";
+				statement = connection.prepareStatement(sql);
+				statement.setDouble(1, fromMoney);
+				statement.setDouble(2, toMoney);
+
+				statement.setInt(3, (page - 1) * size);
+				statement.setInt(4, size);
+			} else {
+				sql = " ;";
+				statement = connection.prepareStatement(sql);
+				statement.setDouble(1, fromMoney);
+				statement.setDouble(2, toMoney);
+
+			}
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Book book = setObjectFromResultSet(resultSet);
@@ -158,37 +218,36 @@ public class BookRepo extends Repo<Book> {
 		return books;
 	}
 
-    public List<Book> GetListBookByCategoryID(String uuid, int page, int size) {
-        List<Book> books = new ArrayList<>();
-        CreateConnection();
-        try {
-            sql = "SELECT * FROM books WHERE category_id=?";
-            if (page == -1 || size == -1) {
-                int offset = (page - 1) * size;
-                sql += " OFFSET ? LIMIT ? ;";
-                statement = connection.prepareStatement(sql);
-                statement.setInt(1, offset);
-                statement.setInt(2, size);
-            } else {
-                sql += ";";
-                statement = connection.prepareStatement(sql);
-            }
-            statement = connection.prepareStatement(sql);
-            statement.setObject(1, UUID.fromString(uuid));
-			statement.setInt(2, (page - 1) * size);
-            statement.setInt(3, size);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Book book = setObjectFromResultSet(resultSet);
-                books.add(book);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            CloseConnection();
-        }
-        return books;
-    }
+	public List<Book> GetListBookByCategoryID(String uuid, int page, int size) {
+		List<Book> books = new ArrayList<>();
+		CreateConnection();
+		try {
+			sql = "SELECT * FROM books WHERE category_id=? AND status = true;";
+			if (page == -1 || size == -1) {
+				int offset = (page - 1) * size;
+				sql += " OFFSET ? LIMIT ? ;";
+				statement = connection.prepareStatement(sql);
+				statement.setObject(1, UUID.fromString(uuid));
+				statement.setInt(2, offset);
+				statement.setInt(3, size);
+			} else {
+				sql += ";";
+				statement = connection.prepareStatement(sql);
+				statement.setObject(1, UUID.fromString(uuid));
+			}
+
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Book book = setObjectFromResultSet(resultSet);
+				books.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+		return books;
+	}
 
 	public int add(Book book) throws Exception {
 		int rowsAffected = 0;
@@ -370,7 +429,7 @@ public class BookRepo extends Repo<Book> {
 			}
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
 			CloseConnection();
 		}
@@ -397,47 +456,67 @@ public class BookRepo extends Repo<Book> {
 		return res;
 	}
 
-    public float getAverageComment(String bookID) {
-        float res = 0;
-        sql = "SELECT COUNT(*) AS comment_count, SUM(rate) AS total_rate FROM books LEFT JOIN comments ON books.id = comments.book_id WHERE books.id = ?;";
-        try {
-            CreateConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setObject(1, UUID.fromString(bookID));
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                int commentCount = resultSet.getInt("comment_count");
-                int totalRate = resultSet.getInt("total_rate");
-                System.out.println(commentCount);
-                System.out.println(totalRate);
-                res = (float)totalRate/ (float)commentCount;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            CloseConnection();
-        }
-        String formattedNumber = String.format("%.2f", res);
-        return Float.parseFloat(formattedNumber);
-    }
+	public int getCount(boolean status) {
+		int res = 0;
+		sql = "SELECT COUNT(*) FROM books WHERE status = ?;";
+		try {
+			CreateConnection();
+			statement = connection.prepareStatement(sql);
+			statement.setBoolean(1, status);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				res = resultSet.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
 
-    public int getNumberComments(String bookID) {
-        int res = 0;
-        sql = "SELECT COUNT(*) AS comment_count FROM books LEFT JOIN comments ON books.id = comments.book_id WHERE books.id = ?;";
-        try {
-            CreateConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setObject(1, UUID.fromString(bookID));
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                res = resultSet.getInt("comment_count");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            CloseConnection();
-        }
-        return res;
-    }
+		return res;
+	}
+
+	public float getAverageComment(String bookID) {
+		float res = 0;
+		sql = "SELECT COUNT(*) AS comment_count, SUM(rate) AS total_rate FROM books LEFT JOIN comments ON books.id = comments.book_id WHERE books.id = ?;";
+		try {
+			CreateConnection();
+			statement = connection.prepareStatement(sql);
+			statement.setObject(1, UUID.fromString(bookID));
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				int commentCount = resultSet.getInt("comment_count");
+				int totalRate = resultSet.getInt("total_rate");
+				System.out.println(commentCount);
+				System.out.println(totalRate);
+				res = (float) totalRate / (float) commentCount;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+		String formattedNumber = String.format("%.2f", res);
+		return Float.parseFloat(formattedNumber);
+	}
+
+	public int getNumberComments(String bookID) {
+		int res = 0;
+		sql = "SELECT COUNT(*) AS comment_count FROM books LEFT JOIN comments ON books.id = comments.book_id WHERE books.id = ?;";
+		try {
+			CreateConnection();
+			statement = connection.prepareStatement(sql);
+			statement.setObject(1, UUID.fromString(bookID));
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				res = resultSet.getInt("comment_count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+		return res;
+	}
 
 }

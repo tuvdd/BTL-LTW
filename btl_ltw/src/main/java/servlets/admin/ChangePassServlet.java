@@ -1,6 +1,5 @@
 package servlets.admin;
 
-import jakarta.servlet.http.HttpServlet;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -8,7 +7,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.Admin;
 import repositories.AdminRepo;
 
 @WebServlet(name = "AdminChangePass", urlPatterns = "/admin/changepass")

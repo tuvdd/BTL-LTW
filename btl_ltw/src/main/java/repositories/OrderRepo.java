@@ -12,7 +12,6 @@ import java.util.UUID;
 import models.Order;
 import models.OrderDetail;
 import models.dtos.AdminOrderPreview;
-import models.dtos.BookDashboardDTO;
 import models.dtos.OrderFullDetail;
 
 public class OrderRepo extends Repo<Order> {
@@ -345,71 +344,6 @@ public class OrderRepo extends Repo<Order> {
         Timestamp to = new Timestamp(cal.getTimeInMillis());
 
         return tinhDoanhThuTheoThoiGian(from, to);
-    }
-
-    public List<BookDashboardDTO> layDanhSachBookIdMuaNhieuNhatTrongThang(Timestamp current,
-            int soLuong) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(current);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        Timestamp from = new Timestamp(cal.getTimeInMillis());
-        cal.add(Calendar.MONTH, 1);
-        Timestamp to = new Timestamp(cal.getTimeInMillis());
-        return layDanhSachBookIdMuaNhieuNhatTrongKhoangThoiGian(from, to, soLuong);
-    }
-
-    public List<BookDashboardDTO> layDanhSachBookIdMuaNhieuNhatTrongNam(Timestamp current,
-            int soLuong) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(current);
-        cal.set(Calendar.MONTH, 1);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        Timestamp from = new Timestamp(cal.getTimeInMillis());
-        cal.add(Calendar.YEAR, 1);
-        Timestamp to = new Timestamp(cal.getTimeInMillis());
-        return layDanhSachBookIdMuaNhieuNhatTrongKhoangThoiGian(from, to, soLuong);
-    }
-
-    public List<BookDashboardDTO> layDanhSachBookIdMuaNhieuNhatTrongKhoangThoiGian(Timestamp from, Timestamp to,
-            int soLuong) {
-        sql = "SELECT b.id AS id, b.\"name\" AS name, SUM(quantity) AS total_quantity "
-                + "FROM order_details od, books b "
-                + "WHERE od.book_id = b.id AND create_time BETWEEN ? AND ? "
-                + "GROUP BY b.id "
-                + "ORDER BY total_quantity DESC "
-                + "LIMIT ?;";
-        List<BookDashboardDTO> res = null;
-        try {
-            CreateConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setTimestamp(1, from);
-            statement.setTimestamp(2, to);
-            statement.setInt(3, soLuong);
-            resultSet = statement.executeQuery();
-            res = new ArrayList<>();
-            while (resultSet.next()) {
-                BookDashboardDTO b = new BookDashboardDTO();
-                b.setId(UUID.fromString(resultSet.getString("id")));
-                b.setName(resultSet.getString("name"));
-                b.setQuantity(resultSet.getInt("quantity"));
-                res.add(b);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            CloseConnection();
-        }
-        return res;
     }
 
     public BigDecimal tinhDoanhThuTheoThoiGian(Timestamp from, Timestamp to) {
