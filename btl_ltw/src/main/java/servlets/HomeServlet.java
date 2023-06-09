@@ -46,7 +46,9 @@ public class HomeServlet extends HttpServlet {
 			 List<Book> listB, listRB = null;
 			 List<Category> listC;
 			 Book p;
-			 listB = repoB.getAll(1, 20);
+			 
+			 listRB = repoB.getAll(1, 4);
+			 listB = repoB.get4LastestBooks();
 			 listC = repoC.getAll(-1, -1);
 
 			 p = listB.get(0);

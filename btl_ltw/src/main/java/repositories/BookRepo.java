@@ -67,18 +67,13 @@ public class BookRepo extends Repo<Book> {
 		return books;
 	}
 
-	public List<Book> searchBooks(String searchQuery, int page, int size) {
+    	public List<Book> get4LastestBooks() {
 		List<Book> books = new ArrayList<>();
 		CreateConnection();
 		try {
-			String sql = "SELECT * FROM books WHERE name LIKE ? OR author LIKE ? OR category LIKE ? OR description LIKE ?";
+			sql = "SELECT * FROM books ORDER BY create_time DESC LIMIT 4;";
 			statement = connection.prepareStatement(sql);
-			String searchParam = "%" + searchQuery + "%";
-			statement.setString(1, searchParam);
-			statement.setString(2, searchParam);
-			statement.setString(3, searchParam);
-			statement.setString(4, searchParam);
-			ResultSet resultSet = statement.executeQuery();
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Book book = setObjectFromResultSet(resultSet);
 				books.add(book);

@@ -12,15 +12,16 @@
 </head>
 <body>
   <header>
-    <div class="logo"><a href="#">E-commerce Bookstore</a></div>
+    <div class="logo"><a href="/btl_ltw">E-commerce Bookstore</a></div>
     <div class="search">
-      <a href=""><input type="text" placeholder="Search products" id="input">
-      </a>
+    <form action="search">
+       <input name="search" type="text" placeholder="Search products" id="input">
+    </form>
     </div>
     <div class="heading">
       <ul>
-        <li><a href="home.jsp" class="under">HOME</a></li>
-        <li><a href="#" class="under">SHOPPING</a></li>
+        <li><a href="/btl_ltw/" class="under">HOME</a></li>
+        <li><a href="/btl_ltw/shopping" class="under">SHOPPING</a></li>
         <li><a href="#" class="under">CONTACT</a></li>
         <li><a href="#" class="under">ACCOUNT</a></li>
         <li><a href="#" class="under">CART</a></li>
