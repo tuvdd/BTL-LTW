@@ -14,11 +14,7 @@
   <header>
     <div class="logo"><a href="/btl_ltw">E-commerce Bookstore</a></div>
     <div class="search">
-<<<<<<< HEAD
-    <form action="search">
-=======
     <form method="get" action="search">
->>>>>>> origin/Hai
        <input name="search" type="text" placeholder="Search products" id="input">
     </form>
     </div>

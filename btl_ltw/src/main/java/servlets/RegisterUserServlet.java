@@ -28,12 +28,6 @@ public class RegisterUserServlet extends BaseServlet {
 	private static final long serialVersionUID = 20;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// super.doGet(req, resp);
-
-		// if (ServletUtil.IsSessionExsited(req, resp)) {
-		// 	resp.sendRedirect("/btl_ltw/admin");
-		// 	return;
-		// }
         System.out.println("Zo register");
 		RequestDispatcher rd = req.getRequestDispatcher("/RegisterUser.jsp");
 		rd.forward(req, resp);
@@ -59,14 +53,7 @@ public class RegisterUserServlet extends BaseServlet {
 			return;
 		}
 		try {
-			User user = userRepo.getUserByPhoneNumber(phoneNumber);
-			if (user != null) {
-                req.getSession().setAttribute("error", "Số điện thoại đã được đăng ký. Vui lòng nhập số khác!");
-				resp.sendRedirect("/btl_ltw/user/register");
-				return;
-				
-			}
-            user = new User();
+            User user = new User();
 			user.set(UUID.randomUUID(), username, phoneNumber, email, isAccessFromServlet, new Timestamp(new Date().getTime()), new Timestamp(new Date().getTime()), username, password);
 			userRepo.add(user);
 			System.out.println("thanh cong");
