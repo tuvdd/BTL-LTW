@@ -96,16 +96,11 @@
         <div class="small-container">
             <div class="row">
                 <div class="col-2">
-                    <img src="data:image/png;base64,${p.getImageBase64()}" alt="" class="offer-img" />
+                    <a href="detail?bookid=${p.getId()}"><img src="data:image/png;base64,${p.getImageBase64()}" alt="" class="offer-img" /></a>
                 </div>
                 <div class="col-2">
-<<<<<<< HEAD
-                    <p>SP đề cử</p>
-                    <h1>${p.name}</h1>
-=======
                     <h2>SP đề cử</h2>
-                    <h3>${p.name}</h3>
->>>>>>> origin/Hai
+                    <a href="detail?bookid=${p.getId()}"><h3>${p.name}</h3></a>
                     <small>${p.sub_description}</small>
                     <br />
                     <a href="#" class="btn">Buy Now &#8594;</a>
