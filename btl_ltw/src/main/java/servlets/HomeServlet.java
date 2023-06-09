@@ -5,10 +5,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Book;
+import models.Category;
+import repositories.BookRepo;
+import repositories.CategoryRepo;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 @WebServlet(name = "ClientHome", urlPatterns = "/")
 public class HomeServlet extends HttpServlet {
