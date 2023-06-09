@@ -14,7 +14,7 @@ import repositories.UserRepo;
 import servlets.Utilities.StringUtilities;
 import servlets.admin.BaseServlet;
 
-@WebServlet(name="ClientLogin",urlPatterns = "/login")
+@WebServlet({"/login", "/login/"})
 public class LoginUserServlet extends BaseServlet {
 	private UserRepo userRepo;
 
@@ -25,8 +25,8 @@ public class LoginUserServlet extends BaseServlet {
 	private static final long serialVersionUID = 20;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		RequestDispatcher rd = req.getRequestDispatcher("/loginUser.jsp");
+		System.out.println("zolofin");
+		RequestDispatcher rd = req.getRequestDispatcher("/UserLogin.jsp");
 		rd.forward(req, resp);
 		return;
 	}
@@ -51,11 +51,11 @@ public class LoginUserServlet extends BaseServlet {
 				return;
 			} else if (!user.password.equals(password)) {
 				req.getSession().setAttribute("error", "Sai mật khẩu!");
-				resp.sendRedirect("/btl_ltw/user/login");
+				resp.sendRedirect("/btl_ltw/login");
 				return;
 			} else if (user.status == false) {
 				req.getSession().setAttribute("error", "Tài khoản đã bị khoá!");
-				resp.sendRedirect("/btl_ltw/user/login");
+				resp.sendRedirect("/btl_ltw/login");
 				return;
 			}
 			
