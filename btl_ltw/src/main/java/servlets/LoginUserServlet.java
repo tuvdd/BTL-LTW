@@ -14,7 +14,7 @@ import repositories.UserRepo;
 import servlets.Utilities.StringUtilities;
 import servlets.admin.BaseServlet;
 
-@WebServlet({"/user/login", "/user/login/"})
+@WebServlet(name="ClientLogin",urlPatterns = "/login")
 public class LoginUserServlet extends BaseServlet {
 	private UserRepo userRepo;
 
@@ -26,7 +26,7 @@ public class LoginUserServlet extends BaseServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		RequestDispatcher rd = req.getRequestDispatcher("/LoginUser.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/loginUser.jsp");
 		rd.forward(req, resp);
 		return;
 	}
@@ -36,18 +36,18 @@ public class LoginUserServlet extends BaseServlet {
 		String password = req.getParameter("password").trim();
 		if (phoneNumber == null || phoneNumber == "" || password == null || password == "") {
 			req.getSession().setAttribute("error", "Không được để trống!");
-			resp.sendRedirect("/btl_ltw/user/login");
+			resp.sendRedirect("/btl_ltw/login");
 			return;
 		} else if(!StringUtilities.isValidPhoneNumber(phoneNumber)) {
 			req.getSession().setAttribute("error", "Không đúng định dạng số điện thoại!");
-			resp.sendRedirect("/btl_ltw/user/login");
+			resp.sendRedirect("/btl_ltw/login");
 			return;
 		}
 		try {
 			User user = userRepo.getUserByPhoneNumber(phoneNumber);
 			if (user == null) {
 				req.getSession().setAttribute("error", "Số điện thoại chưa được đăng ký!");
-				resp.sendRedirect("/btl_ltw/user/login");
+				resp.sendRedirect("/btl_ltw/login");
 				return;
 			} else if (!user.password.equals(password)) {
 				req.getSession().setAttribute("error", "Sai mật khẩu!");
@@ -58,24 +58,24 @@ public class LoginUserServlet extends BaseServlet {
 				resp.sendRedirect("/btl_ltw/user/login");
 				return;
 			}
-			System.out.println("thanh cong");
+			
 			HttpSession session = req.getSession();
 			session.setAttribute("userID", user.getId().toString());
 			String savedURL = (String) session.getAttribute("currentURL");
 			if (savedURL == null) {
-				savedURL = "/btl_ltw/";
+				savedURL = "/btl_ltw";
 			}
 			resp.sendRedirect(savedURL);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			
 			req.getSession().setAttribute("error", e.getMessage());
-			resp.sendRedirect("/btl_ltw/user/login");
+			resp.sendRedirect("/btl_ltw/login");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			req.getSession().setAttribute("error", e.getMessage());
-			resp.sendRedirect("/btl_ltw/user/login");
+			resp.sendRedirect("/btl_ltw/login");
 		}
 	}
 }

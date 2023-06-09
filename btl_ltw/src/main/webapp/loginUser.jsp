@@ -15,7 +15,7 @@
 				style="width: 30%; margin-left: 35%; margin-bottom: 15px;" />
 			<h3 class="center form-header">Đăng nhập</h3>
 			<!-- <h4 class="center form-header">hihi</h4> -->
-			<form class="center" method="post" action="/btl_ltw/user/login">
+			<form class="center" method="post" action="/btl_ltw/login">
                 <div class="form-label">
 					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/phonecall.png">
 					<label class="form-label-text">Số điện thoại:</label>
