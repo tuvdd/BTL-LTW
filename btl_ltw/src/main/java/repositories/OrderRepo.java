@@ -12,7 +12,6 @@ import java.util.UUID;
 import models.Order;
 import models.OrderDetail;
 import models.dtos.AdminOrderPreview;
-import models.dtos.BookDashboardDTO;
 import models.dtos.OrderFullDetail;
 
 public class OrderRepo extends Repo<Order> {
