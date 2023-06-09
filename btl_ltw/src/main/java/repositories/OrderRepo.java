@@ -401,7 +401,7 @@ public class OrderRepo extends Repo<Order> {
                 BookDashboardDTO b = new BookDashboardDTO();
                 b.setId(UUID.fromString(resultSet.getString("id")));
                 b.setName(resultSet.getString("name"));
-                b.setQuantity(resultSet.getInt("quantity"));
+                b.setQuantity(resultSet.getInt("total_quantity"));
                 res.add(b);
             }
         } catch (Exception e) {

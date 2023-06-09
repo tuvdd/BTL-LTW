@@ -115,16 +115,15 @@ public class BookRepo extends Repo<Book> {
                 int offset = (page - 1) * size;
                 sql += " OFFSET ? LIMIT ? ;";
                 statement = connection.prepareStatement(sql);
-                statement.setInt(1, offset);
-                statement.setInt(2, size);
+                statement.setObject(1, UUID.fromString(uuid));
+                statement.setInt(2, offset);
+                statement.setInt(3, size);
             } else {
                 sql += ";";
                 statement = connection.prepareStatement(sql);
+                statement.setObject(1, UUID.fromString(uuid));
             }
-            statement = connection.prepareStatement(sql);
-            statement.setObject(1, UUID.fromString(uuid));
-			statement.setInt(2, (page - 1) * size);
-            statement.setInt(3, size);
+            
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Book book = setObjectFromResultSet(resultSet);
