@@ -3,9 +3,9 @@ package models.dtos;
 import java.util.UUID;
 
 public class BookDashboardDTO {
-    UUID id;
-    String name;
-    int quantity;
+    public UUID id;
+    public String name;
+    public int quantity;
     public UUID getId() {
         return id;
     }
