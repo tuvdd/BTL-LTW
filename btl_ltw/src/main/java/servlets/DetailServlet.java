@@ -65,7 +65,7 @@ public class DetailServlet extends HttpServlet {
             String currentURL = req.getRequestURL().toString();
             currentURL += "?bookid=" + bookID;
             session.setAttribute("currentURL", currentURL);
-            resp.sendRedirect("/btl_ltw/user/login");
+            resp.sendRedirect("/btl_ltw/login");
             return;
         }
         String userID = (String) session.getAttribute("userID");
