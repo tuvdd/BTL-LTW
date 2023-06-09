@@ -64,7 +64,7 @@
                         %>      
                             <div class="star_gray"></div>
                         <% } %>
-                        <span>  Xếp hạng ${averageComment} (${numberComment})</span>
+                        <span>  Xếp hạng ${averageComment} (${numberComment} đánh giá)</span>
                     </div>
 
                     <div class = "product-price">
@@ -84,7 +84,9 @@
 
         <div class = "product-detail">
             <h2>Giới thiệu về sách:</h2>
-            <p>${book.description}</p>
+            <p id="myParagraph">${book.description}</p>
+            <button id="showMoreButton" onclick="showMore()">Xem thêm</button>
+            <button id="showLessButton" onclick="showLess()">Ẩn bớt</button>
         </div>
 
         <div class="comment-wrapper">
@@ -143,7 +145,7 @@
 
                                     </div>
                                     <div class="rating_text">
-                                        <p>${comment.getRate()} stars</p>
+                                        <p>${comment.getRate()} sao</p>
                                     </div>
                                 </div>
                                 <div class="text_cmt">
@@ -166,7 +168,7 @@
         </div>
         
         
-        <script src="/btl_ltw/resources/detail.js"></script>
+        <script src="/btl_ltw/resources/js/detail.js"></script>
     <jsp:include page="Footer.jsp"></jsp:include>
 
     </body>

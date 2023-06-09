@@ -23,7 +23,7 @@
         <li><a href="/btl_ltw/" class="under">HOME</a></li>
         <li><a href="/btl_ltw/shopping" class="under">SHOPPING</a></li>
         <li><a href="#" class="under">CONTACT</a></li>
-        <li><a href="#" class="under">ACCOUNT</a></li>
+        <li><a href="/btl_ltw/account" class="under">ACCOUNT</a></li>
         <li><a href="#" class="under">CART</a></li>
       </ul>
     </div>
