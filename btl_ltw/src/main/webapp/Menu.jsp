@@ -20,8 +20,8 @@
     </div>
     <div class="heading">
       <ul>
-        <li><a href="/btl_ltw/" class="under">HOME</a></li>
-        <li><a href="/btl_ltw/shopping" class="under">SHOPPING</a></li>
+        <li><a href="/btl_ltw/" class="under">Trang chủ</a></li>
+        <li><a href="/btl_ltw/shopping" class="under">Cửa hàng</a></li>
         <li><a href="#" class="under">CONTACT</a></li>
         <li><a href="#" class="under">ACCOUNT</a></li>
         <li><a href="#" class="under">CART</a></li>

@@ -130,14 +130,43 @@
 	font-size: 14px;
   }
   
-  .rating .fas {
-	color: #ff523b;
-  }
-  
-  .rating .far {
-	color: #ff523b;
-  }
-  
+.star_yellow {
+    width: 20px;
+    height: 20px;
+    content: url(../img/star_yellow.png);
+    display: inline-block;
+}
+
+.half_star {
+    width: 20px;
+    height: 20px;
+    content: url(../img/half_star.png);
+    display: inline-block;
+}
+
+.star_gray {
+    width: 20px;
+    height: 20px;
+    content: url(../img/star_gray.png);
+    display: inline-block;
+
+}
+.product-price{
+    margin: 1rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.product-price span{
+    font-weight: 400;
+}
+.last-price span{
+    color: #f64749;
+    text-decoration: line-through;
+}
+.new-price span{
+    color: #256eff;
+} 
+
   .col-4:hover {
 	transform: translateY(-5px);
   }
