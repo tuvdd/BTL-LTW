@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Đăng nhập</title>
-<link rel="stylesheet" href="/btl_ltw/admin/resources/css/style.css" />
+<link rel="stylesheet" href="/admin/resources/css/style.css" />
 </head>
 
 <body>

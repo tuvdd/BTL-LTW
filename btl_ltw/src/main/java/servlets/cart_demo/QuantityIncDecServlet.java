@@ -4,6 +4,8 @@ package servlets.cart_demo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,35 +24,54 @@ public class QuantityIncDecServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
-            int id = Integer.parseInt(request.getParameter("id"));
-            ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+            String id = request.getParameter("id");
+            List<Cart> cart_list = (List<Cart>) request.getSession().getAttribute("cart-list");
+            System.out.println("+");
+            System.out.println(cart_list);
+            System.out.println("+");
 
-            if (action != null && id >= 1) {
+            if (action != null && id != null) {
                 if (action.equals("inc")) {
                     for (Cart c : cart_list) {
-                        if (c.getId() == id) {
+                        System.out.println(cart_list);
+                        System.out.println(id);
+                        System.out.println(c.getId());
+
+
+                        if (c.getId().toString().equals(id)) {
+                            System.out.println("0000");
                             int quantity = c.getQuantity();
                             quantity++;
                             c.setQuantity(quantity);
-                            response.sendRedirect("cart.jsp");
+                            System.out.println(c.getQuantity());
+//                            response.sendRedirect("/cart2.jsp");
                         }
                     }
                 }
 
                 if (action.equals("dec")) {
                     for (Cart c : cart_list) {
-                        if (c.getId() == id && c.getQuantity() > 1) {
+                        if (c.getId().toString().equals(id) && c.getQuantity() > 1) {
                             int quantity = c.getQuantity();
                             quantity--;
                             c.setQuantity(quantity);
                             break;
                         }
                     }
-                    response.sendRedirect("cart.jsp");
+//                    response.sendRedirect("cart2.jsp");
                 }
-            } else {
-                response.sendRedirect("cart.jsp");
             }
+//            else {
+//                response.sendRedirect("cart2.jsp");
+//            }
+//            request.getRequestDispatcher("/cart2.jsp").forward(request,response);
+            for (Cart c : cart_list) {
+                System.out.println(c.getQuantity());
+            }
+
+
+            request.setAttribute("cart-list", cart_list);
+            response.sendRedirect("cart2.jsp");
         }
     }
 

@@ -2,10 +2,9 @@ package servlets.cart_demo;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 import jakarta.servlet.ServletException;
@@ -14,8 +13,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.cart_demo.*;
+import models.dtos.OrderFullDetail;
+import repositories.OrderRepo;
 import repositories.cart_demo.DbCon;
-import repositories.cart_demo.OrderDao;
 
 
 @WebServlet("/cart-check-out")
@@ -25,35 +25,32 @@ public class CheckOutServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try(PrintWriter out = response.getWriter()){
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date();
-            ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
-            User auth = (User) request.getSession().getAttribute("auth");
-            if(cart_list != null && auth!=null) {
-                for(Cart c:cart_list) {
-                    Order order = new Order();
-                    order.setId(c.getId());
-                    order.setUid(auth.getId());
-                    order.setQunatity(c.getQuantity());
-                    order.setDate(formatter.format(date));
-
-                    OrderDao oDao = new OrderDao(DbCon.getConnection());
-                    boolean result = oDao.insertOrder(order);
-                    if(!result) break;
-                }
-                cart_list.clear();
-                response.sendRedirect("orders.jsp");
-            }else {
-                if(auth==null) {
-                    response.sendRedirect("login.jsp");
-                }
-                response.sendRedirect("cart.jsp");
-            }
-        } catch (ClassNotFoundException|SQLException e) {
-
-            e.printStackTrace();
-        }
+//        try{
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            Date date = new Date();
+//            List<Cart> cart_list = (List<Cart>) request.getSession().getAttribute("cart-list");
+//            String auth = (String) request.getSession().getAttribute("userID");
+//            OrderDao orderDao = new OrderDao(DbCon.getConnection());
+//            if(cart_list != null && auth!=null) {
+//                OrderFullDetail orderFullDetail = orderDao.cartToOrder(cart_list, auth, "123 nguyen trai");
+//                OrderRepo orderRepo = new OrderRepo();
+//                int temp = orderRepo.add(orderFullDetail);
+//                if(temp == 0){
+//                    System.out.println("error");
+//                }
+//                cart_list.clear();
+//                response.sendRedirect("orders.jsp");
+//            }else {
+//                if(auth==null) {
+//                    response.sendRedirect("/btl_ltw/user/login");
+//                    return;
+//                }
+//                response.sendRedirect("cart.jsp");
+//            }
+//        } catch (ClassNotFoundException|SQLException e) {
+//
+//            e.printStackTrace();
+//        }
     }
 
 
