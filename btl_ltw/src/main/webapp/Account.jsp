@@ -37,9 +37,7 @@
                 <div class="order-info-item">
                     <h3>Đơn hàng đã mua</h3>
                     <p>${numberOrdered}</p>
-                    <form action="/account" method="post">
-                        <button>Xem tất cả</button>
-                    </form>
+                     <button onclick="location.href='/shopping'">Xem tất cả</button>
                 </div>
             </div>
     </div>
