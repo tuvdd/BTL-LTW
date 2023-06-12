@@ -22,7 +22,7 @@
                         <h2>
                         	Hiệu sách chúng tôi có tất cả sách mà bạn muốn tìm.
                         </h2>
-                      <!--   <a href="/shopping" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a> -->
+                      <!--   <a href="/danh-sach-san-pham" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a> -->
                     </div>
                     <div class="col-2">
                         <img src="/resources/img/Book1.png" alt="" />

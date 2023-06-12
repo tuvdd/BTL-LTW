@@ -22,7 +22,8 @@ import java.util.UUID;
 public class HomeServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 
 		boolean isResource = path.lastIndexOf('.') > 0;
@@ -44,38 +45,38 @@ public class HomeServlet extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			}
 		} else {
-			 CategoryRepo repoC = new CategoryRepo();
-			 BookRepo repoB = new BookRepo();
-			 List<Book> listB, listRB = null;
-			 List<Category> listC;
-			 Book p;
-			 List<Float> listAverageCommentRB = new ArrayList<>();
-			 List<Integer> listNumberCommentRB = new ArrayList<>();
-			 List<Float> listAverageCommentB = new ArrayList<>();
-			 List<Integer> listNumberCommentB = new ArrayList<>();
-			 
-			 listRB = repoB.getAll(1, 4);
-			 listB = repoB.get4LastestBooks();
-			 listC = repoC.getAll(-1, -1);
-			 p = listB.get(0);
-			 for(Book x : listRB) {
-				 listAverageCommentRB.add(repoB.getAverageComment(x.getId().toString()));
-				 listNumberCommentRB.add(repoB.getNumberComments(x.getId().toString()));
-			 }
-			 for(Book x : listB) {
-				 listAverageCommentB.add(repoB.getAverageComment(x.getId().toString()));
-				 listNumberCommentB.add(repoB.getNumberComments(x.getId().toString()));
-			 }
-			 
-			 request.setAttribute("listNumberCommentRB", listNumberCommentRB);
-			 request.setAttribute("listAverageCommentRB", listAverageCommentRB);
-			 request.setAttribute("listNumberCommentB", listNumberCommentB);
-			 request.setAttribute("listAverageCommentB", listAverageCommentB);
-			 request.setAttribute("listB", listB);
-			 request.setAttribute("listC", listC);
-			 request.setAttribute("listRB", listRB);
-			 request.setAttribute("p", p);
-			 request.getRequestDispatcher("Home.jsp").forward(request, response);
+			CategoryRepo repoC = new CategoryRepo();
+			BookRepo repoB = new BookRepo();
+			List<Book> listB, listRB = null;
+			List<Category> listC;
+			Book p;
+			List<Float> listAverageCommentRB = new ArrayList<>();
+			List<Integer> listNumberCommentRB = new ArrayList<>();
+			List<Float> listAverageCommentB = new ArrayList<>();
+			List<Integer> listNumberCommentB = new ArrayList<>();
+
+			listRB = repoB.getAll(1, 4);
+			listB = repoB.get4LastestBooks();
+			listC = repoC.getAll(-1, -1);
+			p = listB.get(0);
+			for (Book x : listRB) {
+				listAverageCommentRB.add(repoB.getAverageComment(x.getId().toString()));
+				listNumberCommentRB.add(repoB.getNumberComments(x.getId().toString()));
+			}
+			for (Book x : listB) {
+				listAverageCommentB.add(repoB.getAverageComment(x.getId().toString()));
+				listNumberCommentB.add(repoB.getNumberComments(x.getId().toString()));
+			}
+
+			request.setAttribute("listNumberCommentRB", listNumberCommentRB);
+			request.setAttribute("listAverageCommentRB", listAverageCommentRB);
+			request.setAttribute("listNumberCommentB", listNumberCommentB);
+			request.setAttribute("listAverageCommentB", listAverageCommentB);
+			request.setAttribute("listB", listB);
+			request.setAttribute("listC", listC);
+			request.setAttribute("listRB", listRB);
+			request.setAttribute("p", p);
+			request.getRequestDispatcher("Home.jsp").forward(request, response);
 
 		}
 	}
@@ -84,5 +85,5 @@ public class HomeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		super.doPost(req, resp);
 	}
-	
+
 }

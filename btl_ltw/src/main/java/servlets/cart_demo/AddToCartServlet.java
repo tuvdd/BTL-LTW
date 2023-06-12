@@ -38,7 +38,7 @@ public class AddToCartServlet extends HttpServlet {
             if (cart_list == null) {
                 cartList.add(cm);
                 request.setAttribute("cart-list", cartList);
-                response.sendRedirect("/shopping");
+                response.sendRedirect("/danh-sach-san-pham");
             } else {
                 cartList = cart_list;
 
@@ -52,7 +52,7 @@ public class AddToCartServlet extends HttpServlet {
 
                 if (!exist) {
                     cartList.add(cm);
-                    response.sendRedirect("/shopping");
+                    response.sendRedirect("/danh-sach-san-pham");
                 }
             }
         }

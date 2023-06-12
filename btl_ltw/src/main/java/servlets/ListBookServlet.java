@@ -16,6 +16,7 @@ import models.Category;
 import models.dtos.GetBooksDTO;
 import repositories.BookRepo;
 import repositories.CategoryRepo;
+import servlets.Utilities.StringUtilities;
 
 @WebServlet(name = "ListBooksServlet", urlPatterns = "/danh-sach-san-pham")
 public class ListBookServlet extends HttpServlet {
@@ -39,6 +40,8 @@ public class ListBookServlet extends HttpServlet {
 		String filter = request.getParameter("filter");
 		String priceMin = request.getParameter("pricemin");
 		String priceMax = request.getParameter("pricemax");
+		GetBooksDTO res = bookRepo.gets(urldanhmuc, page, filter, priceMin, priceMax);
+		List<Category> categories = categoryRepo.getAll(-1, -1, true);
 
 		request.setAttribute("urldanhmuc", urldanhmuc);
 		request.setAttribute("page", page);
@@ -46,25 +49,10 @@ public class ListBookServlet extends HttpServlet {
 		request.setAttribute("pricemin", priceMin);
 		request.setAttribute("pricemax", priceMax);
 		request.setAttribute("tenDanhMuc", categoryRepo.getByUrl(urldanhmuc).name);
-
-		GetBooksDTO res = bookRepo.gets(urldanhmuc, page, filter, priceMin, priceMax);
-		request.setAttribute("size", res.getSize());
 		request.setAttribute("total", res.getTotal());
 		request.setAttribute("data", res.getData());
-
-		List<Category> categories = categoryRepo.getAll(-1, -1, true);
 		request.setAttribute("categories", categories);
-
-		String currentUrl = request.getRequestURI() + "?" + (request.getQueryString() != null ? request.getQueryString() : "");
-		int index = currentUrl.indexOf("page=");
-		if (index != -1) {
-			currentUrl = currentUrl.substring(0, index);
-			while (currentUrl.charAt(currentUrl.length() - 1) == '&') {
-				currentUrl = currentUrl.substring(0, currentUrl.length() - 1);
-			}
-			System.out.println("New URL: " + currentUrl);
-		}
-		request.setAttribute("currentUrl", currentUrl);
+		request.setAttribute("currentUrl", StringUtilities.getRequestURLWithoutPageParam(request));
 
 		request.getRequestDispatcher("/Shopping.jsp").forward(request, response);
 	}
