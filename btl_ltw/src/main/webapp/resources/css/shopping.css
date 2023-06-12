@@ -1,124 +1,153 @@
 body {
-    font-family: "Poppins", sans-serif;
-    background-color: #333333;
+	font-family: "Poppins", sans-serif;
+	background-color: #ffffff;
 }
 
-#wrapper{
-    width: 100%;
+#wrapper {
+	width: 100%;
 }
+
 .clr {
-    clear:both;
+	clear: both;
 }
+
 #menu_tab {
-    width:100%;
+	width: 100%;
 }
+
 ul.menu {
-    float:left;
-    display:block;
-    list-style-type:none;
-    font-weight:bold;
-    height: 54px;
-    padding:12px;
-    width: 100%;
+	float: left;
+	display: block;
+	list-style-type: none;
+	font-weight: bold;
+	height: 54px;
+	padding: 12px;
+	width: 100%;
 }
+
 ul.menu li {
-    display:inline;
-    font-size:14px;
-    padding-top: 15px;
-    text-align:center;
-    line-height:30px;
+	display: inline;
+	font-size: 14px;
+	padding-top: 15px;
+	text-align: center;
+	line-height: 30px;
 }
-ul.menu li a{
-    margin: 10px;
-    padding-left:0px;
-    text-decoration:none;
-    text-align:center;
-    color:#E2D9BC;
-    position:relative;
+
+ul.menu li a {
+	margin: 10px;
+	padding-left: 0px;
+	text-decoration: none;
+	text-align: center;
+	color: #000000;
+	position: relative;
 }
-ul.menu li a:hover{
-    color: #F90;
+
+ul.menu li a:hover {
+	color: #F90;
 }
-ul.menu li a.active{
-    color: #F90;
+
+ul.menu li a.active {
+	color: #F90;
 }
 
 /*Khung*/
-#content{
-    width: 100%;
-    padding-top: 5px;
-    padding-left: 5px;
+#content {
+	width: 100%;
+	padding-top: 5px;
+	padding-left: 5px;
 }
 /*Tab trái*/
-#tab1{
-    width: 15%;
-    float: left;
-    background: #8d8686;
+#tab1 {
+	width: 15%;
+	float: left;
+	background: #d2691e;
 }
-#tab11{
-    width: 100%;
-    padding: 10px;
-}
-ul.tab{
-    list-style: none;
-}
-ul.tab li{
-    display: block;
-    margin-top: 10px;
-}
-ul.tab li a{
-    text-decoration: none;
-    font-size: 16px;
-}
-ul.tab li a:hover{
-    background-color: #F90;
-}
-ul.tab li a.active{
-    background-color: #F90;
-    color: white;
-}
-#tab2{
-    width: 85%;
-    float: left;
-    margin-bottom: 50px;
-}
-#tab22{
-    width: 100%;
-    padding: 10px;
 
+#tab11 {
+	width: 100%;
+	padding: 10px;
+}
+
+#tab11 form {
+	color: white;
+}
+#tab11 form a {
+	color: white;
+	display: block;
+}
+
+ul.tab {
+	list-style: none;
+}
+
+ul.tab li {
+	display: block;
+	margin-top: 10px;
+}
+
+ul.tab li a {
+	text-decoration: none;
+	font-size: 16px;
+}
+
+ul.tab li a:hover {
+	background-color: #F90;
+}
+
+ul.tab li a.active {
+	background-color: #F90;
+	color: white;
+}
+
+#tab2 {
+	margin-left: 5%;
+	width: 80%;
+	float: left;
+	margin-bottom: 50px;
+}
+
+#tab22 {
+	width: 100%;
+	padding: 10px;
 }
 /*phần sản phẩm*/
-ul.item{
-    list-style: none;
-    float: left;
-    width: 100%;
+ul.item {
+	list-style: none;
+	float: left;
+	width: 100%;
 }
-ul.item li{
-    width: 25%;
-    height: 250px;
-    text-align: center;
-    float: left;
-    margin: 20px;
-    border: 2px solid chocolate;
-    border-radius: 20px;
+
+ul.item li {
+	width: 25%;
+	height: 500px;
+	text-align: center;
+	float: left;
+	margin: 20px;
+	border: 2px solid chocolate;
+	border-radius: 20px;
 }
-ul.item li img{
-    margin-top: 5px;
-    width: 90%;
-    height: 70%;
+
+ul.item li img {
+	margin-top: 5px;
+	width: 90%;
+	height: 70%;
 }
-ul.item li a{
-    text-decoration: none;
+
+ul.item li a {
+	text-decoration: none;
 }
-ul.item li:hover{
-    background: bisque;
+
+ul.item li:hover {
+	background: bisque;
 }
-ul.item p{
-    margin:5px;
-    color: blue;
-    font-size: 12px;
+
+ul.item p {
+	margin: 5px;
+	color: blue;
+	font-size: 12px;
 }
-.old{
-    text-decoration: line-through;
-    color: red;
+
+.old {
+	text-decoration: line-through;
+	color: red;
 }

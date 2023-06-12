@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import models.Book;
 import models.dtos.AdminBookView;
+import models.dtos.GetBooksDTO;
 
 public class BookRepo extends Repo<Book> {
 	public List<Book> getAll(int page, int size) {
@@ -38,6 +39,7 @@ public class BookRepo extends Repo<Book> {
 		}
 		return books;
 	}
+
 	public List<Book> getAll(int page, int size, boolean status) {
 		List<Book> books = new ArrayList<>();
 		CreateConnection();
@@ -100,7 +102,7 @@ public class BookRepo extends Repo<Book> {
 		}
 		return books;
 	}
-	
+
 	public int getCountSearchBook(String searchQuery) {
 		int res = 0;
 		sql = "SELECT COUNT(*) FROM books WHERE name LIKE ? OR author LIKE ?;";
@@ -122,7 +124,7 @@ public class BookRepo extends Repo<Book> {
 
 		return res;
 	}
-	
+
 	public List<Book> get4LastestBooks() {
 		List<Book> books = new ArrayList<>();
 		CreateConnection();
@@ -141,7 +143,7 @@ public class BookRepo extends Repo<Book> {
 		}
 		return books;
 	}
-	
+
 	public Book getById(UUID id) throws Exception {
 		Book book = null;
 		CreateConnection();
@@ -362,31 +364,18 @@ public class BookRepo extends Repo<Book> {
 	public List<AdminBookView> GetsAdminBookView(int page, int size) throws SQLException {
 		List<AdminBookView> response = null;
 		try {
-			String sql = "SELECT b.id id, "
-					+ "          b.name name, "
-					+ "          b.image image, "
-					+ "          b.author author, "
-					+ "          b.release_year release_year, "
-					+ "          b.category_id category_id, "
-					+ "          c.name category_name, "
-					+ "          b.price price, "
-					+ "          b.promote_price promote_price, "
-					+ "          b.description description, "
-					+ "          b.sub_description sub_description, "
-					+ "          b.status status, "
-					+ "          b.create_time create_time, "
-					+ "          b.create_by create_by, "
-					+ "          ac.name create_by_name, "
-					+ "          b.last_update_time last_update_time, "
-					+ "          b.last_update_by last_update_by, "
-					+ "          au.name last_update_by_name "
-					+ "     FROM books b "
-					+ "LEFT JOIN categories c ON b.category_id = c.id "
-					+ "LEFT JOIN admins ac ON ac.id = b.create_by "
-					+ "LEFT JOIN admins au ON au.id = b.last_update_by  "
-					+ " ORDER BY b.name "
-					+ "    LIMIT " + size + " "
-					+ "   OFFSET " + ((page - 1) * size) + " " + " ;";
+			String sql = "SELECT b.id id, " + "          b.name name, " + "          b.image image, "
+					+ "          b.author author, " + "          b.release_year release_year, "
+					+ "          b.category_id category_id, " + "          c.name category_name, "
+					+ "          b.price price, " + "          b.promote_price promote_price, "
+					+ "          b.description description, " + "          b.sub_description sub_description, "
+					+ "          b.status status, " + "          b.create_time create_time, "
+					+ "          b.create_by create_by, " + "          ac.name create_by_name, "
+					+ "          b.last_update_time last_update_time, " + "          b.last_update_by last_update_by, "
+					+ "          au.name last_update_by_name " + "     FROM books b "
+					+ "LEFT JOIN categories c ON b.category_id = c.id " + "LEFT JOIN admins ac ON ac.id = b.create_by "
+					+ "LEFT JOIN admins au ON au.id = b.last_update_by  " + " ORDER BY b.name " + "    LIMIT " + size
+					+ " " + "   OFFSET " + ((page - 1) * size) + " " + " ;";
 			CreateConnection();
 			statement = connection.prepareStatement(sql);
 			ResultSet rs = statement.executeQuery();
@@ -517,6 +506,107 @@ public class BookRepo extends Repo<Book> {
 			CloseConnection();
 		}
 		return res;
+	}
+
+	public GetBooksDTO gets(String urldanhmuc, String page, String filter, String priceMin, String priceMax) {
+		List<Object> params = new ArrayList<Object>();
+
+		// Xử lý điều kiện với urldanhmuc.
+		if (urldanhmuc == null) {
+			// Nếu urldanhmuc bị null, lấy tất cả sách.
+			sql = "SELECT * FROM books WHERE status = TRUE ";
+		} else {
+			// Ngược lại, join với bảng categories với điều kiện categories.id =
+			// books.category_id.
+			sql = "SELECT * FROM books JOIN categories ON books.category_id = categories.id WHERE categories.url = ? AND books.status = TRUE AND categories.status = TRUE";
+			params.add(urldanhmuc);
+		}
+
+		// Xử lý điều kiện với priceMin và priceMax.
+		if (priceMin != null) {
+			sql += " AND COALESCE(promote_price, price) >= ?";
+			params.add(Double.parseDouble(priceMin));
+		}
+		if (priceMax != null) {
+			sql += " AND COALESCE(promote_price, price) <= ?";
+			params.add(Double.parseDouble(priceMax));
+		}
+
+		// Xử lý điều kiện với filter.
+		if (filter == null) {
+			// Nếu filter bị null, mặc định lấy theo thời gian tạo mới nhất.
+			sql += " ORDER BY create_time DESC";
+		} else {
+			switch (filter) {
+			case "AZ":
+				sql += " ORDER BY name ASC";
+				break;
+			case "ZA":
+				sql += " ORDER BY name DESC";
+				break;
+			case "NEWEST":
+				sql += " ORDER BY create_time DESC";
+				break;
+			case "OLDEST":
+				sql += " ORDER BY create_time ASC";
+				break;
+			case "LOWEST":
+				sql += " ORDER BY price ASC";
+				break;
+			case "HIGHEST":
+				sql += " ORDER BY price DESC";
+				break;
+			default:
+				break;
+			}
+		}
+
+		// Thêm điều kiện phân trang.
+		int limit = 9;
+		int offset = page != null ? (Integer.parseInt(page) - 1) * limit : 0;
+		sql += " LIMIT ? OFFSET ?";
+		params.add(limit);
+		params.add(offset);
+
+		// Thực hiện câu truy vấn và trả về kết quả.
+		List<Book> books = new ArrayList<Book>();
+		int total = 0;
+		try {
+			CreateConnection();
+			statement = connection.prepareStatement(sql);
+			for (int i = 0; i < params.size(); i++) {
+				statement.setObject(i + 1, params.get(i));
+			}
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				books.add(setObjectFromResultSet(resultSet));
+			}
+			// Lấy số lượng sách trong cơ sở dữ liệu.
+			sql = "SELECT COUNT(*) AS total FROM books WHERE status = TRUE";
+			if (urldanhmuc != null) {
+				sql = "SELECT COUNT(*) AS total FROM books JOIN categories ON books.category_id = categories.id WHERE categories.url = ? AND books.status = TRUE AND categories.status = TRUE";
+			}
+			statement = connection.prepareStatement(sql);
+			if (urldanhmuc != null) {
+				statement.setString(1, urldanhmuc);
+			}
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				total = resultSet.getInt("total");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+
+		// Tạo đối tượng GetBooksDTO và trả về.
+		GetBooksDTO result = new GetBooksDTO();
+		result.setData(books);
+		result.setPage(page != null ? Integer.parseInt(page) : 1);
+		result.setSize(books.size());
+		result.setTotal(total);
+		return result;
 	}
 
 }
