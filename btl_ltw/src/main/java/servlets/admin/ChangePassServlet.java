@@ -20,7 +20,7 @@ public class ChangePassServlet extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (!ServletUtil.IsSessionExsited(req, resp)) {
-            resp.sendRedirect("/btl_ltw/admin/login");
+            resp.sendRedirect("/admin/login");
             return;
         }
 
@@ -31,7 +31,7 @@ public class ChangePassServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (!ServletUtil.IsSessionExsited(req, resp)) {
-            resp.sendRedirect("/btl_ltw/a		dmin/login");
+            resp.sendRedirect("/a		dmin/login");
             return;
         }
 
@@ -51,7 +51,7 @@ public class ChangePassServlet extends BaseServlet {
             req.getSession().setAttribute("message", e.getMessage());
             req.getSession().setAttribute("messageType", "error");
         } finally {
-            resp.sendRedirect("/btl_ltw/admin/changepass");
+            resp.sendRedirect("/admin/changepass");
         }
     }
 

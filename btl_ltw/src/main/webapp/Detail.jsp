@@ -20,7 +20,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Chi tiết sản phẩm</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/btl_ltw/resources/css/detail2.css">
+        <link rel="stylesheet" href="/resources/css/detail2.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
     </head>
@@ -90,7 +90,7 @@
         </div>
 
         <div class="comment-wrapper">
-            <form action="/btl_ltw/detail" method="post">
+            <form action="/detail" method="post">
                 <div class="add-comment">
                     <h1>Thêm đánh giá</h1>
                     <h3>Xếp hạng</h3>
@@ -160,7 +160,7 @@
             <div class="pagination">
                 <% for (int i = 1; i <= numberOfPages; i++) { %>
                     <div class="page-item">
-                        <a href="/btl_ltw/detail?bookid=${bookid}&page=<%= i %>"><%= i %></a>
+                        <a href="/detail?bookid=${bookid}&page=<%= i %>"><%= i %></a>
                     </div>
                 <% } %>
               </div>
@@ -168,7 +168,7 @@
         </div>
         
         
-        <script src="/btl_ltw/resources/js/detail.js"></script>
+        <script src="/resources/js/detail.js"></script>
     <jsp:include page="Footer.jsp"></jsp:include>
 
     </body>

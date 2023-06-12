@@ -31,7 +31,7 @@ request.getSession().removeAttribute("messageType");
 				<td>${adminFullDetail.getUsername()}</td>
 				<td>
 					<button onclick="showEditModal('tr-${adminFullDetail.getId()}')">Sửa</button>
-					<button onclick="window.location.href='/btl_ltw/admin/admin/delete?id=${adminFullDetail.getId()}'">Xóa</button>
+					<button onclick="window.location.href='/admin/admin/delete?id=${adminFullDetail.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>
@@ -51,7 +51,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 	<li style="display: inline;">
 		<%
 		if (i != currentPage) {
-		%><a href="/btl_ltw/admin/admin?page=<%=i%>"><%=i%></a>
+		%><a href="/admin/admin?page=<%=i%>"><%=i%></a>
 		<%
 		} else {
 		%><p style="display: inline;"><%=i%></p>
@@ -68,7 +68,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 </p>
 <button id="add-new-button" onclick="showAddModal()">Thêm mới</button>
 <div id="add-modal" class="modal">
-	<form method="post" action="/btl_ltw/admin/admin" id="add-form">
+	<form method="post" action="/admin/admin" id="add-form">
 		<h3>Thêm admin</h3>
 
 		<div class="form-data-text">
@@ -107,7 +107,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 </div>
 
 <div id="edit-modal" class="modal">
-	<form method="post" action="/btl_ltw/admin/admin" id="edit-form">
+	<form method="post" action="/admin/admin" id="edit-form">
 		<h3>Sửa admin</h3>
 		<input id="edit-hidden" type="hidden" name="id" id="edit_hidden"
 			value="" required/>
@@ -136,7 +136,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 
 	</form>
 </div>
-<script src="/btl_ltw/admin/resources/js/admin.js"
+<script src="/admin/resources/js/admin.js"
 	type="text/javascript"></script>
-<script src="/btl_ltw/admin/resources/js/content.js"
+<script src="/admin/resources/js/content.js"
 	type="text/javascript"></script>

@@ -9,7 +9,7 @@ request.getSession().removeAttribute("message");
 request.getSession().removeAttribute("messageType");
 %>
 <h1>Đổi mật khẩu</h1>
-<form method="POST" action="/btl_ltw/admin/changepass">
+<form method="POST" action="/admin/changepass">
 	<label for="oldpass">Mật khẩu cũ:</label>
 	 <input type="password"	name="oldpass" id="oldpass" /> 
 	 <br />

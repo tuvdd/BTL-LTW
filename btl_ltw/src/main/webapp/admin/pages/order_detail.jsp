@@ -53,7 +53,7 @@ OrderFullDetail orderFullDetail = (OrderFullDetail) request.getAttribute("orderF
 							đơn</option>
 				</select> <script>
 					function updateStatus(orderId, status) {
-						window.location.href = '/btl_ltw/admin/order/change-status?id='
+						window.location.href = '/admin/order/change-status?id='
 								+ orderId + '&status=' + status
 					}
 				</script></td>
@@ -78,5 +78,5 @@ OrderFullDetail orderFullDetail = (OrderFullDetail) request.getAttribute("orderF
 		</c:forEach>
 	</table>
 </div>
-<script src="/btl_ltw/admin/resources/js/content.js"
+<script src="/admin/resources/js/content.js"
 	type="text/javascript"></script>

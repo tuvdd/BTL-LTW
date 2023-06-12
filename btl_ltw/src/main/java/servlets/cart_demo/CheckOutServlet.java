@@ -42,7 +42,7 @@ public class CheckOutServlet extends HttpServlet {
 //                response.sendRedirect("orders.jsp");
 //            }else {
 //                if(auth==null) {
-//                    response.sendRedirect("/btl_ltw/user/login");
+//                    response.sendRedirect("/user/login");
 //                    return;
 //                }
 //                response.sendRedirect("cart.jsp");

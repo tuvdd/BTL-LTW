@@ -7,7 +7,7 @@
 <html>
 <head>
     <title>Trang quản lý người dùng</title>
-    <link rel="stylesheet" href="/btl_ltw/resources/css/account.css">
+    <link rel="stylesheet" href="/resources/css/account.css">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
                 <p><strong>Email:</strong>  ${user.getEmail()}</p>
                 <p><strong>Số điện thoại:</strong>  ${user.getPhonenum()}</p>
             </div>
-            <form class="form-logout" action="/btl_ltw/account" method="post">
+            <form class="form-logout" action="/account" method="post">
                 <button class="logout-btn">Đăng xuất</button>
             </form>
             <div style="clear:both;"></div>

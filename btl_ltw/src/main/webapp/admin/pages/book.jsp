@@ -52,7 +52,7 @@ request.getSession().removeAttribute("messageType");
 					<td>${adminBookView.getDescription()}</td>
 					<td>${adminBookView.getSub_description()}</td>
 					<td><a
-						href="/btl_ltw/admin/book/change-status?id=${adminBookView.getId()}">${adminBookView.getStatus()}</a>
+						href="/admin/book/change-status?id=${adminBookView.getId()}">${adminBookView.getStatus()}</a>
 					</td>
 					<td>${adminBookView.getCreate_time_string()}</td>
 					<td>${adminBookView.getCreate_by_name()}</td>
@@ -61,7 +61,7 @@ request.getSession().removeAttribute("messageType");
 					<td>
 						<button onclick="showEditModal('tr-${adminBookView.getId()}')">Sửa</button>
 						<button
-							onclick="window.location.href='/btl_ltw/admin/book/delete?id=${adminBookView.getId()}'">Xóa</button>
+							onclick="window.location.href='/admin/book/delete?id=${adminBookView.getId()}'">Xóa</button>
 					</td>
 
 				</tr>
@@ -83,7 +83,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 	<li style="display: inline;">
 		<%
 		if (i != currentPage) {
-		%><a href="/btl_ltw/admin/book?page=<%=i%>">
+		%><a href="/admin/book?page=<%=i%>">
 			<%=i%>
 	</a> <%
  } else {
@@ -104,7 +104,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 <button id="add-new-button" onclick="showAddModal()">Thêm mới</button>
 <div id="add-modal" class="modal">
 	<form method="post" enctype="multipart/form-data"
-		action="/btl_ltw/admin/book" id="add-form">
+		action="/admin/book" id="add-form">
 		<h3>Thêm sách</h3>
 		<div class="form-data-text">
 			<p>Tên</p>
@@ -157,7 +157,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 </div>
 <div id="edit-modal" class="modal">
 	<form method="post" enctype="multipart/form-data"
-		action="/btl_ltw/admin/book" id="edit-form">
+		action="/admin/book" id="edit-form">
 		<h3>Sửa sách</h3>
 		<input id="edit-hidden" type="hidden" name="id" value="" />
 		<div class="form-data-text">
@@ -213,6 +213,6 @@ int totalPages = (int) request.getAttribute("totalPages");
 		</div>
 	</form>
 </div>
-<script src="/btl_ltw/admin/resources/js/content.js"
+<script src="/admin/resources/js/content.js"
 	type="text/javascript"></script>
-<script src="/btl_ltw/admin/resources/js/book.js" type="text/javascript"></script>
+<script src="/admin/resources/js/book.js" type="text/javascript"></script>

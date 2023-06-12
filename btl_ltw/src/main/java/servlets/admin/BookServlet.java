@@ -40,7 +40,7 @@ public class BookServlet extends BaseServlet {
         super.doGet(req, resp);
 
         if (!ServletUtil.IsSessionExsited(req, resp)) {
-            resp.sendRedirect("/btl_ltw/admin/login");
+            resp.sendRedirect("/admin/login");
             return;
         }
 
@@ -77,7 +77,7 @@ public class BookServlet extends BaseServlet {
         super.doGet(req, resp);
 
         if (!ServletUtil.IsSessionExsited(req, resp)) {
-            resp.sendRedirect("/btl_ltw/admin/login");
+            resp.sendRedirect("/admin/login");
             return;
         }
 
@@ -146,7 +146,7 @@ public class BookServlet extends BaseServlet {
             req.getSession().setAttribute("message", e.getMessage());
             req.getSession().setAttribute("messageType", "error");
         } finally {
-            resp.sendRedirect("/btl_ltw/admin/book");
+            resp.sendRedirect("/admin/book");
         }
     }
 }

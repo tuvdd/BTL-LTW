@@ -36,26 +36,26 @@ public class LoginUserServlet extends BaseServlet {
 		String password = req.getParameter("password").trim();
 		if (phoneNumber == null || phoneNumber == "" || password == null || password == "") {
 			req.getSession().setAttribute("error", "Không được để trống!");
-			resp.sendRedirect("/btl_ltw/login");
+			resp.sendRedirect("/login");
 			return;
 		} else if(!StringUtilities.isValidPhoneNumber(phoneNumber)) {
 			req.getSession().setAttribute("error", "Không đúng định dạng số điện thoại!");
-			resp.sendRedirect("/btl_ltw/login");
+			resp.sendRedirect("/login");
 			return;
 		}
 		try {
 			User user = userRepo.getUserByPhoneNumber(phoneNumber);
 			if (user == null) {
 				req.getSession().setAttribute("error", "Số điện thoại chưa được đăng ký!");
-				resp.sendRedirect("/btl_ltw/login");
+				resp.sendRedirect("/login");
 				return;
 			} else if (!user.password.equals(password)) {
 				req.getSession().setAttribute("error", "Sai mật khẩu!");
-				resp.sendRedirect("/btl_ltw/login");
+				resp.sendRedirect("/login");
 				return;
 			} else if (user.status == false) {
 				req.getSession().setAttribute("error", "Tài khoản đã bị khoá!");
-				resp.sendRedirect("/btl_ltw/login");
+				resp.sendRedirect("/login");
 				return;
 			}
 			
@@ -69,13 +69,13 @@ public class LoginUserServlet extends BaseServlet {
 		} catch (SQLException e) {
 			
 			req.getSession().setAttribute("error", e.getMessage());
-			resp.sendRedirect("/btl_ltw/login");
+			resp.sendRedirect("/login");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			req.getSession().setAttribute("error", e.getMessage());
-			resp.sendRedirect("/btl_ltw/login");
+			resp.sendRedirect("/login");
 		}
 	}
 }

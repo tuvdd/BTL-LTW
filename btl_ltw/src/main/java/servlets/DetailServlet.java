@@ -68,7 +68,7 @@ public class DetailServlet extends HttpServlet {
             String currentURL = req.getRequestURL().toString();
             currentURL += "?bookid=" + bookID;
             session.setAttribute("currentURL", currentURL);
-            resp.sendRedirect("/btl_ltw/login");
+            resp.sendRedirect("/login");
             return;
         }
         String userID = (String) session.getAttribute("userID");
@@ -77,7 +77,7 @@ public class DetailServlet extends HttpServlet {
         if (rateStr == null || commentText == null || commentText.isEmpty()) {
             System.out.println("Vui lòng nhập comment và chọn số sao!");
             req.getSession().setAttribute("error", "Vui lòng nhập comment và chọn số sao!");
-            resp.sendRedirect("/btl_ltw/detail?bookid="+bookID);
+            resp.sendRedirect("/detail?bookid="+bookID);
         } else {
             int rate = Integer.parseInt(rateStr);
             System.out.println(rate);
@@ -89,7 +89,7 @@ public class DetailServlet extends HttpServlet {
                 System.out.println("Thêm mới không thành công!");
                 req.getSession().setAttribute("error", "Thêm mới không thành công");
             }
-            resp.sendRedirect("/btl_ltw/detail?bookid="+bookID);
+            resp.sendRedirect("/detail?bookid="+bookID);
         }
     }
 }

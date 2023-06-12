@@ -14,7 +14,7 @@ import servlets.admin.ServletUtil;
 public class DeleteOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!ServletUtil.IsSessionExsited(request, response)) {
-            response.sendRedirect("/btl_ltw/admin/login");
+            response.sendRedirect("/admin/login");
             return;
         }
         String idParam = request.getParameter("id");

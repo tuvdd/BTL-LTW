@@ -34,7 +34,7 @@ public class AccountServlet extends BaseServlet {
             String currentURL = req.getRequestURL().toString();
             // currentURL += "?account=" + ;
             req.getSession().setAttribute("currentURL", currentURL);
-            resp.sendRedirect("/btl_ltw/login");
+            resp.sendRedirect("/login");
             return;
         }
 
@@ -55,6 +55,6 @@ public class AccountServlet extends BaseServlet {
 		req.getSession().removeAttribute("userID");
 		String currentURL = req.getRequestURL().toString();
         req.getSession().setAttribute("currentURL", currentURL);
-		resp.sendRedirect("/btl_ltw/login");
+		resp.sendRedirect("/login");
 	}
 }

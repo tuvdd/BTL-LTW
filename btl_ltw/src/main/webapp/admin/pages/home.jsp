@@ -1,5 +1,5 @@
 <%@ page
-	import="java.util.List,java.math.BigDecimal, java.text.DecimalFormat,models.dtos.BookDashboardDTO, servlets.admin.ServletUtil"
+	import="java.util.List,java.math.BigDecimal, java.text.DecimalFormat, servlets.admin.ServletUtil"
 	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -41,4 +41,4 @@ request.getSession().removeAttribute("messageType");
 	<%=df.format(totalNam.intValue())%>
 </p>
 
-<script src="/btl_ltw/admin/resources/js/home.js" type="text/javascript"></script>
+<script src="/admin/resources/js/home.js" type="text/javascript"></script>
