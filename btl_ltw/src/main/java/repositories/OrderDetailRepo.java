@@ -36,7 +36,7 @@ public class OrderDetailRepo extends Repo<OrderDetail> {
         try {
             sql = "INSERT INTO order_details (id, order_id, book_id, quantity, price) VALUES (?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, orderDetail.id);
+            statement.setObject(1, UUID.randomUUID());
             statement.setObject(2, orderDetail.order_id);
             statement.setObject(3, orderDetail.book_id);
             statement.setInt(4, orderDetail.quantity);

@@ -25,7 +25,7 @@ public class UserRepo extends Repo<User> {
             CreateConnection();
             sql = "INSERT INTO users (id, name, phonenum, email, status, created_time, last_update_time, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, user.id);
+            statement.setObject(1, UUID.randomUUID());
             statement.setString(2, user.name);
             statement.setString(3, user.phonenum);
             statement.setString(4, user.email);

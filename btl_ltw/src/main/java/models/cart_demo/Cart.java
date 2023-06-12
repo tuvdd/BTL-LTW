@@ -1,15 +1,6 @@
 package models.cart_demo;
 
 import models.Book;
-import models.Order;
-import models.OrderDetail;
-import models.User;
-import models.dtos.OrderFullDetail;
-import repositories.UserRepo;
-
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.List;
 import java.util.UUID;
 
 public class Cart extends Book {

@@ -181,7 +181,7 @@ public class OrderRepo extends Repo<Order> {
         try {
             sql = "INSERT INTO orders (id, created_time, status, address, phonenum, buyer_name) VALUES (?, ?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
-            statement.setObject(1, orderFullDetail.id);
+            statement.setObject(1, UUID.randomUUID());
             statement.setTimestamp(2, orderFullDetail.created_time);
             statement.setInt(3, orderFullDetail.status);
             statement.setString(4, orderFullDetail.address);

@@ -1,10 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
