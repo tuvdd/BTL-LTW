@@ -499,7 +499,7 @@ public class BookRepo extends Repo<Book> {
 		String formattedNumber = String.format("%.2f", res);
 		return Float.parseFloat(formattedNumber);
 	}
-
+	
 	public int getNumberComments(String bookID) {
 		int res = 0;
 		sql = "SELECT COUNT(*) AS comment_count FROM books LEFT JOIN comments ON books.id = comments.book_id WHERE books.id = ?;";
