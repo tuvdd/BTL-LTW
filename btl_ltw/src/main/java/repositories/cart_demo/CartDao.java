@@ -1,8 +1,9 @@
 package repositories.cart_demo;
 
 
-import models.User;
+import models.Book;
 import models.cart_demo.Cart;
+import repositories.BookRepo;
 
 import java.sql.*;
 import java.util.*;
@@ -69,4 +70,49 @@ public class CartDao {
         }
         return book;
     }
+
+    public int saveToCart(String bookID, String userID, int quantity) throws Exception {
+        int rowsAffected = 0;
+        BookRepo bookRepo = new BookRepo();
+        Book book = bookRepo.getById(UUID.fromString(bookID));
+        Object userId;
+        if (userID == ""){
+            userId = UUID.randomUUID();
+        } else {
+            userId = UUID.fromString(userID);
+        }
+        try {
+
+            query = "INSERT INTO cart_list (id, user_id, book_id, quantity) VALUES (?, ?, ?, ?);";
+            pst = this.con.prepareStatement(query);
+            pst.setObject(1, UUID.randomUUID());
+            pst.setObject(2, userId);
+            pst.setObject(3, book.getId());
+            pst.setInt(4, quantity);
+            rowsAffected = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsAffected;
+    }
+
+    public int updateCart(List<Cart> cartList) {
+        int rowsAffected = 0;
+        try {
+            for(Cart c : cartList){
+                query = "UPDATE cart_list SET id = ?, user_id = ?, book_id = ?, quantity = ? WHERE id = ?;";
+                pst = this.con.prepareStatement(query);
+                pst.setObject(1, c.getId());
+                pst.setObject(2, c.getUser_id());
+                pst.setObject(3, c.getBook_id());
+                pst.setInt(4, c.getQuantity());
+                rowsAffected = pst.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsAffected;
+    }
+
+
 }
