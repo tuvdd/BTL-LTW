@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Book;
 import models.Category;
-import models.Comment;
 import repositories.BookRepo;
 import repositories.CategoryRepo;
 
@@ -16,7 +15,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @WebServlet(name = "ClientHome", urlPatterns = "/")
 public class HomeServlet extends HttpServlet {

@@ -5,8 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import models.User;
 import models.cart_demo.Cart;
 import repositories.cart_demo.CartDao;
 import repositories.cart_demo.DbCon;
@@ -14,7 +12,6 @@ import repositories.cart_demo.DbCon;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "CartServlet", urlPatterns = "/cart")

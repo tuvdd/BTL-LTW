@@ -2,20 +2,12 @@ package servlets.cart_demo;
 
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Date;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.cart_demo.*;
-import models.dtos.OrderFullDetail;
-import repositories.OrderRepo;
-import repositories.cart_demo.DbCon;
 
 
 @WebServlet("/cart-check-out")
