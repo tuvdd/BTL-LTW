@@ -98,12 +98,23 @@
     margin-top: 70px;
     padding-left: 10px;
     padding-right: 10px;
+    color: white;
 }
 
 .order-info-item p {
     width: 100px;
-    height: 100px;
+    height: 80px;
     text-align: center;
     font-size: 2em;
     margin-top: 40px;
+    color: white;
+}
+
+.order-info-item button {
+    height: 40px;
+    color: white;
+    background-color: green;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }

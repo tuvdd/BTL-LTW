@@ -69,7 +69,7 @@ public class UserServlet extends BaseServlet {
         String password = req.getParameter("password");
 
         User user = new User();
-        user.set(null, name, phonenum, email, true, null, null,username, password);
+        user.set(UUID.randomUUID(), name, phonenum, email, true, null, null,username, password);
 
         if (id != null && id != "") {
             user.id = UUID.fromString(id);
