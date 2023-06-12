@@ -32,7 +32,7 @@
         </div>
 
         <!-- Featured categories -->
-        <div class="categories">
+        <!-- <div class="categories">
             <div class="small-container">
                 <div class="row">
                     <div class="col-3">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     <!-- Featured products -->
     <%
@@ -152,13 +152,8 @@
                     <a href="detail?bookid=${p.getId()}"><img src="data:image/png;base64,${p.getImageBase64()}" alt="" class="offer-img" /></a>
                 </div>
                 <div class="col-2">
-<<<<<<< HEAD
                     <h2>Sản phẩm đề cử</h2>
                     <a href="detail?bookid=${p.getId()}"><h3>${p.name}</h3></a>
-=======
-                    <h2>SP đề cử</h2>
-                    <h3>${p.name}</h3>
->>>>>>> origin/main
                     <small>${p.sub_description}</small>
                     <br />
                     <a href="/btl_ltw/detail?bookid=${p.getId()}" class="btn">Mua ngay &#8594;</a>
