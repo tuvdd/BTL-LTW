@@ -15,7 +15,7 @@ public class LogoutServlet extends BaseServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		for (int i = 0; i < ServletUtil.SesstionAttributes.length; i++)
 			req.getSession().setAttribute(ServletUtil.SesstionAttributes[i], null);
-		resp.sendRedirect("/btl_ltw/admin/login");
+		resp.sendRedirect("/admin/login");
 	}
 
 }

@@ -35,7 +35,7 @@ public class UserChangeStatusServlet extends HttpServlet {
                 request.getSession().setAttribute("message", "Đổi trạng thái không thành công!");
                 request.getSession().setAttribute("messageType", "error");
             }
-            response.sendRedirect("/btl_ltw/admin/user");
+            response.sendRedirect("/admin/user");
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().append("Lỗi khi thay đổi trạng thái của user!");

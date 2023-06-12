@@ -64,10 +64,10 @@ request.getSession().removeAttribute("messageType");
 					<td>${order.totalPrice}</td>
 					<td>
 						<button
-							onclick="window.location.href='/btl_ltw/admin/order/detail?id=${order.id}'">Chi
+							onclick="window.location.href='/admin/order/detail?id=${order.id}'">Chi
 							tiết</button>
 						<button
-							onclick="window.location.href='/btl_ltw/admin/order/delete?id=${order.id}'">Xóa</button>
+							onclick="window.location.href='/admin/order/delete?id=${order.id}'">Xóa</button>
 					</td>
 				</tr>
 			</c:forEach>
@@ -75,7 +75,7 @@ request.getSession().removeAttribute("messageType");
 	</table>
 	<script>
 		function updateStatus(orderId, status) {
-			window.location.href = '/btl_ltw/admin/order/change-status?id='
+			window.location.href = '/admin/order/change-status?id='
 					+ orderId + '&status=' + status
 		}
 	</script>
@@ -94,7 +94,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 	<li style="display: inline;">
 		<%
 		if (i != currentPage) {
-		%><a href="/btl_ltw/admin/order?page=<%=i%>">
+		%><a href="/admin/order?page=<%=i%>">
 			<%=i%>
 	</a> <%
  } else {
@@ -113,5 +113,5 @@ int totalPages = (int) request.getAttribute("totalPages");
 	<%=(message != null ? message : "")%>
 </p>
 
-<script src="/btl_ltw/admin/resources/js/content.js"
+<script src="/admin/resources/js/content.js"
 	type="text/javascript"></script>

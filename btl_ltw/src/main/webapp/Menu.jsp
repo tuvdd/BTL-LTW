@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <link rel="stylesheet" href="/btl_ltw/resources/css/menu.css">
+  <link rel="stylesheet" href="/resources/css/menu.css">
 </head>
 <body>
   <header>
@@ -20,11 +20,16 @@
     </div>
     <div class="heading">
       <ul>
+<<<<<<< HEAD
         <li><a href="/btl_ltw/" class="under">Trang chủ</a></li>
         <li><a href="/btl_ltw/shopping" class="under">Cửa hàng</a></li>
+=======
+        <li><a href="/" class="under">HOME</a></li>
+        <li><a href="/shopping" class="under">SHOPPING</a></li>
+>>>>>>> origin/main
         <li><a href="#" class="under">CONTACT</a></li>
-        <li><a href="#" class="under">ACCOUNT</a></li>
-        <li><a href="#" class="under">CART</a></li>
+        <li><a href="/account" class="under">ACCOUNT</a></li>
+        <li><a href="/cart2.jsp" class="under">CART</a></li>
       </ul>
     </div>
   </header>

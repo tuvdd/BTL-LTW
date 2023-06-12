@@ -31,7 +31,7 @@ request.getSession().removeAttribute("messageType");
 				<td>${user.getPhonenum()}</td>
 				<td>${user.getEmail()}</td>
 				<td><a
-					href="/btl_ltw/admin/user/change-status?id=${user.getId()}">${user.getStatus()}</a>
+					href="/admin/user/change-status?id=${user.getId()}">${user.getStatus()}</a>
 				</td>
 				<td>${user.getCreated_time()}</td>
 				<td>${user.getLast_update_time()}</td>
@@ -39,7 +39,7 @@ request.getSession().removeAttribute("messageType");
 				<td>
 					<button onclick="showEditModal('tr-${user.getId()}')">Sửa</button>
 					<button
-						onclick="window.location.href='/btl_ltw/admin/user/delete?id=${user.getId()}'">Xóa</button>
+						onclick="window.location.href='/admin/user/delete?id=${user.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>
@@ -59,7 +59,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 	<li style="display: inline;">
 		<%
 		if (i != currentPage) {
-		%><a href="/btl_ltw/admin/admin?page=<%=i%>">
+		%><a href="/admin/admin?page=<%=i%>">
 			<%=i%>
 	</a> <%
  } else {
@@ -79,7 +79,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 </p>
 <button id="add-new-button" onclick="showAddModal()">Thêm mới</button>
 <div id="add-modal" class="modal">
-	<form method="post" action="/btl_ltw/admin/user" id="add-form">
+	<form method="post" action="/admin/user" id="add-form">
 
 		<h3>Thêm user</h3>
 
@@ -119,7 +119,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 </div>
 
 <div id="edit-modal" class="modal">
-	<form method="post" action="/btl_ltw/admin/user" id="edit-form">
+	<form method="post" action="/admin/user" id="edit-form">
 
 		<h3>Sửa admin</h3>
 		<input id="edit-hidden" type="hidden" name="id" id="edit_hidden"
@@ -148,6 +148,6 @@ int totalPages = (int) request.getAttribute("totalPages");
 	</form>
 </div>
 
-<script src="/btl_ltw/admin/resources/js/user.js" type="text/javascript"></script>
-<script src="/btl_ltw/admin/resources/js/content.js"
+<script src="/admin/resources/js/user.js" type="text/javascript"></script>
+<script src="/admin/resources/js/content.js"
 	type="text/javascript"></script>

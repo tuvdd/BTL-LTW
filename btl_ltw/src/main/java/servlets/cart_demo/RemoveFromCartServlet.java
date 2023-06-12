@@ -6,6 +6,7 @@ import models.cart_demo.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,19 +25,19 @@ public class RemoveFromCartServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String bookId = request.getParameter("id");
             if (bookId != null) {
-                ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+                List<Cart> cart_list = (List<Cart>) request.getSession().getAttribute("cart-list");
                 if (cart_list != null) {
                     for (Cart c : cart_list) {
-                        if (c.getId() == Integer.parseInt(bookId)) {
-                            cart_list.remove(cart_list.indexOf(c));
+                        if (c.getId().toString().equals(bookId)) {
+                            cart_list.remove(c);
                             break;
                         }
                     }
                 }
-                response.sendRedirect("cart.jsp");
+                response.sendRedirect("cart2.jsp");
 
             } else {
-                response.sendRedirect("cart.jsp");
+                response.sendRedirect("cart2.jsp");
             }
 
         }

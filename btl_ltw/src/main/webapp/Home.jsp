@@ -5,7 +5,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/btl_ltw/resources/css/home.css" />
+    <link rel="stylesheet" href="/resources/css/home.css" />
     <title>Ecommerce Website</title>
 </head>
 
@@ -152,8 +152,13 @@
                     <a href="detail?bookid=${p.getId()}"><img src="data:image/png;base64,${p.getImageBase64()}" alt="" class="offer-img" /></a>
                 </div>
                 <div class="col-2">
+<<<<<<< HEAD
                     <h2>Sản phẩm đề cử</h2>
                     <a href="detail?bookid=${p.getId()}"><h3>${p.name}</h3></a>
+=======
+                    <h2>SP đề cử</h2>
+                    <h3>${p.name}</h3>
+>>>>>>> origin/main
                     <small>${p.sub_description}</small>
                     <br />
                     <a href="/btl_ltw/detail?bookid=${p.getId()}" class="btn">Mua ngay &#8594;</a>

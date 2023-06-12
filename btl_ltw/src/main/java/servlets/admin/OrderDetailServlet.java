@@ -23,7 +23,7 @@ public class OrderDetailServlet extends BaseServlet {
 		super.doGet(req, resp);
 
 		if (!ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin/login");
+			resp.sendRedirect("/admin/login");
 			return;
 		}
 

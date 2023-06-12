@@ -79,8 +79,11 @@ img{
 }
 .product-rating{
     color: #ffc107;
+    display: flex;
+    align-items: center;
 }
 .product-rating span{
+    margin-left: 10px;
     font-weight: 600;
     color: #252525;
 }
@@ -300,6 +303,8 @@ h1 {
 .stars {
     display: inline-block;
     height: fit-content;
+    display: flex;
+    align-items: center;
 }
 
 .star_yellow {
@@ -383,3 +388,19 @@ h1 {
     padding: 0.3rem;
     opacity: 0.8;
 }
+
+#myParagraph {
+    max-height: 90px; 
+    overflow: hidden; 
+  }
+  #showMoreButton, #showLessButton {
+    display: none;
+  }
+.product-detail button {
+    background-color: transparent; 
+    border: none;
+    text-decoration: underline;
+    cursor: pointer; 
+    color: blue;
+}
+ 

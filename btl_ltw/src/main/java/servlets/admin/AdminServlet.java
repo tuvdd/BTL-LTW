@@ -28,7 +28,7 @@ public class AdminServlet extends BaseServlet {
         super.doGet(req, resp);
 
         if (!ServletUtil.IsSessionExsited(req, resp)) {
-            resp.sendRedirect("/btl_ltw/admin/login");
+            resp.sendRedirect("/admin/login");
             return;
         }
 
@@ -59,7 +59,7 @@ public class AdminServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (!ServletUtil.IsSessionExsited(req, resp)) {
-            resp.sendRedirect("/btl_ltw/admin/login");
+            resp.sendRedirect("/admin/login");
             return;
         }
         String id = req.getParameter("id");
@@ -88,7 +88,7 @@ public class AdminServlet extends BaseServlet {
                 req.getSession().setAttribute("message", e.getMessage());
                 req.getSession().setAttribute("messageType", "error");
             } finally {
-                resp.sendRedirect("/btl_ltw/admin/admin");
+                resp.sendRedirect("/admin/admin");
             }
             return;
         }
@@ -105,7 +105,7 @@ public class AdminServlet extends BaseServlet {
             req.getSession().setAttribute("message", e.getMessage());
             req.getSession().setAttribute("messageType", "error");
         } finally {
-            resp.sendRedirect("/btl_ltw/admin/admin");
+            resp.sendRedirect("/admin/admin");
         }
     }
 }
