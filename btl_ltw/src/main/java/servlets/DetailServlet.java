@@ -45,6 +45,9 @@ public class DetailServlet extends HttpServlet {
         int numberOfPages = commentRepo.getNumberOfPages(bookID, commentsPerPage);
         int numberComment = repoB.getNumberComments(bookID);
         float averageComment = repoB.getAverageComment(bookID);
+        if (averageComment == 0) {
+            numberComment = 0;
+        }
         // System.out.print("count");
         // System.out.println(numberComment);
         // System.out.println(averageComment);
@@ -65,11 +68,11 @@ public class DetailServlet extends HttpServlet {
             String currentURL = req.getRequestURL().toString();
             currentURL += "?bookid=" + bookID;
             session.setAttribute("currentURL", currentURL);
-            resp.sendRedirect("/btl_ltw/user/login");
+            resp.sendRedirect("/btl_ltw/login");
             return;
         }
         String userID = (String) session.getAttribute("userID");
-        String rateStr = req.getParameter("rate").trim();
+        String rateStr = req.getParameter("rate");
         String commentText = req.getParameter("comment_text").trim();
         if (rateStr == null || commentText == null || commentText.isEmpty()) {
             System.out.println("Vui lòng nhập comment và chọn số sao!");
