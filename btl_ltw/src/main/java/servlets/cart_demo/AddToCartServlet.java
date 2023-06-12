@@ -1,10 +1,11 @@
 package servlets.cart_demo;
 
-import models.cart_demo.*;
+import models.cart_demo.Cart;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,7 +27,8 @@ public class AddToCartServlet extends HttpServlet {
 //        	out.print("add to cart servlet");
 
             ArrayList<Cart> cartList = new ArrayList<>();
-            int id = Integer.parseInt(request.getParameter("id"));
+            String id_raw = request.getParameter("id");
+            UUID id = UUID.fromString(id_raw);
             Cart cm = new Cart();
             cm.setId(id);
             cm.setQuantity(1);
@@ -35,7 +37,7 @@ public class AddToCartServlet extends HttpServlet {
             if (cart_list == null) {
                 cartList.add(cm);
                 session.setAttribute("cart-list", cartList);
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("Shopping1.jsp");
             } else {
                 cartList = cart_list;
 
@@ -49,7 +51,7 @@ public class AddToCartServlet extends HttpServlet {
 
                 if (!exist) {
                     cartList.add(cm);
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("Shopping.jsp");
                 }
             }
         }

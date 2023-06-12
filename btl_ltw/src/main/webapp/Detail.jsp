@@ -74,7 +74,7 @@
 
                     <div class = "purchase-info">
                         <input type = "number" min = "0" value = "1">
-                        <button type = "button" class = "btn">
+                        <button type = "button" class = "btn" onclick="location.href='add-to-cart?id=<%=book.getId()%>'">>
                             Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
                         </button>
                     </div>

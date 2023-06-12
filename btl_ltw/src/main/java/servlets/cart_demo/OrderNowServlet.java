@@ -1,15 +1,7 @@
 package servlets.cart_demo;
 
 
-import models.cart_demo.*;
-import repositories.cart_demo.DbCon;
-import repositories.cart_demo.OrderDao;
-
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.*;
-import java.text.SimpleDateFormat;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,7 +16,7 @@ public class OrderNowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        /*response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
@@ -40,7 +32,7 @@ public class OrderNowServlet extends HttpServlet {
                 Order orderModel = new Order();
                 orderModel.setId(Integer.parseInt(productId));
                 orderModel.setUid(auth.getId());
-                orderModel.setQunatity(productQuantity);
+                orderModel.setQuantity(productQuantity);
                 orderModel.setDate(formatter.format(date));
 
                 OrderDao orderDao = new OrderDao(DbCon.getConnection());
@@ -66,7 +58,7 @@ public class OrderNowServlet extends HttpServlet {
         } catch (ClassNotFoundException|SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
