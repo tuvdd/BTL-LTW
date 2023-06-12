@@ -31,13 +31,14 @@ public class AddToCartServlet extends HttpServlet {
             UUID id = UUID.fromString(id_raw);
             Cart cm = new Cart();
             cm.setId(id);
+            System.out.println(id);
             cm.setQuantity(1);
             HttpSession session = request.getSession();
             ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
             if (cart_list == null) {
                 cartList.add(cm);
-                session.setAttribute("cart-list", cartList);
-                response.sendRedirect("Shopping1.jsp");
+                request.setAttribute("cart-list", cartList);
+                response.sendRedirect("/shopping");
             } else {
                 cartList = cart_list;
 
@@ -51,7 +52,7 @@ public class AddToCartServlet extends HttpServlet {
 
                 if (!exist) {
                     cartList.add(cm);
-                    response.sendRedirect("Shopping.jsp");
+                    response.sendRedirect("/shopping");
                 }
             }
         }
