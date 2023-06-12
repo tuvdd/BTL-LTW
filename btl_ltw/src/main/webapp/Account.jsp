@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.*, servlets.admin.ServletUtil, models.*" %>
 
-<% User user = (User) request.getAttribute("user"); %>
+<% 
+    User user = (User) request.getAttribute("user");
+    int numberOrdered = (int) request.getAttribute("numberOrdered");
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,14 +35,9 @@
     <div class="order-info">
             <div class="cart">
                 <div class="order-info-item">
-                    <h3>Đơn hàng trong giỏ hàng</h3>
-                    <p>100</p>
-                </div>
-            </div>
-            <div class="cart">
-                <div class="order-info-item">
                     <h3>Đơn hàng đã mua</h3>
-                    <p>100</p>
+                    <p>${numberOrdered}</p>
+                     <button onclick="location.href='/shopping'">Xem tất cả</button>
                 </div>
             </div>
     </div>
