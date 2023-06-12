@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/resources/css/shopping.css" />
+    <link rel="stylesheet" href="/btl_ltw/resources/css/shopping.css" />
     <title>Ecommerce Website</title>
 </head>
 
@@ -92,7 +92,7 @@
 								<li style="display: inline;">
 									<%
 									if (i != currentPage) {
-									%><a href="/shopping?newspage=<%=i%>">
+									%><a href="/btl_ltw/shopping?newspage=<%=i%>">
 										<%=i%>
 								</a> <%
 							 } else {
@@ -140,7 +140,7 @@
 								<li style="display: inline;">
 									<%
 									if (i != currentPage) {
-									%><a href="/shopping?oldspage=<%=i%>">
+									%><a href="/btl_ltw/shopping?oldspage=<%=i%>">
 										<%=i%>
 								</a> <%
 							 } else {
@@ -190,7 +190,7 @@
 								<li style="display: inline;">
 									<%
 									if (i != currentPage) {
-									%><a href="/search?search=<%=searchQuery%>&&searchpage=<%=i%>">
+									%><a href="/btl_ltw/search?search=<%=searchQuery%>&&searchpage=<%=i%>">
 										<%=i%>
 								</a> <%
 							 } else {

@@ -20,7 +20,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Chi tiết sản phẩm</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/resources/css/detail2.css">
+        <link rel="stylesheet" href="/btl_ltw/resources/css/detail2.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
     </head>
@@ -64,7 +64,7 @@
                         %>      
                             <div class="star_gray"></div>
                         <% } %>
-                        <span>  Xếp hạng ${averageComment} (${numberComment})</span>
+                        <span>  Xếp hạng ${averageComment} (${numberComment} đánh giá)</span>
                     </div>
 
                     <div class = "product-price">
@@ -84,7 +84,9 @@
 
         <div class = "product-detail">
             <h2>Giới thiệu về sách:</h2>
-            <p>${book.description}</p>
+            <p id="myParagraph">${book.description}</p>
+            <button id="showMoreButton" onclick="showMore()">Xem thêm</button>
+            <button id="showLessButton" onclick="showLess()">Ẩn bớt</button>
         </div>
 
         <div class="comment-wrapper">
@@ -143,7 +145,7 @@
 
                                     </div>
                                     <div class="rating_text">
-                                        <p>${comment.getRate()} stars</p>
+                                        <p>${comment.getRate()} sao</p>
                                     </div>
                                 </div>
                                 <div class="text_cmt">
@@ -166,7 +168,7 @@
         </div>
         
         
-        <script src="/btl_ltw/resources/detail.js"></script>
+        <script src="/btl_ltw/resources/js/detail.js"></script>
     <jsp:include page="Footer.jsp"></jsp:include>
 
     </body>

@@ -295,6 +295,7 @@ td {
 	display: inline-block;
 	cursor: pointer;
 	padding-left: 10px;
+	color: green;
 }
 .underline-link:after {
 	content: "";

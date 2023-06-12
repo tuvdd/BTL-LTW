@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/resources/css/home.css" />
+    <link rel="stylesheet" href="/btl_ltw/resources/css/home.css" />
     <title>Ecommerce Website</title>
 </head>
 
@@ -99,13 +99,8 @@
                     <img src="data:image/png;base64,${p.getImageBase64()}" alt="" class="offer-img" />
                 </div>
                 <div class="col-2">
-<<<<<<< HEAD
-                    <p>SP đề cử</p>
-                    <h1>${p.name}</h1>
-=======
                     <h2>SP đề cử</h2>
                     <h3>${p.name}</h3>
->>>>>>> origin/Hai
                     <small>${p.sub_description}</small>
                     <br />
                     <a href="#" class="btn">Buy Now &#8594;</a>

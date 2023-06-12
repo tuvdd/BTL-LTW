@@ -32,7 +32,7 @@ public class LoginUserServlet extends BaseServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String phoneNumber = req.getParameter("phoneNumber".trim());
+		String phoneNumber = req.getParameter("phoneNumber").trim();
 		String password = req.getParameter("password").trim();
 		if (phoneNumber == null || phoneNumber == "" || password == null || password == "") {
 			req.getSession().setAttribute("error", "Không được để trống!");

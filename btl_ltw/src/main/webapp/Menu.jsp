@@ -8,11 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <link rel="stylesheet" href="/resources/css/menu.css">
+  <link rel="stylesheet" href="/btl_ltw/resources/css/menu.css">
 </head>
 <body>
   <header>
-    <div class="logo"><a href="/">E-commerce Bookstore</a></div>
+    <div class="logo"><a href="/btl_ltw">E-commerce Bookstore</a></div>
     <div class="search">
     <form method="get" action="search">
        <input name="search" type="text" placeholder="Search products" id="input">
@@ -20,10 +20,10 @@
     </div>
     <div class="heading">
       <ul>
-        <li><a href="/" class="under">HOME</a></li>
-        <li><a href="/shopping" class="under">SHOPPING</a></li>
+        <li><a href="/btl_ltw/" class="under">HOME</a></li>
+        <li><a href="/btl_ltw/shopping" class="under">SHOPPING</a></li>
         <li><a href="#" class="under">CONTACT</a></li>
-        <li><a href="#" class="under">ACCOUNT</a></li>
+        <li><a href="/btl_ltw/account" class="under">ACCOUNT</a></li>
         <li><a href="/cart2.jsp" class="under">CART</a></li>
       </ul>
     </div>
