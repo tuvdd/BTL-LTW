@@ -5,6 +5,7 @@
 <% 
     User user = (User) request.getAttribute("user");
     int numberOrdered = (int) request.getAttribute("numberOrdered");
+    String userID = (String) request.getAttribute("id");
  %>
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,7 @@
                 <div class="order-info-item">
                     <h3>Đơn hàng đã mua</h3>
                     <p>${numberOrdered}</p>
-                     <button onclick="location.href='/shopping'">Xem tất cả</button>
+                     <button onclick="location.href='/manageOrder?id=${userID}'">Xem tất cả</button>
                 </div>
             </div>
     </div>

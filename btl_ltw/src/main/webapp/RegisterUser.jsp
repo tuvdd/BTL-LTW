@@ -28,7 +28,7 @@
 				<input type="text" name="phoneNumber">
 				<div class="form-label">
 					<img class="form-label-icon" src="/admin/resources/img/usericon.png">
-					<label class="form-label-text">Tên đăng nhập:</label>
+					<label class="form-label-text">Họ tên:</label>
 				</div>
 				<input type="text" name="username">
 				<div class="form-label">

@@ -301,6 +301,26 @@ public class OrderRepo extends Repo<Order> {
         return order;
     }
 
+    public int getCount(UUID id) {
+        int res = 0;
+        sql = "SELECT COUNT(*) FROM orders where user_id = ? ;";
+        try {
+            CreateConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setObject(1, id);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getInt("count");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
+    }
+
     public int getCount() {
         int res = 0;
         sql = "SELECT COUNT(*) FROM orders ;";
