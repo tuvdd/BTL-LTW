@@ -50,7 +50,7 @@
 							<h5 style="color: white">Sắp xếp</h5>
 							<hr style="border-top: 1px solid white" />
 							<form>
-								<a href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }">
+								<a href="${currentUrl}">
 									<c:choose>
 										<c:when test="${tenDanhMuc == null}">
 											<strong>Tất cả</strong>
@@ -61,7 +61,7 @@
 									</c:choose>
 								</a>
 								<a
-									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=AZ${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									href="${currentUrl}&filter=AZ${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
 									<c:choose>
 										<c:when test="${filter == 'AZ'}">
 											<strong>A đến Z</strong>
@@ -71,7 +71,7 @@
 										</c:otherwise>
 									</c:choose>
 								</a> <a
-									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=ZA${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									href="${currentUrl}&filter=ZA${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
 									<c:choose>
 										<c:when test="${filter == 'ZA'}">
 											<strong>Z đến A</strong>
@@ -81,7 +81,7 @@
 										</c:otherwise>
 									</c:choose>
 								</a> <a
-									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=NEWEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									href="${currentUrl}&filter=NEWEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
 									<c:choose>
 										<c:when test="${filter == 'NEWEST'}">
 											<strong>Mới nhất</strong>
@@ -91,7 +91,7 @@
 										</c:otherwise>
 									</c:choose>
 								</a> <a
-									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=OLDEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									href="${currentUrl}&filter=OLDEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
 									<c:choose>
 										<c:when test="${filter == 'OLDEST'}">
 											<strong>Cũ nhất</strong>
@@ -101,7 +101,7 @@
 										</c:otherwise>
 									</c:choose>
 								</a> <a
-									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=LOWEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									href="${currentUrl}&filter=LOWEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
 									<c:choose>
 										<c:when test="${filter == 'LOWEST'}">
 											<strong>Giá thấp đến cao</strong>
@@ -111,7 +111,7 @@
 										</c:otherwise>
 									</c:choose>
 								</a> <a
-									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=HIGHEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									href="${currentUrl}&filter=HIGHEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
 									<c:choose>
 										<c:when test="${filter == 'HIGHEST'}">
 											<strong>Giá cao đến thấp</strong>
@@ -136,7 +136,7 @@
 								function filter() {
 									var lowest = document.getElementById("lowest").value;
 									var highest = document.getElementById("highest").value;
-									var url = "/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }${filter == null ? '' : '&filter='}${filter == null ? '' : filter }";
+									var url = "${currentUrl}${filter == null ? '' : '&filter='}${filter == null ? '' : filter }";
 									if (lowest !== "") {
 										url += "&pricemin=" + lowest;
 									}
