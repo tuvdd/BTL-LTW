@@ -9,14 +9,18 @@
 <html>
 <head>
   <link rel="stylesheet" href="/resources/css/menu.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
   <header>
     <div class="logo"><a href="/">E-commerce Bookstore</a></div>
     <div class="search">
-    <form method="get" action="search">
-       <input name="search" type="text" placeholder="Search products" id="input">
-    </form>
+	    <form method="get" action="search">
+	       <input name="search" type="text" placeholder="Search products" id="input">
+	    		<button type="submit" class="btn-search">
+	    			<i class='bx bx-search-alt-2'></i>
+	    		</button>
+	    </form>
     </div>
     <div class="heading">
       <ul>
