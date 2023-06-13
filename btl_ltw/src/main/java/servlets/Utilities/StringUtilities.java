@@ -1,5 +1,6 @@
 package servlets.Utilities;
 
+import java.text.DecimalFormat;
 import java.util.regex.Pattern;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,5 +30,11 @@ public class StringUtilities {
         }
 
         return currentUrl;
+    }
+
+    public static String formatPrice(double price) {
+        DecimalFormat decimalFormat = new DecimalFormat("###,###.###");
+        String formattedNumber = decimalFormat.format(price);
+        return formattedNumber;
     }
 }

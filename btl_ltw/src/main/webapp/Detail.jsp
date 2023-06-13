@@ -68,8 +68,8 @@
                     </div>
 
                     <div class = "product-price">
-                        <p class = "last-price">Giá cũ: <span>${book.price}</span></p>
-                        <p class = "new-price">Giá mới: <span>${book.promote_price}</span></p>
+                        <p class = "last-price">Giá cũ: <span> ${book.getPriceFormat()} $</span></p>
+                        <p class = "new-price">Giá mới: <span> ${book.getPromotePriceFormat()} $</span></p>
                     </div>
 
                     <div class = "purchase-info">
@@ -87,7 +87,7 @@
 
         <div class = "product-detail">
             <h2>Giới thiệu về sách:</h2>
-            <p id="myParagraph">${book.description}</p>
+            <p id="myParagraph">${book.getDescription()}</p>
             <button id="showMoreButton" onclick="showMore()">Xem thêm</button>
             <button id="showLessButton" onclick="showLess()">Ẩn bớt</button>
         </div>

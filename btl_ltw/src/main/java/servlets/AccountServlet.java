@@ -35,11 +35,12 @@ public class AccountServlet extends BaseServlet {
         }
 
         try {
+            System.out.println(userID);
             User user= userRepo.getById(UUID.fromString(userID));
             req.setAttribute("user", user);
-            int numberOrdered = orderRepo.getCount();
+            int numberOrdered = orderRepo.getCount(user.getId());
             req.setAttribute("numberOrdered", numberOrdered);
-            System.out.println(user);
+            req.setAttribute("id", user.getId().toString());
             RequestDispatcher rd = req.getRequestDispatcher("/Account.jsp");
             rd.forward(req, resp);
         } catch (Exception e) {
