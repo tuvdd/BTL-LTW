@@ -65,8 +65,6 @@ public class QuantityIncDecServlet extends HttpServlet {
             for (Cart c : cart_list) {
                 System.out.println(c.getQuantity());
             }
-
-
             request.setAttribute("cart-list", cart_list);
             response.sendRedirect("cart2.jsp");
         }

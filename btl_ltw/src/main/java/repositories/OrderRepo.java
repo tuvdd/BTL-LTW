@@ -199,6 +199,30 @@ public class OrderRepo extends Repo<Order> {
         return rowsAffected;
     }
 
+    public int add_2 (OrderFullDetail orderFullDetail) {
+        int rowsAffected = 0;
+        CreateConnection();
+        try {
+            sql = "INSERT INTO orders (id, created_time, status, address, phonenum, buyer_name) VALUES (?, ?, ?, ?, ?, ?);";
+            statement = connection.prepareStatement(sql);
+            statement.setObject(1, orderFullDetail.id);
+            statement.setTimestamp(2, orderFullDetail.created_time);
+            statement.setInt(3, orderFullDetail.status);
+            statement.setString(4, orderFullDetail.address);
+            statement.setString(5, orderFullDetail.phonenum);
+            statement.setString(6, orderFullDetail.buyer_name);
+            rowsAffected = statement.executeUpdate();
+            for (OrderDetail orderDetail : orderFullDetail.getOrderDetails()) {
+                rowsAffected += odr.add(orderDetail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            CloseConnection();
+        }
+        return rowsAffected;
+    }
+
     public int update(OrderFullDetail orderFullDetail) {
         int rowsAffected = 0;
         CreateConnection();

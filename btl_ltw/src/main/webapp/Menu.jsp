@@ -24,7 +24,7 @@
         <li><a href="/danh-sach-san-pham" class="under">Cửa hàng</a></li>
         <li><a href="#" class="under">Giới thiệu</a></li>
         <li><a href="/account" class="under">Tài khoản</a></li>
-        <li><a href="/cart2.jsp" class="under">Giỏ hàng</a></li>
+        <li><a href="/cart" class="under">Giỏ hàng</a></li>
       </ul>
     </div>
   </header>
