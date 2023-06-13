@@ -1,5 +1,7 @@
 
-
+#wrapper {
+    width: 100%;
+}
 body {
     background: #eee;
     margin: 0;

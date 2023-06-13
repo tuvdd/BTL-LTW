@@ -195,7 +195,7 @@
 
     <div class="left">
         <h1 class="total">Total: <span>${total}</span>VNĐ</h1>
-        <a class="btn">Checkout</a>
+        <a href = "cart-check-out" class="btn">Checkout</a>
     </div>
 
 
