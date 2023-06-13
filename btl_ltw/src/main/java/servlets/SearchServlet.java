@@ -28,7 +28,7 @@ public class SearchServlet extends HttpServlet {
 		List<Category> categories = categoryRepo.getAll(-1, -1, true);
         
         String searchQuery = request.getParameter("search");
-        int pageSearch, sizeSearch = 2;
+        int pageSearch, sizeSearch = 9;
         if (page == null) {
         	pageSearch = 1;
         } else {
