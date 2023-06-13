@@ -8,8 +8,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Book;
 import models.Category;
+import models.dtos.GetBooksDTO;
 import repositories.BookRepo;
 import repositories.CategoryRepo;
+import servlets.Utilities.StringUtilities;
 
 import java.io.IOException;
 
@@ -17,42 +19,41 @@ import java.io.IOException;
 public class SearchServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CategoryRepo repoC = new CategoryRepo();
-        List<Category> list = null;
-        list = repoC.getAll(-1, -1);
-        boolean[] chid = new boolean[list.size()+1];
-        chid[0]=true;
-        String[] pp={"Dưới 100k",
-                "Từ 100k - 200k",
-                "Từ 200k - 500k",
-                "Từ 500k - 1 triệu",
-                "Trên 1 triệu"};
-        boolean[] pb=new boolean[pp.length+1];
-        pb[0] = true;
+    	BookRepo bookRepo;
+    	CategoryRepo categoryRepo;
+    	bookRepo = new BookRepo();
+		categoryRepo = new CategoryRepo();
+		
+		String page = request.getParameter("page");
+    	String urldanhmuc = request.getParameter("urldanhmuc");
+		String filter = request.getParameter("filter");
+		String priceMin = request.getParameter("pricemin");
+		String priceMax = request.getParameter("pricemax");
+		List<Category> categories = categoryRepo.getAll(-1, -1, true);
         
         String searchQuery = request.getParameter("search");
-        int page = 1, pageSize = 2;
-        if (request.getParameter("searchpage") != null) {
-        	page = Integer.parseInt(request.getParameter("searchpage"));
+        int pageSearch, sizeSearch = 9;
+        if (page == null) {
+        	pageSearch = 1;
+        } else {
+        	pageSearch = Integer.parseInt(page);
         }
-		BookRepo bookRepo = new BookRepo();
 		List<Book> books = new ArrayList<>();        
-		books = bookRepo.searchBooks(searchQuery, page, pageSize);
+		books = bookRepo.getListSearchBooks(searchQuery, pageSearch, sizeSearch, urldanhmuc, filter, priceMin, priceMax);
 
-		int totalRecords = bookRepo.getCountSearchBook(searchQuery);
-        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-        
-        request.setAttribute("totalRecords", totalRecords);
-        request.setAttribute("searchQuery", searchQuery);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("currentPage", page);
-		request.setAttribute("data", list);
-        request.setAttribute("products", books);
-        request.setAttribute("pp", pp);
-        request.setAttribute("pb", pb);
-        request.setAttribute("cid", 0);
-        request.setAttribute("chid", chid);
+		int totalRecords = bookRepo.getCountSearchBook(searchQuery, urldanhmuc);
+        String currentUrl = "search?search=" + searchQuery;
+        request.setAttribute("total", totalRecords);
+        request.setAttribute("urldanhmuc", urldanhmuc);
+		request.setAttribute("page", page);
+		request.setAttribute("filter", filter);
+		request.setAttribute("pricemin", priceMin);
+		request.setAttribute("pricemax", priceMax);
+		request.setAttribute("tenDanhMuc", categoryRepo.getByUrl(urldanhmuc).name);
+		request.setAttribute("data", books);
+		request.setAttribute("categories", categories);
+		request.setAttribute("currentUrl", currentUrl);
 
-        request.getRequestDispatcher("/Shopping.jsp").forward(request, response);
+        request.getRequestDispatcher("/ShoppingSearch.jsp").forward(request, response);
     }
 }
