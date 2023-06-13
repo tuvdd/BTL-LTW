@@ -10,6 +10,15 @@ public class Order{
     public String address;
     public String phonenum;
     public String buyer_name;
+    private UUID user_id;
+
+    public UUID getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(UUID user_id) {
+        this.user_id = user_id;
+    }
 
     public UUID getId() {
         return id;

@@ -28,7 +28,7 @@ public class RemoveFromCartServlet extends HttpServlet {
             String bookId = request.getParameter("id");
             CartDao cartDao = new CartDao(DbCon.getConnection());
             if (bookId != null) {
-                List<Cart> cart_list = (List<Cart>) request.getSession().getAttribute("cart-list");
+                List<Cart> cart_list = (List<Cart>) request.getSession().getAttribute("cart_list");
                 if (cart_list != null) {
                     for (Cart c : cart_list) {
                         if (c.getId().toString().equals(bookId)) {

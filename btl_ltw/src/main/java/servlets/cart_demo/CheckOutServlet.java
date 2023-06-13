@@ -30,11 +30,17 @@ public class CheckOutServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
+
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             System.out.println(timestamp);
-            CartDao cartDao = new CartDao(DbCon.getConnection());
-            List<Cart> cart_list = cartDao.getCartProducts("ffe76ad1-10f8-4b45-9aa1-38ef3290a71b");
             String auth = (String) request.getSession().getAttribute("userID");
+            System.out.println("Checkout" + auth);
+            if(auth == null) {
+                response.sendRedirect("/login");
+                return;
+            }
+            CartDao cartDao = new CartDao(DbCon.getConnection());
+            List<Cart> cart_list = cartDao.getCartProducts(auth);
 
             System.out.println(cart_list);
 
@@ -43,7 +49,7 @@ public class CheckOutServlet extends HttpServlet {
             String name = request.getParameter("name");
 
             if (address != null && phone != null && name != null){
-                OrderFullDetail orderFullDetail = cartToOrder(cart_list,timestamp,1,address, phone,name);
+                OrderFullDetail orderFullDetail = cartToOrder(auth, cart_list,timestamp,1,address, phone,name);
                 System.out.println(orderFullDetail);
                 OrderRepo orderRepo = new OrderRepo();
                 int temp = orderRepo.add_2(orderFullDetail);
@@ -53,7 +59,7 @@ public class CheckOutServlet extends HttpServlet {
                     cart_list.clear();
                 }
             }
-            response.sendRedirect("/cart");
+            response.sendRedirect("/manageOrder");
             /*if(cart_list != null && auth!=null) {
                 OrderFullDetail orderFullDetail = cartToOrder(cart_list,timestamp,1,"test", "098","Tsu123");
                 System.out.println(orderFullDetail);
@@ -83,9 +89,10 @@ public class CheckOutServlet extends HttpServlet {
         doGet(request, response);
     }
 
-    public OrderFullDetail cartToOrder(List<Cart> cartList, Timestamp timestamp, int status, String address, String phone, String buyer){
+    public OrderFullDetail cartToOrder(String auth, List<Cart> cartList, Timestamp timestamp, int status, String address, String phone, String buyer){
         OrderFullDetail orderFullDetail = new OrderFullDetail();
         orderFullDetail.setId(UUID.randomUUID());
+        orderFullDetail.setUser_id(UUID.fromString(auth));
         orderFullDetail.setStatus(status);
         orderFullDetail.setAddress(address);
         orderFullDetail.setPhonenum(phone);

@@ -203,14 +203,15 @@ public class OrderRepo extends Repo<Order> {
         int rowsAffected = 0;
         CreateConnection();
         try {
-            sql = "INSERT INTO orders (id, created_time, status, address, phonenum, buyer_name) VALUES (?, ?, ?, ?, ?, ?);";
+            sql = "INSERT INTO orders (id, user_id, created_time, status, address, phonenum, buyer_name) VALUES (?, ?, ?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, orderFullDetail.id);
-            statement.setTimestamp(2, orderFullDetail.created_time);
-            statement.setInt(3, orderFullDetail.status);
-            statement.setString(4, orderFullDetail.address);
-            statement.setString(5, orderFullDetail.phonenum);
-            statement.setString(6, orderFullDetail.buyer_name);
+            statement.setObject(2, orderFullDetail.getUser_id());
+            statement.setTimestamp(3, orderFullDetail.created_time);
+            statement.setInt(4, orderFullDetail.status);
+            statement.setString(5, orderFullDetail.address);
+            statement.setString(6, orderFullDetail.phonenum);
+            statement.setString(7, orderFullDetail.buyer_name);
             rowsAffected = statement.executeUpdate();
             for (OrderDetail orderDetail : orderFullDetail.getOrderDetails()) {
                 rowsAffected += odr.add(orderDetail);

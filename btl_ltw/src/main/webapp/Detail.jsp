@@ -73,10 +73,13 @@
                     </div>
 
                     <div class = "purchase-info">
-                        <input type = "number" min = "0" value = "1">
-                        <button type = "button" class = "btn" onclick="location.href='/add-to-cart?id=${book.getId()}'">>
-                            Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
-                        </button>
+                        <form action="add-to-cart" >
+                            <input type="hidden" name="id" value="${book.id}">
+                            <input type = "number" name = "quantity" min = "0" value = "1">
+                            <button type = "submit" class = "btn">
+                                Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

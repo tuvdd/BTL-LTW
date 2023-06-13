@@ -10,6 +10,7 @@ import models.dtos.OrderFullDetail;
 import repositories.OrderRepo;
 import repositories.cart_demo.CartDao;
 import repositories.cart_demo.DbCon;
+import repositories.cart_demo.OrderDao;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,10 +24,25 @@ public class ManageOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String auth = (String) req.getSession().getAttribute("userID");
+        System.out.println(auth);
         OrderRepo orderRepo = new OrderRepo();
-        OrderFullDetail orderFullDetail = orderRepo.getOrderFullDetailById(UUID.fromString("3e1791f0-2843-446e-98c7-8663fdcbc536"));
+        List<String> orderListId = new ArrayList<>();
         List<OrderFullDetail> orderFullDetailList = new ArrayList<>();
-        orderFullDetailList.add(orderFullDetail);
+        try {
+            OrderDao orderDao = new OrderDao(DbCon.getConnection());
+            orderListId = orderDao.getOrderListId(auth);
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        for(String orderId : orderListId){
+            OrderFullDetail orderFullDetail = orderRepo.getOrderFullDetailById(UUID.fromString(orderId));
+            orderFullDetailList.add(orderFullDetail);
+        }
+
+
         req.setAttribute("order_list", orderFullDetailList);
         req.getRequestDispatcher("/manageOrder.jsp").forward(req,resp);
     }

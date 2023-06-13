@@ -1,6 +1,12 @@
 <%@ page import="models.cart_demo.Cart" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<Cart> cart_list = (List<Cart>) request.getAttribute("cart_list");
+    System.out.println(cart_list + "cart_jsp");
+    session.setAttribute("cart_list", cart_list);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,13 +26,18 @@
     <div class="container">
 
         <section id="cart">
-            <c:forEach items="${cart_list}" var="c">
+            <%
+            if(cart_list!=null){
+                for(Cart c : cart_list){
+
+
+            %>
             <article class="product">
                 <header>
-                    <input type="hidden" name="id" value="${c.getId()}" class="form-input">
+                    <input type="hidden" name="id" value="<%=c.getId()%>" class="form-input">
                     <a class="remove">
-                        <a href="#"><img src="data:image/png;base64,${c.getImageBase64()}" alt="" /></a>
-                        <h3><a href="remove-from-cart?id=${c.getId()}" >Remove product</a></h3>
+                        <a href="#"><img src="data:image/png;base64,<%=c.getImageBase64()%>" alt="" /></a>
+                        <h3><a href="remove-from-cart?id=<%=c.getId()%>" >Remove product</a></h3>
 
                             <%--          <h3 href="remove-from-cart?id=<%=c.getId() %>"><span>Remove product</span> </h3>--%>
                     </a>
@@ -34,32 +45,35 @@
 
                 <div class="content">
 
-                    <h1>${c.getName()}</h1>
+                    <h1><%=c.getName()%></h1>
                         <%--        <%=c.getSub_description()%>--%>
 
                 </div>
 
                 <footer class="content">
-                    <a href="quantity-inc-dec?action=dec&id=${c.getId()}"><span class="qt-minus">-</span></a>
-                    <span class="qt">${c.getQuantity()}</span>
-                    <a href="quantity-inc-dec?action=inc&id=${c.getId()}"><span class="qt-minus">+</span></a>
+                    <a href="quantity-inc-dec?action=dec&id=<%=c.getId()%>"><span class="qt-minus">-</span></a>
+                    <span class="qt"><%=c.getQuantity()%></span>
+                    <a href="quantity-inc-dec?action=inc&id=<%=c.getId()%>"><span class="qt-minus">+</span></a>
 
-                        <%--        <span class="qt-plus" href="quantity-inc-dec?action=inc&id=${c.getId()}">+</span>--%>
+                        <%--        <span class="qt-plus" href="quantity-inc-dec?action=inc&id=<%=c.getId()%>">+</span>--%>
 
                     <h2 class="full-price">
-                            ${c.getPromote_price()*c.getQuantity()} VNĐ
-                            <%--          ${c.promote_price*c.quantity} VNĐ--%>
+                            <%=c.getPromote_price()*c.getQuantity()%> VNĐ
+                            <%--          <%=c.promote_price*c.quantity%> VNĐ--%>
                     </h2>
 
                     <h2 class="price">
-                            ${c.getPromote_price()} VNĐ
+                            <%=c.getPromote_price()%> VNĐ
 
-                            <%--        ${c.promote_price} VNĐ--%>
+                            <%--        <%=c.promote_price%> VNĐ--%>
                     </h2>
                 </footer>
             </article>
 
-            </c:forEach>
+            <%
+                    }
+                }
+            %>
 
             <footer id="site-footer">
                 <div class="container clearfix">

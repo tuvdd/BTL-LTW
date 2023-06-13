@@ -22,7 +22,12 @@ public class OrderDetailServlet extends HttpServlet {
         String orderID = req.getParameter("orderID");
         OrderFullDetail orderFullDetail = orderRepo.getOrderFullDetailById(UUID.fromString(orderID));
         List<OrderDetail> orderDetailList = orderFullDetail.getOrderDetails();
+        double total = 0;
+        for(OrderDetail orderDetail: orderDetailList){
+            total += orderDetail.getPrice()*orderDetail.getQuantity();
+        }
         req.setAttribute("order_detail_list", orderDetailList);
+        req.setAttribute("total", total);
         req.getRequestDispatcher("/orderDetail.jsp").forward(req,resp);
     }
 
