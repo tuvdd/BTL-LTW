@@ -26,7 +26,7 @@ public class LoginServlet extends BaseServlet {
 		super.doGet(req, resp);
 
 		if (ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin");
+			resp.sendRedirect("/admin");
 			return;
 		}
 		RequestDispatcher rd = req.getRequestDispatcher("/admin/login.jsp");
@@ -39,7 +39,7 @@ public class LoginServlet extends BaseServlet {
 		String password = req.getParameter("password");
 		if (username == null || username == "" || password == null || password == "") {
 			req.setAttribute("error", "Tên tài khoản hoặc mật khẩu không được để trống");
-			resp.sendRedirect("/btl_ltw/admin/login");
+			resp.sendRedirect("/admin/login");
 			return;
 		}
 
@@ -47,17 +47,17 @@ public class LoginServlet extends BaseServlet {
 			Admin admin = adminRepo.getByUsernameAndPassword(username, password);
 			if (admin == null) {
 				req.getSession().setAttribute("error", "Tên tài khoản hoặc mật khẩu không đúng");
-				resp.sendRedirect("/btl_ltw/admin/login");
+				resp.sendRedirect("/admin/login");
 				return;
 			}
 
 			HttpSession session = req.getSession();
 			session.setAttribute("id", admin.id);
-			resp.sendRedirect("/btl_ltw/admin");
+			resp.sendRedirect("/admin");
 
 		} catch (SQLException e) {
 			req.getSession().setAttribute("error", e.getMessage());
-			resp.sendRedirect("/btl_ltw/admin/login");
+			resp.sendRedirect("/admin/login");
 		}
 	}
 }

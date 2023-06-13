@@ -20,7 +20,7 @@ public class UserRepo extends Repo<User> {
             throw new Exception("Số điện thoại không hợp lệ");
         }
 
-        int res;
+        int res = 0;
         try {
             CreateConnection();
             sql = "INSERT INTO users (id, name, phonenum, email, status, created_time, last_update_time, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -35,6 +35,10 @@ public class UserRepo extends Repo<User> {
             statement.setString(8, user.username);
             statement.setString(9, user.password);
             res = statement.executeUpdate();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("duplicate key value violates unique constraint "))
+                throw new Exception("Đã tồn tại username email hoặc phonenum");
+            e.printStackTrace();
         } catch (Exception e) {
             throw e;
         } finally {
@@ -144,7 +148,7 @@ public class UserRepo extends Repo<User> {
         return user;
     }
 
-    public User getByUsernameAndPassword(String username, String password) throws SQLException {
+    public User getByUsernameAndPassword(String username, String password) throws Exception {
         User user;
         try {
             CreateConnection();
@@ -152,6 +156,31 @@ public class UserRepo extends Repo<User> {
             statement = connection.prepareStatement(sql);
             statement.setString(1, username);
             statement.setString(2, password);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = setObjectFromResultSet(resultSet);
+                if(user.status == false){
+                    throw new Exception("Tài khoản bị khóa");
+                }
+            } else {
+                user = null;
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            CloseConnection();
+        }
+        return user;
+    }
+
+    public User getUserByPhoneNumber(String phoneNumber) throws Exception {
+        User user;
+        try {
+            CreateConnection();
+            sql = "SELECT * FROM users WHERE phonenum=?;";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, phoneNumber);
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

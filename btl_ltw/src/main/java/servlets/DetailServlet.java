@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.Book;
 import models.Comment;
 import repositories.BookRepo;
@@ -32,44 +33,63 @@ public class DetailServlet extends HttpServlet {
         // String bookID = "9377f02d-5f88-4bd6-b251-9183a63bcf87";
         try {
             book = repoB.getById(UUID.fromString(bookID));
+            System.out.println(book.getName());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.print("BOOKID");
-        System.out.println(bookID);
+        // System.out.print("BOOKID");
+        // System.out.println(bookID);
         List<Comment> listComments;
         listComments = commentRepo.GetlistCommentByBookID(bookID, currentPage, commentsPerPage);
         int numberOfPages = commentRepo.getNumberOfPages(bookID, commentsPerPage);
+        int numberComment = repoB.getNumberComments(bookID);
+        float averageComment = repoB.getAverageComment(bookID);
+        if (averageComment == 0) {
+            numberComment = 0;
+        }
+        // System.out.print("count");
+        // System.out.println(numberComment);
+        // System.out.println(averageComment);
         req.setAttribute("bookid", bookID);
         req.setAttribute("listComments", listComments);
         req.setAttribute("book",book);
         req.setAttribute("numberOfPages", numberOfPages);
+        req.setAttribute("averageComment", averageComment);
+        req.setAttribute("numberComment", numberComment);
         req.getRequestDispatcher("/Detail.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userID") == null) {
+            String currentURL = req.getRequestURL().toString();
+            currentURL += "?bookid=" + bookID;
+            session.setAttribute("currentURL", currentURL);
+            resp.sendRedirect("/login");
+            return;
+        }
+        String userID = (String) session.getAttribute("userID");
         String rateStr = req.getParameter("rate");
-        String commentText = req.getParameter("comment_text");
-        System.out.println("comment text:");
-        System.out.println(commentText);
+        String commentText = req.getParameter("comment_text").trim();
         if (rateStr == null || commentText == null || commentText.isEmpty()) {
             System.out.println("Vui lòng nhập comment và chọn số sao!");
-            req.setAttribute("error", "Vui lòng nhập comment và chọn số sao!");
-            resp.sendRedirect("/btl_ltw/detail?bookid="+bookID);
+            req.getSession().setAttribute("error", "Vui lòng nhập comment và chọn số sao!");
+            resp.sendRedirect("/detail?bookid="+bookID);
         } else {
             int rate = Integer.parseInt(rateStr);
             System.out.println(rate);
             Comment newComment = new Comment();
-            newComment.set(UUID.randomUUID(), UUID.fromString(bookID), rate, commentText, new Timestamp(new Date().getTime()));
+            newComment.set(UUID.randomUUID(), UUID.fromString(userID), UUID.fromString(bookID), rate, commentText, new Timestamp(new Date().getTime()));
             int res = commentRepo.Add(newComment);
             System.out.println("okeee");
             if (res != 1) {
                 System.out.println("Thêm mới không thành công!");
-                req.setAttribute("error", "Thêm mới không thành công");
+                req.getSession().setAttribute("error", "Thêm mới không thành công");
             }
-            resp.sendRedirect("/btl_ltw/detail?bookid="+bookID);
+            resp.sendRedirect("/detail?bookid="+bookID);
         }
     }
 }

@@ -13,7 +13,6 @@ public class Book{
     public UUID category_id;
     public double price;
     public double promote_price;
-    public int quantity;
     public String description;
     public String sub_description;
     public boolean status;
@@ -23,8 +22,7 @@ public class Book{
     public UUID last_update_by;
 
     public void set(UUID id, String name, byte[] image, String author, int release_year, UUID category_id, double price,
-            double promote_price,
-            int quantity, String description, String sub_description, boolean status, Timestamp create_time, UUID create_by,
+            double promote_price, String description, String sub_description, boolean status, Timestamp create_time, UUID create_by,
             Timestamp last_update_time, UUID last_update_by) {
         this.id = id;
         this.name = name;
@@ -34,7 +32,6 @@ public class Book{
         this.category_id = category_id;
         this.price = price;
         this.promote_price = promote_price;
-        this.quantity = quantity;
         this.description = description;
         this.sub_description = sub_description;
         this.status = status;
@@ -110,14 +107,6 @@ public class Book{
 
     public void setPromote_price(double promote_price) {
         this.promote_price = promote_price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public String getDescription() {

@@ -1,19 +1,24 @@
-const imgs = document.querySelectorAll('.img-select a');
-const imgBtns = [...imgs];
-let imgId = 1;
 
-imgBtns.forEach((imgItem) => {
-    imgItem.addEventListener('click', (event) => {
-        event.preventDefault();
-        imgId = imgItem.dataset.id;
-        slideImage();
-    });
-});
-
-function slideImage(){
-    const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-
-    document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+var paragraph = document.getElementById("myParagraph");
+if (paragraph.scrollHeight > paragraph.clientHeight) {
+      showMoreButton.style.display = "inline"; /* Hiển thị nút "Xem thêm" */
 }
 
-window.addEventListener('resize', slideImage);
+function showMore() {
+    var paragraph = document.getElementById("myParagraph");
+    var showMoreButton = document.getElementById("showMoreButton");
+    var showLessButton = document.getElementById("showLessButton");
+    paragraph.style.maxHeight = "none"; /* Hiển thị toàn bộ nội dung */
+    showMoreButton.style.display = "none"; /* Ẩn nút "Xem thêm" */
+    showLessButton.style.display = "inline"; /* Hiển thị nút "Ẩn bớt" */
+}
+
+  function showLess() {
+    var paragraph = document.getElementById("myParagraph");
+    var showMoreButton = document.getElementById("showMoreButton");
+    var showLessButton = document.getElementById("showLessButton");
+    paragraph.style.maxHeight = "90px"; /* Giới hạn chiều cao nội dung */
+    showMoreButton.style.display = "inline"; /* Hiển thị nút "Xem thêm" */
+    showLessButton.style.display = "none"; /* Ẩn nút "Ẩn bớt" */
+  }
+ 

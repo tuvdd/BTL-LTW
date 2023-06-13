@@ -10,16 +10,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import repositories.UserRepo;
+import servlets.admin.ServletUtil;
 
 @WebServlet("/admin/user/delete")
 public class DeleteUserServlet extends HttpServlet {
     private UserRepo userRepo;
+
     public DeleteUserServlet() {
         userRepo = new UserRepo();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (!ServletUtil.IsSessionExsited(request, response)) {
+            response.sendRedirect("/admin/login");
+            return;
+        }
         String idParam = request.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Category ID parameter is missing or empty");

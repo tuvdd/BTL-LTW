@@ -26,7 +26,7 @@ public class CategoryServlet extends BaseServlet {
 		super.doGet(req, resp);
 
 		if (!ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin/login");
+			resp.sendRedirect("/admin/login");
 			return;
 		}
 		int page = 1;
@@ -58,7 +58,7 @@ public class CategoryServlet extends BaseServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (!ServletUtil.IsSessionExsited(req, resp)) {
-			resp.sendRedirect("/btl_ltw/admin/login");
+			resp.sendRedirect("/admin/login");
 			return;
 		}
 
@@ -85,7 +85,7 @@ public class CategoryServlet extends BaseServlet {
 				req.getSession().setAttribute("message", e.getMessage());
 				req.getSession().setAttribute("messageType", "error");
 			} finally {
-				resp.sendRedirect("/btl_ltw/admin/category");
+				resp.sendRedirect("/admin/category");
 			}
 			return;
 		}
@@ -102,7 +102,7 @@ public class CategoryServlet extends BaseServlet {
 			req.getSession().setAttribute("message", e.getMessage());
 			req.getSession().setAttribute("messageType", "error");
 		} finally {
-			resp.sendRedirect("/btl_ltw/admin/category");
+			resp.sendRedirect("/admin/category");
 		}
 	}
 }

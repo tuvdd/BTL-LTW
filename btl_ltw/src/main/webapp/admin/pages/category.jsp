@@ -24,14 +24,14 @@ request.getSession().removeAttribute("messageType");
 				<td>${category.getId()}</td>
 				<td>${category.getName()}</td>
 				<td><a
-					href="/btl_ltw/admin/category/change-status?id=${category.getId()}">${category.getStatus()}</a>
+					href="/admin/category/change-status?id=${category.getId()}">${category.getStatus()}</a>
 				</td>
 				<td><a
-					href="/btl_ltw/${category.getUrl()}">${category.getUrl()}</a>
+					href="/${category.getUrl()}">${category.getUrl()}</a>
 				</td>
 				<td>
 					<button onclick="showEditModal('tr-${category.getId()}')">Sửa</button>
-					<button onclick="window.location.href='/btl_ltw/admin/category/delete?id=${category.getId()}'">Xóa</button>
+					<button onclick="window.location.href='/admin/category/delete?id=${category.getId()}'">Xóa</button>
 				</td>
 			</tr>
 		</c:forEach>
@@ -51,7 +51,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 	<li style="display: inline;">
 		<%
 		if (i != currentPage) {
-		%><a href="/btl_ltw/admin/category?page=<%=i%>"><%=i%></a> <%
+		%><a href="/admin/category?page=<%=i%>"><%=i%></a> <%
  } else {
  %><p style="display: inline;"><%=i%></p> <%
  }
@@ -66,7 +66,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 </p>
 <button id="add-new-button" onclick="showAddModal()">Thêm mới</button>
 <div id="add-modal" class="modal">
-	<form method="post" action="/btl_ltw/admin/category" id="add-form">
+	<form method="post" action="/admin/category" id="add-form">
 		<h3>Thêm danh mục</h3>
 		<input name="name" placeholder="Nhập tên danh mục" />
 		<input name="url" placeholder="Nhập đường dẫn" />
@@ -77,7 +77,7 @@ int totalPages = (int) request.getAttribute("totalPages");
 </div>
 
 <div id="edit-modal" class="modal">
-	<form method="post" action="/btl_ltw/admin/category" id="edit-form">
+	<form method="post" action="/admin/category" id="edit-form">
 		<h3>Sửa danh mục</h3>
 		<input id="edit-hidden" type="hidden" name="id" value="" />
 		<div class="form-data-text">
@@ -98,8 +98,8 @@ int totalPages = (int) request.getAttribute("totalPages");
 
 	</form>
 </div>
-<script src="/btl_ltw/admin/resources/js/content.js"
+<script src="/admin/resources/js/content.js"
 	type="text/javascript"></script>
 
-<script src="/btl_ltw/admin/resources/js/category.js"
+<script src="/admin/resources/js/category.js"
 	type="text/javascript"></script>

@@ -15,7 +15,6 @@ public class AdminBookView {
     public String category_name;
     public double price;
     public double promote_price;
-    public int quantity;
     public String description;
     public String sub_description;
     public boolean status;
@@ -81,12 +80,6 @@ public class AdminBookView {
     }
     public void setPromote_price(double promote_price) {
         this.promote_price = promote_price;
-    }
-    public int getQuantity() {
-        return quantity;
-    }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
     public String getDescription() {
         return description;

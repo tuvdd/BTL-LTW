@@ -1,87 +1,83 @@
-<%@page import="java.util.*"%>
-<%@page import="java.text.DecimalFormat"%>
-<%@ page import="models.cart_demo.User" %>
 <%@ page import="models.cart_demo.Cart" %>
-<%@ page import="repositories.cart_demo.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    DecimalFormat dcf = new DecimalFormat("#.##");
-    request.setAttribute("dcf", dcf);
-    User auth = (User) request.getSession().getAttribute("auth");
-    if (auth != null) {
-        request.setAttribute("person", auth);
-    }
-    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-    List<Cart> cartProduct = null;
-    if (cart_list != null) {
-        ProductDao pDao = new ProductDao(DbCon.getConnection());
-        cartProduct = pDao.getCartProducts(cart_list);
-        double total = pDao.getTotalCartPrice(cart_list);
-        request.setAttribute("total", total);
-        request.setAttribute("cart_list", cart_list);
-    }
-%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>E-Commerce Cart</title>
-    <link rel="stylesheet" href="/resources/css/cart.css">
+    <title>Title</title>
+    <link rel = stylesheet href="/resources/css/cart.css">
 
-    <style type="text/css">
-
-        .table tbody td{
-            vertical-align: middle;
-        }
-        .btn-incre, .btn-decre{
-            box-shadow: none;
-            font-size: 25px;
-        }
-    </style>
 </head>
 <body>
 <jsp:include page="Menu.jsp"></jsp:include>
+<div id = wrapper>
+    <header id="site-header">
+        <div class="container">
+            <h1>Shopping cart </h1>
+        </div>
+    </header>
 
-<div class="container my-3">
-    <div class="d-flex py-3"><h3>Total Price: $ ${(total>0)?dcf.format(total):0} </h3> <a class="mx-3 btn btn-primary" href="cart-check-out">Check Out</a></div>
-    <table class="table table-light">
-        <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Price</th>
-            <th scope="col">Buy Now</th>
-            <th scope="col">Cancel</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-            if (cart_list != null) {
-                for (Cart c : cartProduct) {
-        %>
-        <tr>
-            <td><%=c.getName()%></td>
-            <td><%=c.getCategory()%></td>
-            <td><%= dcf.format(c.getPrice())%></td>
-            <td>
-                <form action="order-now" method="post" class="form-inline">
-                    <input type="hidden" name="id" value="<%= c.getId()%>" class="form-input">
-                    <div class="form-group d-flex justify-content-between">
-                        <a class="btn bnt-sm btn-incre" href="quantity-inc-dec?action=inc&id=<%=c.getId()%>"><i class="fas fa-plus-square"></i></a>
-                        <input type="text" name="quantity" class="form-control"  value="<%=c.getQuantity()%>" readonly>
-                        <a class="btn btn-sm btn-decre" href="quantity-inc-dec?action=dec&id=<%=c.getId()%>"><i class="fas fa-minus-square"></i></a>
+    <div class="container">
+
+        <section id="cart">
+            <c:forEach items="${cart_list}" var="c">
+            <article class="product">
+                <header>
+                    <input type="hidden" name="id" value="${c.getId()}" class="form-input">
+                    <a class="remove">
+                        <a href="#"><img src="data:image/png;base64,${c.getImageBase64()}" alt="" /></a>
+                        <h3><a href="remove-from-cart?id=${c.getId()}" >Remove product</a></h3>
+
+                            <%--          <h3 href="remove-from-cart?id=<%=c.getId() %>"><span>Remove product</span> </h3>--%>
+                    </a>
+                </header>
+
+                <div class="content">
+
+                    <h1>${c.getName()}</h1>
+                        <%--        <%=c.getSub_description()%>--%>
+
+                </div>
+
+                <footer class="content">
+                    <a href="quantity-inc-dec?action=dec&id=${c.getId()}"><span class="qt-minus">-</span></a>
+                    <span class="qt">${c.getQuantity()}</span>
+                    <a href="quantity-inc-dec?action=inc&id=${c.getId()}"><span class="qt-minus">+</span></a>
+
+                        <%--        <span class="qt-plus" href="quantity-inc-dec?action=inc&id=${c.getId()}">+</span>--%>
+
+                    <h2 class="full-price">
+                            ${c.getPromote_price()*c.getQuantity()} VNĐ
+                            <%--          ${c.promote_price*c.quantity} VNĐ--%>
+                    </h2>
+
+                    <h2 class="price">
+                            ${c.getPromote_price()} VNĐ
+
+                            <%--        ${c.promote_price} VNĐ--%>
+                    </h2>
+                </footer>
+            </article>
+
+            </c:forEach>
+
+            <footer id="site-footer">
+                <div class="container clearfix">
+
+                    <div class="left">
+                        <h1 class="total">Total: <span>${total}</span>VNĐ</h1>
+                        <a href = "orders.jsp" class="btn">Checkout</a>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm">Buy</button>
-                </form>
-            </td>
-            <td><a href="remove-from-cart?id=<%=c.getId() %>" class="btn btn-sm btn-danger">Remove</a></td>
-        </tr>
 
-        <%
-                }}%>
-        </tbody>
-    </table>
-</div>
+
+                </div>
+            </footer>
+
+    </div>
+
+
 
 <jsp:include page="Footer.jsp"></jsp:include>
+
 </body>
 </html>

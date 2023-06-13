@@ -4,11 +4,7 @@
 	String pageUri = "/login";
 	
 	if (request.getAttribute("isAccessFromServlet") == null){
-		response.sendRedirect("/btl_ltw/admin"+pageUri);
-		return;
-	}
-	if (ServletUtil.IsSessionExsited(request, response)) {
-		response.sendRedirect("home.jsp");
+		response.sendRedirect("/admin"+pageUri);
 		return;
 	}
 %>
@@ -18,27 +14,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Đăng nhập</title>
-<link rel="stylesheet" href="/btl_ltw/admin/resources/css/style.css" />
+<link rel="stylesheet" href="/admin/resources/css/style.css" />
 </head>
 
 <body>
 	<div>
 		<div id="login-form" class="container center _80pc login-panel">
-			<img class="center" src="/btl_ltw/admin/resources/img/logo.png"
+			<img class="center" src="/admin/resources/img/logo.png"
 				style="width: 30%; margin-left: 35%; margin-bottom: 15px;" />
 			<h3 class="center form-header">Đăng nhập hệ thống</h3>
 			<h4 class="center form-header">Hệ thống quản lý bán sách</h4>
-			<form class="center" method="post" action="/btl_ltw/admin/login">
+			<form class="center" method="post" action="/admin/login">
 				<div class="form-label">
-					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/usericon.png">
+					<img class="form-label-icon" src="/admin/resources/img/usericon.png">
 					<label class="form-label-text">Tên đăng nhập:</label>
 				</div>
-				<input type="text" name="username">
+				<input type="text" name="username" required>
 				<div class="form-label">
-					<img class="form-label-icon" src="/btl_ltw/admin/resources/img/passicon.png">
+					<img class="form-label-icon" src="/admin/resources/img/passicon.png">
 					<label class="form-label-text">Mật khẩu:</label>
 				</div>
-				<input type="password" name="password"> <br />
+				<input type="password" name="password" required> <br />
 
 				<%
 				String error = (String) request.getSession().getAttribute("error");

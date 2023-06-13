@@ -7,20 +7,18 @@
     int numberOfPages = (int) request.getAttribute("numberOfPages");
     String bookid = (String) request.getAttribute("bookid");
     Book book = (Book) request.getAttribute("book");
+    int numberComment = (int) request.getAttribute("numberComment");
+    float averageComment = (float) request.getAttribute("averageComment");
+    int fullStars = (int) averageComment;
+    boolean hasHalfStar = averageComment % 1 != 0;
 %>
-<%
-    String error = (String) session.getAttribute("error");
-    if (error != null) {
-%>
-    <script>alert("error", "aa")</script>
-<%  } %>
-            
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Product Card/Page</title>
+        <title>Chi tiết sản phẩm</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/resources/css/detail2.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
@@ -42,94 +40,60 @@
                             <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
                         </div>
                     </div>
-                    <div class = "img-select">
-                        <div class = "img-item">
-                            <a href = "#" data-id = "1">
-                                <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
-                            </a>
-                        </div>
-                        <div class = "img-item">
-                            <a href = "#" data-id = "2">
-                                <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
-                            </a>
-                        </div>
-                        <div class = "img-item">
-                            <a href = "#" data-id = "3">
-                                <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
-                            </a>
-                        </div>
-                        <div class = "img-item">
-                            <a href = "#" data-id = "4">
-                                <img src = "data:image/png;base64,${book.getImageBase64()}" alt = "shoe image">
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
                 <!-- card right -->
                 <div class = "product-content">
                     <h2 class = "product-title">${book.name}</h2>
-                    <a href = "#" class = "product-link">visit nike store</a>
                     <div class = "product-rating">
-                        <i class = "fas fa-star"></i>
-                        <i class = "fas fa-star"></i>
-                        <i class = "fas fa-star"></i>
-                        <i class = "fas fa-star"></i>
-                        <i class = "fas fa-star-half-alt"></i>
-                        <span>4.7(21)</span>
+                        <%
+                            int countLocal = 0;
+                            for (int i = 0; i < fullStars; i++) {
+                                countLocal += 1;
+                        %>
+                            <div class="star_yellow"></div>
+                        <%
+                            }
+                            if (hasHalfStar) {
+                                countLocal += 1;
+                        %>
+                            <div class="half_star"></div>
+                        <%
+                            }
+                            for (int i=0; i< 5-countLocal; i++) {
+                        %>      
+                            <div class="star_gray"></div>
+                        <% } %>
+                        <span>  Xếp hạng ${averageComment} (${numberComment} đánh giá)</span>
                     </div>
 
                     <div class = "product-price">
-                        <p class = "last-price">Old Price: <span>${book.price}</span></p>
-                        <p class = "new-price">New Price: <span>${book.promote_price}</span></p>
-                    </div>
-
-                    <div class = "product-detail">
-                        <h2>about this item: </h2>
-                        <p>${book.description}</p>
-                        <ul>
-                            <li>Color: <span>Black</span></li>
-                            <li>Available: <span>Còn hàng</span></li>
-                            <li>Category: <span>Trinh thám</span></li>
-                            <li>Shipping Area: <span>Toàn thế giới</span></li>
-                            <li>Shipping Fee: <span>Free</span></li>
-                        </ul>
+                        <p class = "last-price">Giá cũ: <span>${book.price}</span></p>
+                        <p class = "new-price">Giá mới: <span>${book.promote_price}</span></p>
                     </div>
 
                     <div class = "purchase-info">
                         <input type = "number" min = "0" value = "1">
-                        <button type = "button" class = "btn">
-                            Add to Cart <i class = "fas fa-shopping-cart"></i>
+                        <button type = "button" class = "btn" onclick="location.href='/add-to-cart?id=${book.getId()}'">>
+                            Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
                         </button>
-                        <button type = "button" class = "btn">Compare</button>
-                    </div>
-
-                    <div class = "social-links">
-                        <p>Share At: </p>
-                        <a href = "#">
-                            <i class = "fab fa-facebook-f"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-twitter"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-instagram"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-whatsapp"></i>
-                        </a>
-                        <a href = "#">
-                            <i class = "fab fa-pinterest"></i>
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class = "product-detail">
+            <h2>Giới thiệu về sách:</h2>
+            <p id="myParagraph">${book.description}</p>
+            <button id="showMoreButton" onclick="showMore()">Xem thêm</button>
+            <button id="showLessButton" onclick="showLess()">Ẩn bớt</button>
+        </div>
+
         <div class="comment-wrapper">
-            <form action="/btl_ltw/detail" method="post">
+            <form action="/detail" method="post">
                 <div class="add-comment">
-                    <h1>Add Comment</h1>
-                    <h3>Rating</h3>
+                    <h1>Thêm đánh giá</h1>
+                    <h3>Xếp hạng</h3>
                     <div class="rate">
                         <input type="radio" id="star5" name="rate" value="5" />
                         <label for="star5" title="text">5 stars</label>
@@ -143,24 +107,37 @@
                         <label for="star1" title="text">1 star</label>
                     </div>
 
-                    <textarea id="comment_text", name="comment_text" placeholder="Write your comment..."></textarea>
-                    <button class="btn" onclick="submitReview()">Submit</button>
+                    <textarea id="comment_text", name="comment_text" placeholder="Viết đánh giá của bạn..."></textarea>
+                    <button class="btn">Gửi</button>
+                    <%
+                    String error = (String) request.getSession().getAttribute("error");
+                    if (error != null) {
+                    %>
+                    <p style="color: red; font-size: 15px;"><%=error%></p>
+                    <%
+                    request.getSession().removeAttribute("error");
+                    }
+                    %>
                 </div>
             </form>
 
             
             <div class="review-comments">
-                <h1 class="title-reviews">Reviews</h1>
+                <h1 class="title-reviews">Tất cả đánh giá</h1>
                 <div class="list-comments">
                     <% if (listComments.size() == 0) { %>
-                        <p>Chưa có review nào!</p>
+                        <p>Chưa có đánh giá nào!</p>
                     <%} else { %>
                         <c:forEach var="comment" items="${listComments}">
                             <div class="user_comment">
+                                <div class="username">
+                                    <h3>${comment.getUsername()}</h3>
+                                    <p>${comment.getStringCreate_at()}</p>
+                                </div>
                                 <div class="rating">
                                     <div class="stars">
                                     <c:forEach var="number" begin="1" end="${comment.getRate()}">
-                                            <div class="star_yellow">a</div>
+                                            <div class="star_yellow"></div>
                                         </c:forEach>
                                         <c:forEach var="number" begin="1" end="${5 - comment.getRate()}">
                                             <div class="star_gray"></div>
@@ -168,7 +145,7 @@
 
                                     </div>
                                     <div class="rating_text">
-                                        <p>${comment.getRate()} stars</p>
+                                        <p>${comment.getRate()} sao</p>
                                     </div>
                                 </div>
                                 <div class="text_cmt">
@@ -183,15 +160,15 @@
             <div class="pagination">
                 <% for (int i = 1; i <= numberOfPages; i++) { %>
                     <div class="page-item">
-                        <a href="/btl_ltw/detail?bookid=${bookid}&page=<%= i %>"><%= i %></a>
+                        <a href="/detail?bookid=${bookid}&page=<%= i %>"><%= i %></a>
                     </div>
                 <% } %>
               </div>
               
         </div>
         
- 
-        <script src="/btl_ltw/resources/detail.js"></script>
+        
+        <script src="/resources/js/detail.js"></script>
     <jsp:include page="Footer.jsp"></jsp:include>
 
     </body>

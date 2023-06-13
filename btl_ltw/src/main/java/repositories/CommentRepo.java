@@ -2,6 +2,7 @@ package repositories;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,13 +14,14 @@ public class CommentRepo extends Repo<Comment> {
         int response = 0;
         CreateConnection();
         try {
-            sql = "INSERT INTO comment (id, book_id, rate, comment, create_at) VALUES (?, ?, ?, ?, ?);";
+            sql = "INSERT INTO comments (id, user_id, book_id, rate, comment_text, create_at) VALUES (?, ?, ?, ?, ?, ?);";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, UUID.randomUUID());
-            statement.setObject(2, comment.getBookId());
-            statement.setInt(3, comment.getRate());
-            statement.setString(4, comment.getComment());
-            statement.setTimestamp(5, comment.getCreate_at());
+            statement.setObject(2, comment.getUserID());
+            statement.setObject(3, comment.getBookId());
+            statement.setInt(4, comment.getRate());
+            statement.setString(5, comment.getComment());
+            statement.setTimestamp(6, comment.getCreate_at());
             response = statement.executeUpdate();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -36,7 +38,7 @@ public class CommentRepo extends Repo<Comment> {
         CreateConnection();
 
         try {
-            sql = "UPDATE comment SET rate = ?, comment = ?, create_at = ? WHERE id = ?";
+            sql = "UPDATE comments SET rate = ?, comment_text = ?, create_at = ? WHERE id = ?";
             statement = connection.prepareStatement(sql);
             statement.setFloat(1, comment.getRate());
             statement.setString(2, comment.getComment());
@@ -58,7 +60,7 @@ public class CommentRepo extends Repo<Comment> {
         int response = 0;
         CreateConnection();
         try {
-            sql = "DELETE FROM comment WHERE id=?;";
+            sql = "DELETE FROM comments WHERE id=?;";
             statement = connection.prepareStatement(sql);
             statement.setString(1, id.toString());
             response = statement.executeUpdate();
@@ -76,9 +78,10 @@ public class CommentRepo extends Repo<Comment> {
         Comment response = new Comment();
         response.set(
             UUID.fromString(resultSet.getString("id")),
+            UUID.fromString(resultSet.getString("user_id")),
             UUID.fromString(resultSet.getString("book_id")),
             resultSet.getInt("rate"),
-            resultSet.getString("comment"),
+            resultSet.getString("comment_text"),
             resultSet.getTimestamp("create_at")
         );
 		return response;
@@ -90,14 +93,19 @@ public class CommentRepo extends Repo<Comment> {
         List<Comment> comments = new ArrayList<>();
         CreateConnection();
         try {
-            sql = "SELECT * FROM comment WHERE book_id=? ORDER BY create_at DESC LIMIT ? OFFSET ?;";
+            sql = "SELECT c.comment_text, c.rate, c.create_at, u.name FROM comments c JOIN Users u ON c.user_id = u.id WHERE c.book_id = ? ORDER BY create_at DESC LIMIT ? OFFSET ?;";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, UUID.fromString(book_id));
             statement.setInt(2, size);
             statement.setInt(3, (page - 1)*size);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
-                Comment comment = setObjectFromResultSet(resultSet);
+                String commentText = resultSet.getString("comment_text");
+                int rate = resultSet.getInt("rate");
+                String name = resultSet.getString("name");
+                Timestamp create_at = resultSet.getTimestamp("create_at");
+                Comment comment = new Comment();
+                comment.setPropertyFromResultSet(name, commentText, rate, create_at);
                 comments.add(comment);
             }
         } catch (Exception ex) {
@@ -114,7 +122,7 @@ public class CommentRepo extends Repo<Comment> {
         int res = 0;
         CreateConnection();
         try {
-            sql = "SELECT * from comment Where book_id=?";
+            sql = "SELECT * from comments Where book_id=?";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, UUID.fromString(book_id));
             ResultSet resultSet = statement.executeQuery();

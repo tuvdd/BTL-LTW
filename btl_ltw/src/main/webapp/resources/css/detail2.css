@@ -79,8 +79,11 @@ img{
 }
 .product-rating{
     color: #ffc107;
+    display: flex;
+    align-items: center;
 }
 .product-rating span{
+    margin-left: 10px;
     font-weight: 600;
     color: #252525;
 }
@@ -99,33 +102,7 @@ img{
 .new-price span{
     color: #256eff;
 }
-.product-detail h2{
-    text-transform: capitalize;
-    color: #12263a;
-    padding-bottom: 0.6rem;
-}
-.product-detail p{
-    font-size: 0.9rem;
-    padding: 0.3rem;
-    opacity: 0.8;
-}
-.product-detail ul{
-    margin: 1rem 0;
-    font-size: 0.9rem;
-}
-.product-detail ul li{
-    margin: 0;
-    list-style: none;
-    background: url(/client/checked.png) left center no-repeat;
-    background-size: 18px;
-    padding-left: 1.7rem;
-    margin: 0.4rem 0;
-    font-weight: 600;
-    opacity: 0.9;
-}
-.product-detail ul li span{
-    font-weight: 400;
-}
+
 .purchase-info{
     margin: 1.5rem 0;
 }
@@ -276,7 +253,10 @@ h1 {
     color: white;
     cursor: pointer;
 }
+.add-comment p {
+    text-align: center;
 
+}
 .add-comment .btn:hover {
     background-color: #45a049;
 }
@@ -306,16 +286,25 @@ h1 {
     padding: 20px;
 }
 
+.user_comment .username {
+    display: flex;
+    height: 20px;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
 .rating {
     display: flex;
     align-items: center;
     height: 20px;
-
 }
 
 .stars {
     display: inline-block;
     height: fit-content;
+    display: flex;
+    align-items: center;
 }
 
 .star_yellow {
@@ -328,7 +317,7 @@ h1 {
 .half_star {
     width: 20px;
     height: 20px;
-    content: url(/half_star.png);
+    content: url(../img/half_star.png);
     display: inline-block;
 }
 
@@ -382,3 +371,36 @@ h1 {
     color: gray;
     padding: 20px
 }
+
+.product-detail {
+    width: 80%;
+    height: fit-content;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.product-detail h2{
+    text-transform: capitalize;
+    color: #12263a;
+}
+.product-detail p{
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    opacity: 0.8;
+}
+
+#myParagraph {
+    max-height: 90px; 
+    overflow: hidden; 
+  }
+  #showMoreButton, #showLessButton {
+    display: none;
+  }
+.product-detail button {
+    background-color: transparent; 
+    border: none;
+    text-decoration: underline;
+    cursor: pointer; 
+    color: blue;
+}
+ 

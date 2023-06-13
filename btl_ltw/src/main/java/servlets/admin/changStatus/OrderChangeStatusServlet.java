@@ -36,7 +36,7 @@ public class OrderChangeStatusServlet extends HttpServlet {
                 request.getSession().setAttribute("message", "Đổi trạng thái không thành công!");
                 request.getSession().setAttribute("messageType", "error");
             }
-            response.sendRedirect("/btl_ltw/admin/order");
+            response.sendRedirect("/admin/order");
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().append("Lỗi khi thay đổi trạng thái của order!");

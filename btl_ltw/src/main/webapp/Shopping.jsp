@@ -1,128 +1,203 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+	<%@page import="java.util.*, java.text.*, servlets.admin.ServletUtil, models.dtos.*, models.*" language="java"
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+		<!DOCTYPE html>
+		<html>
 
-<head>
-    <link rel="stylesheet" href="/resources/css/shopping.css" />
-    <title>Ecommerce Website</title>
-</head>
+		<head>
+			<link rel="stylesheet" href="/resources/css/shopping.css" />
+			<title>Ecommerce Website</title>
+		</head>
 
-<body>
-    <jsp:include page="Menu.jsp"></jsp:include>
+		<body>
+			<jsp:include page="Menu.jsp"></jsp:include>
 
-    <div id = "wrapper">
-        <div id="menu_tab">
-            <c:set var="cat" value="${requestScope.data}"/>
-            <c:set var="cid" value="${requestScope.cid}"/>
-            <ul class="menu">
-                <li><a class="${cid==0?"active":""}" href="shopping1?cid=0">ALL</a></li>
-                <c:forEach items="${cat}" var="c">
-                    <li><a class="${cat.indexOf(c)+1==cid?"active":""}" href="shopping1?cid=${cat.indexOf(c)+1}">${c.name}</a></li>
-                </c:forEach>
-            </ul>
-        </div>
+			<div id="wrapper">
+				<div id="menu_tab"></div>
 
-        <div class="clr"></div>
+				<div class="clr"></div>
 
-        <div id="content">
-            <div id="tab1">
-                <div id = "tab11">
-                    <c:set var="chid" value="${requestScope.chid}"/>
-                    <h5 style="color: chocolate">TÊN HÃNG</h5>
-                    <hr style="border-top: 1px solid chocolate "/>
-                    <form id="f1" action="shopping1">
-                        <input type="checkbox" id="c0" name="cidd"
-                        ${chid[0]?"checked":""}
-                               value="${0}" onclick="setCheck(this)"/>All<br/>
-                        <c:forEach begin="0" end="${cat.size()-1}"  var="i">
-                            <input type="checkbox" id="cm" name="cidd"
-                                ${i+1==cid?"checked":""}
-                                   value="${i+1}"
-                                ${chid[i+1]?"checked":""}   onclick="setCheck(this)" />
-                            ${cat.get(i).getName()}
-                            <br/>
-                        </c:forEach>
-                    </form>
-                    <h5 style="color: chocolate">MỨC GIÁ</h5>
-                    <hr style="border-top: 1px solid chocolate "/>
-                    <c:set var="pp" value="${requestScope.pp}"/>
-                    <c:set var="pb" value="${requestScope.pb}"/>
-                    <form id="f2" action="shopping1">
-                        <input type="checkbox" id="g0" name="price"
-                        ${pb[0]?"checked":""}
-                               value="0" onclick="setCheck1(this)"/>All<br/>
-                        <c:forEach begin="0" end="${4}"  var="i">
-                            <input type="checkbox" id="g1" name="price"
-                                ${pb[i+1]?"checked":""}
-                                   value="${(i+1)}" onclick="setCheck1(this)"/>${pp[i]}<br/>
-                        </c:forEach>
-                    </form>
-                </div>
+				<div id="content">
+					<div id="tab1">
+						<div id="tab11">
+							<h5 style="color: white">Danh mục sản phẩm</h5>
+							<hr style="border-top: 1px solid chocolate" />
+							<form>
+								<a href="/danh-sach-san-pham">
+									<c:choose>
+										<c:when test="${tenDanhMuc == null}">
+											<strong>Tất cả</strong>
+										</c:when>
+										<c:otherwise>
+											Tất cả
+										</c:otherwise>
+									</c:choose>
+								</a>
+								<c:forEach items="${categories}" var="category">
+									<a href="/danh-sach-san-pham?urldanhmuc=${category.url}">
+										<c:choose>
+											<c:when test="${tenDanhMuc == category.name}">
+												<strong>${category.name}</strong>
+											</c:when>
+											<c:otherwise>
+												${category.name}
+											</c:otherwise>
+										</c:choose>
+									</a>
+								</c:forEach>
+							</form>
+							<br />
+							<h5 style="color: white">Sắp xếp</h5>
+							<hr style="border-top: 1px solid white" />
+							<form>
+								<a href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }">
+									<c:choose>
+										<c:when test="${tenDanhMuc == null}">
+											<strong>Tất cả</strong>
+										</c:when>
+										<c:otherwise>
+											Tất cả
+										</c:otherwise>
+									</c:choose>
+								</a>
+								<a
+									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=AZ${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									<c:choose>
+										<c:when test="${filter == 'AZ'}">
+											<strong>A đến Z</strong>
+										</c:when>
+										<c:otherwise>
+											A đến Z
+										</c:otherwise>
+									</c:choose>
+								</a> <a
+									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=ZA${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									<c:choose>
+										<c:when test="${filter == 'ZA'}">
+											<strong>Z đến A</strong>
+										</c:when>
+										<c:otherwise>
+											Z đến A
+										</c:otherwise>
+									</c:choose>
+								</a> <a
+									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=NEWEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									<c:choose>
+										<c:when test="${filter == 'NEWEST'}">
+											<strong>Mới nhất</strong>
+										</c:when>
+										<c:otherwise>
+											Mới nhất
+										</c:otherwise>
+									</c:choose>
+								</a> <a
+									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=OLDEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									<c:choose>
+										<c:when test="${filter == 'OLDEST'}">
+											<strong>Cũ nhất</strong>
+										</c:when>
+										<c:otherwise>
+											Cũ nhất
+										</c:otherwise>
+									</c:choose>
+								</a> <a
+									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=LOWEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									<c:choose>
+										<c:when test="${filter == 'LOWEST'}">
+											<strong>Giá thấp đến cao</strong>
+										</c:when>
+										<c:otherwise>
+											Giá thấp đến cao
+										</c:otherwise>
+									</c:choose>
+								</a> <a
+									href="/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }&filter=HIGHEST${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}${pricemax != null ? '&pricemax=':''}${pricemax != null ? pricemax : ''}">
+									<c:choose>
+										<c:when test="${filter == 'HIGHEST'}">
+											<strong>Giá cao đến thấp</strong>
+										</c:when>
+										<c:otherwise>
+											Giá cao đến thấp
+										</c:otherwise>
+									</c:choose>
+								</a>
+							</form>
+							<br />
+							<h5 style="color: white">MỨC GIÁ</h5>
+							<hr style="border-top: 1px solid white" />
+							<form>
+								<label for="lowest">Lowest:</label> <input type="text" id="lowest" name="lowest"
+									value="${pricemin}"> <label for="highest">Highest:</label>
+								<input type="text" id="highest" name="highest" value="${pricemax}">
+								<button type="button" onclick="filter()">Lọc</button>
+							</form>
 
-            </div>
-            <div id="tab2">
-                <div id = "tab22">
-                    <c:set var="news" value="${requestScope.news}"/>
-                    <c:if test="${news!=null}">
-                        <h4 style="color: chocolate">SÁCH MỚI </h4>
-                        <ul class="item">
-                            <c:forEach items="${news}" var="p">
-                                <li>
-                                    <a href="detail?bookid=${p.getId()}">
-                                        <img src="data:image/png;base64,${p.getImageBase64()}" alt="" width="80px" height="80px" />
-                                        <p>${p.name}</p>
-                                        <p>gia goc: <span class="old">${(p.price)}</span>VND</p>
-                                        <p>Sale:${(p.price)}VND</p>
-                                    </a>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                        <hr/>
-                    </c:if>
+							<script>
+								function filter() {
+									var lowest = document.getElementById("lowest").value;
+									var highest = document.getElementById("highest").value;
+									var url = "/danh-sach-san-pham?${urldanhmuc==null ? '' : 'urldanhmuc='}${urldanhmuc==null ? '' : urldanhmuc }${filter == null ? '' : '&filter='}${filter == null ? '' : filter }";
+									if (lowest !== "") {
+										url += "?&pricemin=" + lowest;
+									}
+									if (highest !== "") {
+										url += "&pricemax=" + highest;
+									}
+									window.location.href = url;
+								}
+							</script>
+						</div>
 
-                    <c:set var="olds" value="${requestScope.olds}"/>
-                    <c:if test="${olds!=null}">
-                        <h4 style="color: chocolate">SÁCH KHUYẾN MẠI </h4>
-                        <ul class="item">
-                            <c:forEach items="${olds}" var="p">
-                                <li>
-                                    <a href="detail?bookid=${p.getId()}">
-                                        <img src="data:image/png;base64,${p.getImageBase64()}" alt="" width="80px" height="80px" />
-                                        <p>${p.name}</p>
-                                        <p>gia goc: <span class="old">${(p.price)}</span>VND</p>
-                                        <p>Sale:${(p.price)}VND</p>
-                                    </a>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                        <hr/>
-                    </c:if>
+					</div>
+					<div id="tab2">
+						<div id="tab22">
+							<% List<Book> data = (List<Book>) request.getAttribute("data");
+									%>
+									<c:if test="${data!=null}">
+										<h4 style="color: chocolate">${tenDanhMuc}</h4>
+										<ul class="item">
+											<c:forEach items="${data}" var="b">
+												<li><a href="detail?bookid=${b.getId()}"> <img
+															src="data:image/png;base64,${b.getImageBase64()}" alt=""
+															width="80px" height="80px" />
+														<p>${b.name}</p>
+														<p>
+															Giá gốc: <span class="old">${(b.price)}</span>VND
+														</p>
+														<p>Giảm giá:${(b.price)}VND</p>
+													</a></li>
+											</c:forEach>
+										</ul>
+										<% int currentPage=request.getAttribute("page")==null ? 1 :
+											Integer.parseInt((String) request.getAttribute("page")); int size=9; int
+											totalRecords=(int) request.getAttribute("total"); int
+											totalPages=totalRecords % size==0 ? totalRecords / size : totalRecords /
+											size + 1; %>
+											<p style="display: inline;">Trang</p>
+											<ul class="pagination" style="display: inline;">
+												<% for (int i=1; i <=totalPages; i++) { %>
+													<li style="display: inline;">
+														<% if (i !=currentPage) { %><a href="${currentUrl}&page=<%=i%>">
+																<%=i%>
+															</a>
+															<% } else { %>
+																<p style="display: inline;">
+																	<%=i%>
+																</p>
+																<% } %>
+													</li>
+													<% } %>
+											</ul>
+											<hr />
+									</c:if>
+						</div>
 
-                    <c:set var="list" value="${requestScope.products}"/>
-                    <c:if test="${list!=null}">
-                        <h4 style="color: chocolate">SÁCH (${list.size()} sản phẩm)</h4>
-                        <ul class="item">
-                            <c:forEach items="${list}" var="p">
-                                <li>
-                                    <a href="detail?bookid=${p.getId()}">
-                                        <img src="data:image/png;base64,${p.getImageBase64()}" alt="" width="80px" height="80px" />
-                                        <p>${p.name}</p>
-                                        <p>gia goc: <span class="old">${(p.price)}</span>VND</p>
-                                        <p>Sale:${(p.price)}VND</p>
-                                    </a>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </c:if>
-                </div>
+					</div>
+				</div>
+			</div>
+			<div class="clr"></div>
+			<jsp:include page="Footer.jsp"></jsp:include>
 
-            </div>
-        </div>
-    </div>
-    <div class="clr"></div>
-    <jsp:include page="Footer.jsp"></jsp:include>
+		</body>
 
-</body>
-
-</html>
+		</html>
