@@ -72,11 +72,11 @@ public class CartDao {
         return book;
     }
 
-    public int saveToCart(String bookID, String userID, int quantity) throws Exception {
+    public int saveToCart(String id, String bookID, String userID, int quantity) throws Exception {
         int rowsAffected = 0;
         Object userId;
         if (userID == ""){
-            userId = UUID.randomUUID();
+            userId = null;
         } else {
             userId = UUID.fromString(userID);
         }
@@ -84,7 +84,7 @@ public class CartDao {
 
             query = "INSERT INTO cart_list (id, user_id, book_id, quantity) VALUES (?, ?, ?, ?);";
             pst = this.con.prepareStatement(query);
-            pst.setObject(1, UUID.randomUUID());
+            pst.setObject(1, UUID.fromString(id));
             pst.setObject(2, userId);
             pst.setObject(3, UUID.fromString(bookID));
             pst.setInt(4, quantity);
@@ -99,12 +99,13 @@ public class CartDao {
         int rowsAffected = 0;
         try {
             for(Cart c : cartList){
-                query = "UPDATE cart_list SET id = ?, user_id = ?, book_id = ?, quantity = ? WHERE id = ?;";
+                query = "UPDATE cart_list SET user_id = ?, book_id = ?, quantity = ? WHERE id = ?;";
                 pst = this.con.prepareStatement(query);
-                pst.setObject(1, c.getId());
-                pst.setObject(2, c.getUser_id());
-                pst.setObject(3, c.getBook_id());
-                pst.setInt(4, c.getQuantity());
+                pst.setObject(1, c.getUser_id());
+                pst.setObject(2, c.getBook_id());
+                pst.setInt(3, c.getQuantity());
+                pst.setObject(4, c.getId());
+
                 rowsAffected = pst.executeUpdate();
             }
         } catch (SQLException e) {
