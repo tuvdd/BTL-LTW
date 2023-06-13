@@ -1,5 +1,16 @@
+<%@ page import="models.cart_demo.Cart" %>
+<%@ page import="java.util.List" %>
+<%@ page import="repositories.cart_demo.CartDao" %>
+<%@ page import="repositories.cart_demo.DbCon" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+  List<Cart> cart_list = (List<Cart>) request.getSession().getAttribute("cart_list");
+  System.out.println(cart_list + "cart_jsp");
+  session.setAttribute("cart_list", cart_list);
+  CartDao cartDao = new CartDao(DbCon.getConnection());
+  double total = cartDao.getTotalCartPrice(cart_list);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,15 +52,26 @@
           <h4>Cart
             <span class="price" style="color:black">
                     <i class="fa fa-shopping-cart"></i>
-                    <b>4</b>
+                    <b><%=cart_list.size()%></b>
                   </span>
           </h4>
-          <p><a href="#">Product 1</a> <span class="price">$15</span></p>
-          <p><a href="#">Product 2</a> <span class="price">$5</span></p>
-          <p><a href="#">Product 3</a> <span class="price">$8</span></p>
-          <p><a href="#">Product 4</a> <span class="price">$2</span></p>
+          <%
+            if(cart_list!=null){
+              for(Cart c : cart_list){
+
+
+          %>
+
+          <p><a href="#"><%=c.getName()%> x <%=c.getQuantity()%></a> <span class="price"><%=c.getPromote_price()%></span></p>
+<%--          <p><a href="#">Product 2</a> <span class="price">$5</span></p>--%>
+<%--          <p><a href="#">Product 3</a> <span class="price">$8</span></p>--%>
+<%--          <p><a href="#">Product 4</a> <span class="price">$2</span></p>--%>
+          <%
+              }
+            }
+          %>
           <hr>
-          <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
+          <p>Total <span class="price" style="color:black"><b><%=total%>></b></span></p>
         </div>
       </div>
     </div>

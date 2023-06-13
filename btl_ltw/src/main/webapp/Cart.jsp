@@ -80,7 +80,7 @@
 
                     <div class="left">
                         <h1 class="total">Total: <span>${total}</span>VNĐ</h1>
-                        <a href = "orders.jsp" class="btn">Checkout</a>
+                        <a href = "orders.jsp?total=${total}" class="btn">Checkout</a>
                     </div>
 
 
