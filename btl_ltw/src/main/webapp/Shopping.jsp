@@ -168,11 +168,10 @@
 													</a></li>
 											</c:forEach>
 										</ul>
-										<% int currentPage=request.getAttribute("page")==null ? 1 :
-											Integer.parseInt((String) request.getAttribute("page")); int size=9; int
-											totalRecords=(int) request.getAttribute("total"); int
-											totalPages=totalRecords % size==0 ? totalRecords / size : totalRecords /
-											size + 1; %>
+										<% int currentPage=request.getAttribute("page")==null ? 1 : Integer.parseInt((String) request.getAttribute("page")); 
+											int size=2; 
+											int totalRecords=(int) request.getAttribute("total"); 
+											int totalPages=totalRecords % size==0 ? totalRecords / size : totalRecords / size + 1; %>
 											<p style="display: inline;">Trang</p>
 											<ul class="pagination" style="display: inline;">
 												<% for (int i=1; i <=totalPages; i++) { %>

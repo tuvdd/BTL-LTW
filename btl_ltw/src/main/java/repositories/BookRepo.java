@@ -74,23 +74,15 @@ public class BookRepo extends Repo<Book> {
 		CreateConnection();
 		try {
 			String sql = "SELECT * FROM books WHERE name LIKE ? OR author LIKE ?";
-			if (page > 0 && size > 0) {
-				int offset = (page - 1) * size;
-				sql += " OFFSET ? LIMIT ? ;";
-				statement = connection.prepareStatement(sql);
-				String searchParam = "%" + searchQuery + "%";
-				statement.setString(1, searchParam);
-				statement.setString(2, searchParam);
-				statement.setInt(3, offset);
-				statement.setInt(4, size);
-			} else {
-				sql += " ;";
-				statement = connection.prepareStatement(sql);
-				String searchParam = "%" + searchQuery + "%";
-				statement.setString(1, searchParam);
-				statement.setString(2, searchParam);
-			}
-			ResultSet resultSet = statement.executeQuery();
+			int offset = (page - 1) * size;
+			sql += " OFFSET ? LIMIT ? ;";
+			statement = connection.prepareStatement(sql);
+			String searchParam = "%" + searchQuery + "%";
+			statement.setString(1, searchParam);
+			statement.setString(2, searchParam);
+			statement.setInt(3, offset);
+			statement.setInt(4, size);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Book book = setObjectFromResultSet(resultSet);
 				books.add(book);
