@@ -95,15 +95,26 @@ public class BookRepo extends Repo<Book> {
 		return books;
 	}
 
-	public int getCountSearchBook(String searchQuery) {
+	public int getCountSearchBook(String searchQuery, String urldanhmuc) {
 		int res = 0;
-		sql = "SELECT COUNT(*) FROM books WHERE name LIKE ? OR author LIKE ?;";
+		List<Object> param = new ArrayList<>();
+		
+		if (urldanhmuc == null) {
+			sql = "SELECT count(*) FROM books WHERE status = TRUE ";
+		} else {
+			sql = "SELECT count(*) FROM books JOIN categories ON books.category_id = categories.id WHERE categories.url = ? AND books.status = TRUE AND categories.status = TRUE";
+			param.add(urldanhmuc);
+		}
+		sql += "and books.name LIKE ? OR author LIKE ?";
+		String searchParam = "%" + searchQuery + "%";
+		param.add(searchParam);
+		param.add(searchParam);
 		try {
 			CreateConnection();
 			statement = connection.prepareStatement(sql);
-			String searchParam = "%" + searchQuery + "%";
-			statement.setString(1, searchParam);
-			statement.setString(2, searchParam);
+			for(int i = 0; i < param.size(); i++) {
+				statement.setObject(i+1, param.get(i));
+			}
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				res = resultSet.getInt("count");
@@ -500,6 +511,92 @@ public class BookRepo extends Repo<Book> {
 		return res;
 	}
 
+	public List<Book> getListSearchBooks(String searchQuery, int page, int size, String urldanhmuc, String filter, String priceMin, String priceMax) {
+		List<Object> params = new ArrayList<Object>();
+
+		// Xử lý điều kiện với urldanhmuc.
+		if (urldanhmuc == null) {
+			// Nếu urldanhmuc bị null, lấy tất cả sách.
+			sql = "SELECT * FROM books WHERE status = TRUE ";
+		} else {
+			// Ngược lại, join với bảng categories với điều kiện categories.id =
+			// books.category_id.
+			sql = "SELECT * FROM books JOIN categories ON books.category_id = categories.id WHERE categories.url = ? AND books.status = TRUE AND categories.status = TRUE";
+			params.add(urldanhmuc);
+		}
+		
+		// Xử lý tìm kiếm
+		sql += "and ( books.name LIKE ? OR author LIKE ? )";
+		String searchParam = "%" + searchQuery + "%";
+		params.add(searchParam);
+		params.add(searchParam);
+		
+		// Xử lý điều kiện với priceMin và priceMax.
+		if (priceMin != null) {
+			sql += " AND COALESCE(promote_price, price) >= ?";
+			params.add(Double.parseDouble(priceMin));
+		}
+		if (priceMax != null) {
+			sql += " AND COALESCE(promote_price, price) <= ?";
+			params.add(Double.parseDouble(priceMax));
+		}
+
+		// Xử lý điều kiện với filter.
+		if (filter == null) {
+			// Nếu filter bị null, mặc định lấy theo thời gian tạo mới nhất.
+			sql += " ORDER BY create_time DESC";
+		} else {
+			switch (filter) {
+			case "AZ":
+				sql += " ORDER BY books.name ASC";
+				break;
+			case "ZA":
+				sql += " ORDER BY books.name DESC";
+				break;
+			case "NEWEST":
+				sql += " ORDER BY create_time DESC";
+				break;
+			case "OLDEST":
+				sql += " ORDER BY create_time ASC";
+				break;
+			case "LOWEST":
+				sql += " ORDER BY price ASC";
+				break;
+			case "HIGHEST":
+				sql += " ORDER BY price DESC";
+				break;
+			default:
+				break;
+			}
+		}
+		
+		//Phân trang
+		int offset = (page - 1) * size;
+		sql += " OFFSET ? LIMIT ? ;";
+		params.add(offset);
+		params.add(size);
+		
+		// Thực hiện câu truy vấn và trả về kết quả.
+		List<Book> books = new ArrayList<Book>();
+				try {
+					CreateConnection();
+					statement = connection.prepareStatement(sql);
+					for (int i = 0; i < params.size(); i++) {
+						statement.setObject(i + 1, params.get(i));
+					}
+					resultSet = statement.executeQuery();
+					while (resultSet.next()) {
+						Book book = setObjectFromResultSet(resultSet);
+						books.add(book);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					CloseConnection();
+				}
+		return books;
+	}
+	
 	public GetBooksDTO gets(String urldanhmuc, String page, String filter, String priceMin, String priceMax) {
 		List<Object> params = new ArrayList<Object>();
 
@@ -531,10 +628,10 @@ public class BookRepo extends Repo<Book> {
 		} else {
 			switch (filter) {
 			case "AZ":
-				sql += " ORDER BY name ASC";
+				sql += " ORDER BY books.name ASC";
 				break;
 			case "ZA":
-				sql += " ORDER BY name DESC";
+				sql += " ORDER BY books.name DESC";
 				break;
 			case "NEWEST":
 				sql += " ORDER BY create_time DESC";
