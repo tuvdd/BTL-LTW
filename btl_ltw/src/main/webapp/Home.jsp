@@ -20,7 +20,7 @@
                             Chào mừng bạn đến với hiệu sách của chúng tôi
                         </h1>
                         <h2>
-                        	Hiệu sách chúng tôi có tất cả sách mà bạn muốn tìm.
+                        	E-commerce Bookstore chúng tôi chuyên bán các loại sách: Học tập, Kinh doanh, Ngôn tình, Truyện ngắn, Truyện tranh
                         </h2>
                       <!--   <a href="/danh-sach-san-pham" target="_blank" rel="noopener noreferrer" class="btn">Go Shopping &#8594;</a> -->
                     </div>
@@ -30,23 +30,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Featured categories -->
-        <!-- <div class="categories">
-            <div class="small-container">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="/resources/img/category-1.jpg" alt="" />
-                    </div>
-                    <div class="col-3">
-                        <img src="/resources/img/category-2.jpg" alt="" />
-                    </div>
-                    <div class="col-3">
-                        <img src="/resources/img/category-3.jpg" alt="" />
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
     <!-- Featured products -->
     <%
@@ -58,7 +41,7 @@
         <h2 class="title">Sản phẩm nổi bật</h2>
     </div>
         <div class="row">
-            <c:forEach items="${listRB}" var="o">
+            <c:forEach items="${listFeaturedBook}" var="o">
                 <div class="col-4">
                     <a href="detail?bookid=${o.getId()}"><img src="data:image/png;base64,${o.getImageBase64()}" alt="" /></a>
                     <a href="detail?bookid=${o.getId()}">
@@ -104,7 +87,7 @@
 	%>
         <h2 class="title">Sản phẩm mới nhất</h2>
         <div class="row">
-            <c:forEach items="${listB}" var="m">
+            <c:forEach items="${listLasterBook}" var="m">
                 <div class="col-4">
                     <a href="detail?bookid=${m.getId()}"><img src="data:image/png;base64,${m.getImageBase64()}" alt="" /></a>
                     <a href="detail?bookid=${m.getId()}">

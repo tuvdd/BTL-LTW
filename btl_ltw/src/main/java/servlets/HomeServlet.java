@@ -14,7 +14,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 @WebServlet(name = "ClientHome", urlPatterns = "/")
 public class HomeServlet extends HttpServlet {
@@ -45,7 +52,8 @@ public class HomeServlet extends HttpServlet {
 		} else {
 			CategoryRepo repoC = new CategoryRepo();
 			BookRepo repoB = new BookRepo();
-			List<Book> listB, listRB = null;
+			List<Book> listRB, listLasterBook, listFeaturedBook = new ArrayList<>();
+			Map<Book, Float> listAverageBook = new HashMap<>();
 			List<Category> listC;
 			Book p;
 			List<Float> listAverageCommentRB = new ArrayList<>();
@@ -53,26 +61,40 @@ public class HomeServlet extends HttpServlet {
 			List<Float> listAverageCommentB = new ArrayList<>();
 			List<Integer> listNumberCommentB = new ArrayList<>();
 
-			listRB = repoB.getAll(1, 4);
-			listB = repoB.get4LastestBooks();
+			listRB = repoB.getListFeaturedBook();
+			listLasterBook = repoB.get4LastestBooks();
 			listC = repoC.getAll(-1, -1);
-			p = listB.get(0);
 			for (Book x : listRB) {
-				listAverageCommentRB.add(repoB.getAverageComment(x.getId().toString()));
 				listNumberCommentRB.add(repoB.getNumberComments(x.getId().toString()));
+				listAverageBook.put(x, repoB.getAverageComment(x.getId().toString()));
 			}
-			for (Book x : listB) {
+			List<Map.Entry<Book, Float>> list = new ArrayList<>(listAverageBook.entrySet());
+			Collections.sort(list, new Comparator<Map.Entry<Book, Float>>() {
+
+				@Override
+				public int compare(Entry<Book, Float> o1, Entry<Book, Float> o2) {
+					// TODO Auto-generated method stub
+					return o2.getValue().compareTo(o1.getValue());
+				}
+				
+			});
+			for(int i = 0; i < 4; i++) {
+				listFeaturedBook.add(list.get(i).getKey());
+				listAverageCommentRB.add(list.get(i).getValue());
+			}
+			for (Book x : listLasterBook) {
 				listAverageCommentB.add(repoB.getAverageComment(x.getId().toString()));
 				listNumberCommentB.add(repoB.getNumberComments(x.getId().toString()));
 			}
+			p = listFeaturedBook.get(0);
 
 			request.setAttribute("listNumberCommentRB", listNumberCommentRB);
 			request.setAttribute("listAverageCommentRB", listAverageCommentRB);
 			request.setAttribute("listNumberCommentB", listNumberCommentB);
 			request.setAttribute("listAverageCommentB", listAverageCommentB);
-			request.setAttribute("listB", listB);
-			request.setAttribute("listC", listC);
-			request.setAttribute("listRB", listRB);
+			request.setAttribute("listLasterBook", listLasterBook);
+			request.setAttribute("categories", listC);
+			request.setAttribute("listFeaturedBook", listFeaturedBook);
 			request.setAttribute("p", p);
 			request.getRequestDispatcher("Home.jsp").forward(request, response);
 
