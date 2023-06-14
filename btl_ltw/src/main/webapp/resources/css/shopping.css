@@ -151,3 +151,17 @@ ul.item p {
 	text-decoration: line-through;
 	color: red;
 }
+
+.btn {
+	display: inline-block;
+	background: #ff523b;
+	color: #ffffff;
+	padding: 8px 30px;
+	margin-top: 10px;
+	border-radius: 30px;
+	transition: background 0.5s;
+}
+
+.btn:hover {
+	background: #563434;
+}

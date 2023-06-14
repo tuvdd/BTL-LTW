@@ -75,6 +75,7 @@
                         <p class = "last-price">Giá cũ: <span>${o.getPriceFormat()} VNĐ</span></p>
                         <p class = "new-price">Giá mới: <span>${o.getPromotePriceFormat()} VNĐ</span></p>
                     </div>
+                    <a href="/add-to-cart?id=${o.getId()}&quantity=1" class="btn">Thêm vào giỏ &#8594;</a>
                     <% countRB += 1;  %>
                 </div>
             </c:forEach>
@@ -121,6 +122,7 @@
                         <p class = "last-price">Giá cũ: <span>${m.price}vnd</span></p>
                         <p class = "new-price">Giá mới: <span>${m.promote_price}vnd</span></p>
                     </div>
+                    <a href="/add-to-cart?id=${m.getId()}&quantity=1" class="btn">Thêm vào giỏ &#8594;</a>
                     <% countB += 1;  %>
                 </div>
             </c:forEach>

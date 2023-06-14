@@ -53,35 +53,46 @@
 
       <div class="col-25">
         <div class="container">
+          <h4>Cart
 
           <%
             if(cart_list!=null){
+
+              %>
+            <span class="price" style="color:black">
+                    <i class="fa fa-shopping-cart"></i>
+                    <%
+                      int num = 0;
+                      for(Cart cart : cart_list){
+                        num += cart.getQuantity();
+                      }
+                    %>
+                    <b><%=num%></b>
+                  </span>
+          </h4>
+            <%
               for(Cart c : cart_list){
 
 
           %>
-          <h4>Cart
-            <span class="price" style="color:black">
-                    <i class="fa fa-shopping-cart"></i>
-                    <b><%=cart_list.size()%></b>
-                  </span>
-          </h4>
+
+
           <p><a href="#"><%=c.getName()%> x <%=c.getQuantity()%></a> <span class="price"><%=StringUtilities.formatPrice(c.getPromote_price())%></span></p>
           <%
               }
             }
           %>
           <hr>
-          <p>Total <span class="price" style="color:black"><b><%=StringUtilities.formatPrice(total)%>></b></span></p>
+          <p>Total <span class="price" style="color:black"><b><%=StringUtilities.formatPrice(total)%> VNĐ</b></span></p>
         </div>
       </div>
     </div>
 
   </div>
   <div class="clr"></div>
-  <div id = wrapper>
-    <jsp:include page="Footer.jsp"></jsp:include>
-
-  </div>
+<%--  <div id = wrapper>--%>
+<%--    --%>
+<%--  </div>--%>
+  <jsp:include page="Footer.jsp"></jsp:include>
 </body>
 </html>
