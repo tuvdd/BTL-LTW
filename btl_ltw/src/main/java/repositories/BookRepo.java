@@ -468,6 +468,25 @@ public class BookRepo extends Repo<Book> {
 		return res;
 	}
 
+	public List<Book> getListFeaturedBook() {
+		List<Book> books = new ArrayList<>();
+		sql = "select books.* as total_rate from books join comments on book_id = BOOKS.id group by books.id";
+		try {
+			CreateConnection();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Book book = setObjectFromResultSet(resultSet);
+				books.add(book);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CloseConnection();
+		}
+		return books;
+	}
+	
 	public float getAverageComment(String bookID) {
 		float res = 0;
 		sql = "SELECT COUNT(*) AS comment_count, SUM(rate) AS total_rate FROM books LEFT JOIN comments ON books.id = comments.book_id WHERE books.id = ?;";
@@ -479,8 +498,8 @@ public class BookRepo extends Repo<Book> {
 			if (resultSet.next()) {
 				int commentCount = resultSet.getInt("comment_count");
 				int totalRate = resultSet.getInt("total_rate");
-				System.out.println(commentCount);
-				System.out.println(totalRate);
+//				System.out.println(commentCount);
+//				System.out.println(totalRate);
 				res = (float) totalRate / (float) commentCount;
 			}
 		} catch (Exception e) {
@@ -526,7 +545,7 @@ public class BookRepo extends Repo<Book> {
 		}
 		
 		// Xử lý tìm kiếm
-		sql += "and ( books.name LIKE ? OR author LIKE ? )";
+		sql += "and ( lower(books.name) LIKE lower(?) OR author LIKE lower(?) )";
 		String searchParam = "%" + searchQuery + "%";
 		params.add(searchParam);
 		params.add(searchParam);
