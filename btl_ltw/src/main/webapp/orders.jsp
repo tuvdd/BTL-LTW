@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="repositories.cart_demo.CartDao" %>
 <%@ page import="repositories.cart_demo.DbCon" %>
+<%@ page import="servlets.Utilities.StringUtilities" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
@@ -65,13 +66,13 @@
                     <b><%=cart_list.size()%></b>
                   </span>
           </h4>
-          <p><a href="#"><%=c.getName()%> x <%=c.getQuantity()%></a> <span class="price"><%=c.getPromote_price()%></span></p>
+          <p><a href="#"><%=c.getName()%> x <%=c.getQuantity()%></a> <span class="price"><%=StringUtilities.formatPrice(c.getPromote_price())%></span></p>
           <%
               }
             }
           %>
           <hr>
-          <p>Total <span class="price" style="color:black"><b><%=total%>></b></span></p>
+          <p>Total <span class="price" style="color:black"><b><%=StringUtilities.formatPrice(total)%>></b></span></p>
         </div>
       </div>
     </div>

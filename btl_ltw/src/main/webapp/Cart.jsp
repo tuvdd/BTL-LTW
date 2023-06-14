@@ -1,5 +1,6 @@
 <%@ page import="models.cart_demo.Cart" %>
 <%@ page import="java.util.List" %>
+<%@ page import="servlets.Utilities.StringUtilities" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -36,15 +37,17 @@
                 <header>
                     <input type="hidden" name="id" value="<%=c.getId()%>" class="form-input">
                     <a class="remove">
-                        <a href="#"><img src="data:image/png;base64,<%=c.getImageBase64()%>" alt="" /></a>
+                        <a><img src="data:image/png;base64,<%=c.getImageBase64()%>" alt="" /></a>
                         <h3><a href="remove-from-cart?id=<%=c.getId()%>" >Remove product</a></h3>
 
                     </a>
                 </header>
 
                 <div class="content">
+                    <a href="/detail?bookid=<%=c.getBook_id()%>"><h1><%=c.getName()%></h1></a>
 
-                    <h1><%=c.getName()%></h1>
+
+
 
                 </div>
 
@@ -55,11 +58,11 @@
 
 
                     <h2 class="full-price">
-                            <%=c.getPromote_price()*c.getQuantity()%> VNĐ
+                            <%=StringUtilities.formatPrice(c.getPromote_price()*c.getQuantity())%> VNĐ
                     </h2>
 
                     <h2 class="price">
-                            <%=c.getPromote_price()%> VNĐ
+                            <%=StringUtilities.formatPrice(c.getPromote_price())%> VNĐ
 
                     </h2>
                 </footer>
@@ -82,7 +85,7 @@
                     %>
 
                     <div class="left">
-                        <h1 class="total">Total: <span>${total}</span>VNĐ</h1>
+                        <h1 class="total">Total: <span>${StringUtilities.formatPrice(total)} </span>VNĐ</h1>
                         <a href = "orders.jsp" class="btn">Checkout</a>
                     </div>
 
