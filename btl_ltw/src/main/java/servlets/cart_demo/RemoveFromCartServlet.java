@@ -38,10 +38,10 @@ public class RemoveFromCartServlet extends HttpServlet {
                         }
                     }
                 }
-                response.sendRedirect("cart2.jsp");
+                response.sendRedirect("/cart");
 
             } else {
-                response.sendRedirect("cart2.jsp");
+                response.sendRedirect("/cart");
             }
 
         } catch (SQLException e) {

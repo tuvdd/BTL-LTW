@@ -50,34 +50,18 @@ public class CheckOutServlet extends HttpServlet {
 
             if (address != null && phone != null && name != null){
                 OrderFullDetail orderFullDetail = cartToOrder(auth, cart_list,timestamp,1,address, phone,name);
-                System.out.println(orderFullDetail);
                 OrderRepo orderRepo = new OrderRepo();
                 int temp = orderRepo.add_2(orderFullDetail);
                 if(temp == 0){
                     System.out.println("error");
                 }else {
+                    for(Cart cart : cart_list){
+                        cartDao.deleteCart(cart);
+                    }
                     cart_list.clear();
                 }
             }
             response.sendRedirect("/manageOrder");
-            /*if(cart_list != null && auth!=null) {
-                OrderFullDetail orderFullDetail = cartToOrder(cart_list,timestamp,1,"test", "098","Tsu123");
-                System.out.println(orderFullDetail);
-                OrderRepo orderRepo = new OrderRepo();
-                int temp = orderRepo.add_2(orderFullDetail);
-                if(temp == 0){
-                    System.out.println("error");
-                }else {
-                    cart_list.clear();
-                }
-                response.sendRedirect("orders.jsp");
-            }else {
-                if(auth==null) {
-                    response.sendRedirect("/login");
-                    return;
-                }
-                response.sendRedirect("cart2.jsp");
-            }*/
         } catch ( Exception e) {
             e.printStackTrace();
         }
@@ -98,20 +82,15 @@ public class CheckOutServlet extends HttpServlet {
         orderFullDetail.setPhonenum(phone);
         orderFullDetail.setCreated_time(timestamp);
         orderFullDetail.setBuyer_name(buyer);
-        System.out.println(12345);
         List<OrderDetail> list = new ArrayList<>();
         for (Cart c: cartList){
-            System.out.println(222);
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder_id(orderFullDetail.getId());
             orderDetail.setBook_id(c.getBook_id());
             orderDetail.setQuantity(c.getQuantity());
             orderDetail.setPrice(c.getPromote_price());
-            System.out.println(1323);
 
             list.add(orderDetail);
-            System.out.println(8888);
-            System.out.println(list);
         }
         orderFullDetail.setOrderDetails(list);
         return orderFullDetail;

@@ -39,14 +39,12 @@
                         <a href="#"><img src="data:image/png;base64,<%=c.getImageBase64()%>" alt="" /></a>
                         <h3><a href="remove-from-cart?id=<%=c.getId()%>" >Remove product</a></h3>
 
-                            <%--          <h3 href="remove-from-cart?id=<%=c.getId() %>"><span>Remove product</span> </h3>--%>
                     </a>
                 </header>
 
                 <div class="content">
 
                     <h1><%=c.getName()%></h1>
-                        <%--        <%=c.getSub_description()%>--%>
 
                 </div>
 
@@ -55,17 +53,14 @@
                     <span class="qt"><%=c.getQuantity()%></span>
                     <a href="quantity-inc-dec?action=inc&id=<%=c.getId()%>"><span class="qt-minus">+</span></a>
 
-                        <%--        <span class="qt-plus" href="quantity-inc-dec?action=inc&id=<%=c.getId()%>">+</span>--%>
 
                     <h2 class="full-price">
                             <%=c.getPromote_price()*c.getQuantity()%> VNĐ
-                            <%--          <%=c.promote_price*c.quantity%> VNĐ--%>
                     </h2>
 
                     <h2 class="price">
                             <%=c.getPromote_price()%> VNĐ
 
-                            <%--        <%=c.promote_price%> VNĐ--%>
                     </h2>
                 </footer>
             </article>
@@ -77,6 +72,14 @@
 
             <footer id="site-footer">
                 <div class="container clearfix">
+                    <%
+                        if(cart_list == null){
+
+                    %>
+                    <h2>Giỏ hàng trống !</h2>
+                    <%
+                        }
+                    %>
 
                     <div class="left">
                         <h1 class="total">Total: <span>${total}</span>VNĐ</h1>
@@ -88,10 +91,14 @@
             </footer>
 
     </div>
+</div>
 
 
+<div class="clr"></div>
+<div id = wrapper>
+    <jsp:include page="Footer.jsp"></jsp:include>
 
-<jsp:include page="Footer.jsp"></jsp:include>
+</div>
 
 </body>
 </html>
