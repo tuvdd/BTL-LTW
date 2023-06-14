@@ -55,7 +55,7 @@ public class RegisterUserServlet extends BaseServlet {
 		try {
             User user = new User();
 			user.set(UUID.randomUUID(), username, phoneNumber, email, isAccessFromServlet, new Timestamp(new Date().getTime()), new Timestamp(new Date().getTime()), username, password);
-			userRepo.add(user);
+			userRepo.add1(user);
 			System.out.println("thanh cong");
 			HttpSession session = req.getSession();
 			session.setAttribute("userID", user.getId().toString());
