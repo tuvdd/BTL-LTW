@@ -28,9 +28,11 @@
 }
 
 .col-25,
-.col-50,
-.col-75 {
-    padding: 0 16px;
+.col-50 {
+    padding: 0 5px;
+}
+.col-75{
+    padding-left: 16px;
 }
 
 .container {

@@ -9,7 +9,10 @@
   System.out.println(cart_list + "cart_jsp");
   session.setAttribute("cart_list", cart_list);
   CartDao cartDao = new CartDao(DbCon.getConnection());
-  double total = cartDao.getTotalCartPrice(cart_list);
+  double total = 0;
+  if(cart_list != null){
+    total = cartDao.getTotalCartPrice(cart_list);
+  }
 %>
 <!DOCTYPE html>
 <html>
@@ -49,23 +52,20 @@
 
       <div class="col-25">
         <div class="container">
-          <h4>Cart
-            <span class="price" style="color:black">
-                    <i class="fa fa-shopping-cart"></i>
-                    <b><%=cart_list.size()%></b>
-                  </span>
-          </h4>
+
           <%
             if(cart_list!=null){
               for(Cart c : cart_list){
 
 
           %>
-
+          <h4>Cart
+            <span class="price" style="color:black">
+                    <i class="fa fa-shopping-cart"></i>
+                    <b><%=cart_list.size()%></b>
+                  </span>
+          </h4>
           <p><a href="#"><%=c.getName()%> x <%=c.getQuantity()%></a> <span class="price"><%=c.getPromote_price()%></span></p>
-<%--          <p><a href="#">Product 2</a> <span class="price">$5</span></p>--%>
-<%--          <p><a href="#">Product 3</a> <span class="price">$8</span></p>--%>
-<%--          <p><a href="#">Product 4</a> <span class="price">$2</span></p>--%>
           <%
               }
             }

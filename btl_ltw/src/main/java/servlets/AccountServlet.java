@@ -51,6 +51,7 @@ public class AccountServlet extends BaseServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().removeAttribute("cart_list");
 		req.getSession().removeAttribute("userID");
 		String currentURL = req.getRequestURL().toString();
         req.getSession().setAttribute("currentURL", currentURL);
