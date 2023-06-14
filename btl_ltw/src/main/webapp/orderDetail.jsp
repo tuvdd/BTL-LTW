@@ -4,6 +4,7 @@
 <%@ page import="models.OrderDetail" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.UUID" %>
+<%@ page import="servlets.Utilities.StringUtilities" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -51,11 +52,11 @@
                 <footer class="content">
                     <span class="qt"><%=orderDetail.getQuantity()%></span>
                     <h2 class="full-price">
-                        <%=orderDetail.getPrice()*orderDetail.getQuantity()%> VNĐ
+                        <%=StringUtilities.formatPrice(orderDetail.getPrice()*orderDetail.getQuantity())%> VNĐ
                     </h2>
 
                     <h2 class="price">
-                        <%=orderDetail.getPrice()%> VNĐ
+                        <%=StringUtilities.formatPrice(orderDetail.getPrice())%> VNĐ
                     </h2>
                 </footer>
             </article>
@@ -68,7 +69,7 @@
                 <div class="container clearfix">
 
                     <div class="left">
-                        <h1 class="total">Total: <span>${total}</span>VNĐ</h1>
+                        <h1 class="total">Total: <span>${StringUtilities.formatPrice(total)}</span>VNĐ</h1>
                     </div>
 
 

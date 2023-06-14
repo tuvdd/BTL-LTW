@@ -4,6 +4,7 @@
 <%@ page import="models.OrderDetail" %>
 <%@ page import="repositories.BookRepo" %>
 <%@ page import="models.Book" %>
+<%@ page import="servlets.Utilities.StringUtilities" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -55,7 +56,7 @@
                 <div class="content">
                     <h1><a href="/orderdetail?orderID=<%=o.id%>">Đơn hàng tạo lúc: <%=o.created_time%> </a></h1>
                     Địa chỉ: <%=o.address%> (Khách hàng: <%=o.buyer_name%>)
-                    <h1>Tổng tiền: <%=total%> VNĐ</h1>
+                    <h1>Tổng tiền: <%=StringUtilities.formatPrice(total)%> VNĐ</h1>
 
                 </div>
 
