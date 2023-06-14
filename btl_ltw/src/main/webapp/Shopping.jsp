@@ -165,7 +165,9 @@
 															Giá gốc: <span class="old">${(b.getPriceFormat())} VNĐ</span>
 														</p>
 														<p>Giá mới:${b.getPromotePriceFormat()} VNĐ</p>
-													</a></li>
+													</a>
+													<a href="/add-to-cart?id=${b.getId()}&quantity=1" class="btn">Thêm vào giỏ &#8594;</a>
+												</li>
 											</c:forEach>
 										</ul>
 										<% int currentPage=request.getAttribute("page")==null ? 1 : Integer.parseInt((String) request.getAttribute("page")); 

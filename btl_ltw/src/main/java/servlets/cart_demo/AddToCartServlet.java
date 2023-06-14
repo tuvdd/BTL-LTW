@@ -28,9 +28,11 @@ public class AddToCartServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
+            System.out.println(1000);
             String id_raw = request.getParameter("id");
             String quantity_raw = request.getParameter("quantity");
             int quantity = Integer.parseInt(quantity_raw);
+            System.out.println(id_raw);
             UUID id = UUID.fromString(id_raw);
             Cart cm = new Cart();
             String cart_id = UUID.randomUUID().toString();
@@ -42,7 +44,7 @@ public class AddToCartServlet extends HttpServlet {
             cm.setPromote_price(book.promote_price);
             cm.setImage(book.image);
             cm.setName(book.name);
-
+            System.out.println(1111);
 
             HttpSession session = request.getSession();
             List<Cart> cart_list = new ArrayList<>();
@@ -51,6 +53,7 @@ public class AddToCartServlet extends HttpServlet {
             if(userID == null){
                 userID = "";
             }
+            System.out.println(1010);
             CartDao cartDao = new CartDao(DbCon.getConnection());
             if (cart_list == null) {
                 cart_list = new ArrayList<>();
@@ -73,7 +76,8 @@ public class AddToCartServlet extends HttpServlet {
                 }
             }
             session.setAttribute("cart_list", cart_list);
-            request.getRequestDispatcher("/detail?bookid="+id_raw).forward(request,response);
+            response.sendRedirect("/cart");
+//            request.getRequestDispatcher("/detail?bookid="+id_raw).forward(request,response);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

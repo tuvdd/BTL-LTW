@@ -55,7 +55,8 @@ public class QuantityIncDecServlet extends HttpServlet {
             double total = pDao.getTotalCartPrice(cart_list);
             request.setAttribute("cart_list", cart_list);
             request.setAttribute("total", total);
-            request.getRequestDispatcher("/Cart.jsp").forward(request,response);
+            response.sendRedirect("/cart");
+//            request.getRequestDispatcher("/Cart.jsp").forward(request,response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
