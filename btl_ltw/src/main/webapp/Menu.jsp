@@ -29,7 +29,6 @@
         <li><a href="/gioi-thieu" class="under">Giới thiệu</a></li>
         <li><a href="/cart2.jsp" class="under">Giỏ hàng</a></li>
         <li><a href="/account" class="under">Tài khoản</a></li>
->>>>>>> origin/main
       </ul>
     </div>
   </header>

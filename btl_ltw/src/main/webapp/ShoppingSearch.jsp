@@ -162,9 +162,9 @@
 															width="80px" height="80px" />
 														<p>${b.name}</p>
 														<p>
-															Giá gốc: <span class="old">${(b.price)}</span>VND
+															Giá gốc: <span class="old">${(b.price)} $</span>
 														</p>
-														<p>Giá mới:${b.promote_price}VND</p>
+														<p>Giá mới:${b.promote_price} $</p>
 													</a></li>
 											</c:forEach>
 										</ul>
