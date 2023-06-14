@@ -72,8 +72,8 @@
                         <% } %>
                     </div>
                     <div class = "product-price">
-                        <p class = "last-price">Giá cũ: <span>${o.price} $</span></p>
-                        <p class = "new-price">Giá mới: <span>${o.promote_price} $</span></p>
+                        <p class = "last-price">Giá cũ: <span>${o.getPriceFormat()} VNĐ</span></p>
+                        <p class = "new-price">Giá mới: <span>${o.getPromotePriceFormat()} VNĐ</span></p>
                     </div>
                     <% countRB += 1;  %>
                 </div>

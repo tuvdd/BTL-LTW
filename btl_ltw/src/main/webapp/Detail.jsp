@@ -44,7 +44,7 @@
                 </div>
                 <!-- card right -->
                 <div class = "product-content">
-                    <h2 class = "product-title">${book.name}</h2>
+                    <h2 class = "product-title">${book.getName()}</h2>
                     <div class = "product-rating">
                         <%
                             int countLocal = 0;
@@ -68,8 +68,8 @@
                     </div>
 
                     <div class = "product-price">
-                        <p class = "last-price">Giá cũ: <span> ${book.getPriceFormat()} $</span></p>
-                        <p class = "new-price">Giá mới: <span> ${book.getPromotePriceFormat()} $</span></p>
+                        <p class = "last-price">Giá cũ: <span> ${book.getPriceFormat()} VNĐ</span></p>
+                        <p class = "new-price">Giá mới: <span> ${book.getPromotePriceFormat()} VNĐ</span></p>
                     </div>
 
                     <div class = "purchase-info">

@@ -20,7 +20,7 @@
 				<div id="content">
 					<div id="tab1">
 						<div id="tab11">
-							<h5 style="color: white">Danh mục sản phẩm</h5>
+							<!-- <h5 style="color: white">Danh mục sản phẩm</h5>
 							<hr style="border-top: 1px solid chocolate" />
 							<form>
 								<a href="/danh-sach-san-pham">
@@ -46,7 +46,7 @@
 									</a>
 								</c:forEach>
 							</form>	
-							<br />
+							<br /> -->
 							<h5 style="color: white">Sắp xếp</h5>
 							<hr style="border-top: 1px solid white" />
 							<form>
@@ -162,9 +162,9 @@
 															width="80px" height="80px" />
 														<p>${b.name}</p>
 														<p>
-															Giá gốc: <span class="old">${(b.price)} $</span>
+															Giá gốc: <span class="old">${(b.getPriceFormat())} VNĐ</span>
 														</p>
-														<p>Giá mới:${b.promote_price} $</p>
+														<p>Giá mới:${b.getPromotePriceFormat()} VNĐ</p>
 													</a></li>
 											</c:forEach>
 										</ul>
