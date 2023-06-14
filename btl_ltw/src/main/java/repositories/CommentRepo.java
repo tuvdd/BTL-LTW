@@ -93,7 +93,7 @@ public class CommentRepo extends Repo<Comment> {
         List<Comment> comments = new ArrayList<>();
         CreateConnection();
         try {
-            sql = "SELECT c.comment_text, c.rate, c.create_at, u.name FROM comments c JOIN Users u ON c.user_id = u.id WHERE c.book_id = ? ORDER BY create_at DESC LIMIT ? OFFSET ?;";
+            sql = "SELECT c.comment_text, c.rate, c.create_at, u.name FROM comments c JOIN users u ON c.user_id = u.id WHERE c.book_id = ? ORDER BY create_at DESC LIMIT ? OFFSET ?;";
             statement = connection.prepareStatement(sql);
             statement.setObject(1, UUID.fromString(book_id));
             statement.setInt(2, size);
@@ -107,6 +107,7 @@ public class CommentRepo extends Repo<Comment> {
                 Comment comment = new Comment();
                 comment.setPropertyFromResultSet(name, commentText, rate, create_at);
                 comments.add(comment);
+                System.out.println("MAsssss");
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

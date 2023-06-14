@@ -48,6 +48,43 @@ public class UserRepo extends Repo<User> {
         return res;
     }
 
+    public int add1(User user) throws Exception {
+        if (user.name == null || user.email == null || user.phonenum == null || user.username == null
+                || user.password == null) {
+            throw new Exception("Thiếu dữ liệu");
+        }
+        if (Utils.isExistNotNumberChar(user.phonenum)) {
+            throw new Exception("Số điện thoại không hợp lệ");
+        }
+
+        int res = 0;
+        try {
+            CreateConnection();
+            sql = "INSERT INTO users (id, name, phonenum, email, status, created_time, last_update_time, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(sql);
+            statement.setObject(1, user.id);
+            statement.setString(2, user.name);
+            statement.setString(3, user.phonenum);
+            statement.setString(4, user.email);
+            statement.setBoolean(5, user.status);
+            statement.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+            statement.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+            statement.setString(8, user.username);
+            statement.setString(9, user.password);
+            res = statement.executeUpdate();
+        } catch (SQLException e) {
+            if (e.getMessage().contains("duplicate key value violates unique constraint "))
+                throw new Exception("Đã tồn tại username email hoặc phonenum");
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            CloseConnection();
+        }
+
+        return res;
+    }
+
     public int update(User user) throws Exception {
         if (user.name == null || user.email == null || user.phonenum == null) {
             throw new Exception("Thiếu dữ liệu");
@@ -137,6 +174,7 @@ public class UserRepo extends Repo<User> {
                 user = setObjectFromResultSet(resultSet);
 
             } else {
+                System.out.println("null");
                 user = null;
             }
         } catch (Exception e) {

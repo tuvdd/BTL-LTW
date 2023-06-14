@@ -4,6 +4,8 @@ import java.util.Base64;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import servlets.Utilities.StringUtilities;
+
 public class Book{
     public UUID id;
     public String name;
@@ -103,6 +105,14 @@ public class Book{
 
     public double getPromote_price() {
         return promote_price;
+    }
+
+    public String getPriceFormat() {
+        return StringUtilities.formatPrice(price);
+    }
+
+    public String getPromotePriceFormat() {
+        return StringUtilities.formatPrice(promote_price);
     }
 
     public void setPromote_price(double promote_price) {

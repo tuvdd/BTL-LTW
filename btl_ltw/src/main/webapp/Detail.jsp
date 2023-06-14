@@ -68,15 +68,18 @@
                     </div>
 
                     <div class = "product-price">
-                        <p class = "last-price">Giá cũ: <span>${book.price}</span></p>
-                        <p class = "new-price">Giá mới: <span>${book.promote_price}</span></p>
+                        <p class = "last-price">Giá cũ: <span> ${book.getPriceFormat()} $</span></p>
+                        <p class = "new-price">Giá mới: <span> ${book.getPromotePriceFormat()} $</span></p>
                     </div>
 
                     <div class = "purchase-info">
-                        <input type = "number" min = "0" value = "1">
-                        <button type = "button" class = "btn" onclick="location.href='/add-to-cart?id=${book.getId()}'">>
-                            Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
-                        </button>
+                        <form action="add-to-cart" >
+                            <input type="hidden" name="id" value="${book.id}">
+                            <input type = "number" name = "quantity" min = "0" value = "1">
+                            <button type = "submit" class = "btn">
+                                Thêm vào giỏ hàng <i class = "fas fa-shopping-cart"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -84,7 +87,7 @@
 
         <div class = "product-detail">
             <h2>Giới thiệu về sách:</h2>
-            <p id="myParagraph">${book.description}</p>
+            <p id="myParagraph">${book.getDescription()}</p>
             <button id="showMoreButton" onclick="showMore()">Xem thêm</button>
             <button id="showLessButton" onclick="showLess()">Ẩn bớt</button>
         </div>
