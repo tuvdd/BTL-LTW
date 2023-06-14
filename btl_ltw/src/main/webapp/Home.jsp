@@ -139,7 +139,7 @@
                     <a href="detail?bookid=${p.getId()}"><h3>${p.name}</h3></a>
                     <small>${p.sub_description}</small>
                     <br />
-                    <a href="/btl_ltw/detail?bookid=${p.getId()}" class="btn">Mua ngay &#8594;</a>
+                    <a href="/detail?bookid=${p.getId()}" class="btn">Mua ngay &#8594;</a>
                 </div>
             </div>
         </div>

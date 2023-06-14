@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="image-section">
-            <img src="./webapp/resources/img/1.png">
+            <img src="./resources/img/Book1.png">
         </div>
     </div>
 </div>
